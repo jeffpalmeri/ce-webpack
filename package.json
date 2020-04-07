@@ -1,5 +1,8 @@
 {
-  "author": "@polpenaloza",
+  "author": "Pol Penaloza <polpenaloza@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/polpenaoza/amp-webpack/issues"
+  },
   "dependencies": {
     "autoprefixer": "^9.7.6",
     "aws-sync-n-invalidate": "^2.3.5",
@@ -64,10 +67,32 @@
     "fs-extra": "^9.0.0",
     "prettier": "^2.0.4"
   },
+  "eslintConfig": {
+    "env": {
+      "browser": false,
+      "commonjs": true,
+      "es6": true,
+      "jest": true,
+      "node": true
+    },
+    "extends": "eslint:recommended",
+    "parser": "babel-eslint"
+  },
+  "files": [
+    "src"
+  ],
+  "homepage": "https://github.com/polpenaloza/amp-webpack#readme",
+  "keywords": [
+    "webpack",
+    "amp"
+  ],
   "license": "MIT",
-  "main": "index.js",
   "name": "amp-webpack",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/polpenaloza/amp-webpack.git"
+  },
   "scripts": {
     "lint": "eslint ."
   },

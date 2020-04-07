@@ -8,16 +8,15 @@ const htmlMinifyConfig = {
   removeStyleLinkTypeAttributes: true,
 };
 
-const mapJs = {
-  index: ['main'],
-};
+const htmlGenerator = (mapJS) =>
+  Object.entries(mapJS).map(
+    ([filename, chunks]) =>
+      new HtmlWebpackPlugin({
+        template: `src/${filename}.html`,
+        filename,
+        chunks: [...chunks, 'runtime'],
+        minify: htmlMinifyConfig,
+      })
+  );
 
-export default Object.entries(mapJs).map(
-  ([filename, chunks]) =>
-    new HtmlWebpackPlugin({
-      template: `src/${filename}.html`,
-      filename,
-      chunks: [...chunks, 'runtime'],
-      minify: htmlMinifyConfig,
-    })
-);
+export default htmlGenerator;
