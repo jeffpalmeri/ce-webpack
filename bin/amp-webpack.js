@@ -6,6 +6,8 @@
  * directory of this source tree.
  */
 const yargs = require('yargs');
+const webpack = require('webpack');
+const webpackDev = require('webpack-dev-server');
 
 const devBuild = require('../src/dev.babel');
 const prodBuild = require('../src/prod.babel');
@@ -31,7 +33,7 @@ if (argv.config) {
 }
 
 if (argv.env === 'prod') {
-  prodBuild();
+  webpack(prodBuild());
 } else {
-  devBuild();
+  webpackDev(devBuild());
 }
