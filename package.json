@@ -94,7 +94,10 @@
   "name": "amp-webpack",
   "repository": "git+https://github.com/polpenaloza/amp-webpack.git",
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "start": "webpack-dev-server --progress --config src/dev.babel.js --env.dev",
+    "build:dev": "webpack --config src/prod.babel.js --env.dev",
+    "build:prod": "webpack -p --config src/prod.babel.js --env.prod"
   },
   "version": "1.0.6"
 }

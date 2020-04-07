@@ -4,7 +4,7 @@ const path = require('path');
 
 const common = require('./common');
 
-module.exportss = function dev(env) {
+module.exports = function dev(env) {
   const getCommon = common(env);
   return merge(getCommon, {
     mode: 'development',

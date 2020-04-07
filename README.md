@@ -35,7 +35,7 @@ const htmls = {
   'cool-quiz-1': ['cool-quiz-1', 'main'],
 }
 
-const FAVICON = path.join(process.cwd(), 'app', 'img', 'favicon.ico');
+const FAVICON = path.join(process.cwd(), 'src', 'img', 'favicon.ico');
 
 const PLOVER = [
   {
