@@ -2,7 +2,7 @@
 
 **Install**
 ````bash
-yarn add @amp/webpack --dev
+yarn add amp-webpack --dev
 ````
 **package.json**
 
@@ -11,8 +11,8 @@ yarn add @amp/webpack --dev
 ````json wrap
 {
   "scripts": {
-    "build:dev": "webpack --mode development --config node_modules/@amp/webpack/dev.babel.js --hide-modules",
-    "build:prod": "webpack --mode production --config node_modules/@amp/webpack/prod.babel.js --hide-modules",
+    "build:dev": "webpack --mode development --config node_modules/amp-webpack/dev.babel.js --hide-modules",
+    "build:prod": "webpack --mode production --config node_modules/amp-webpack/prod.babel.js --hide-modules",
     "start": "webpack-dev-server --progress --config webpack/dev.babel.js --env.dev --hide-modules --colors",
   },
 }

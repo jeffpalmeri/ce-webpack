@@ -1,7 +1,7 @@
 {
   "author": "Pol Penaloza <polpenaloza@gmail.com>",
   "bugs": {
-    "url": "https://github.com/polpenaoza/-amp-webpack/issues"
+    "url": "https://github.com/polpenaoza/amp-webpack/issues"
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.9.0",
@@ -82,17 +82,16 @@
   "files": [
     "src"
   ],
-  "homepage": "https://github.com/polpenaloza/-amp-webpack#readme",
+  "homepage": "https://github.com/polpenaloza/amp-webpack#readme",
   "keywords": [
     "webpack",
     "amp"
   ],
   "license": "MIT",
   "name": "amp-webpack",
-  "repository": "git+https://github.com/polpenaloza/-amp-webpack.git",
+  "repository": "git+https://github.com/polpenaloza/amp-webpack.git",
   "scripts": {
     "lint": "eslint ."
   },
-  "version": "1.0.0",
-  "private": false
+  "version": "1.0.0"
 }
