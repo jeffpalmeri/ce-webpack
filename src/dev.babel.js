@@ -1,0 +1,28 @@
+import path from 'path';
+import merge from 'webpack-merge';
+import webpack from 'webpack';
+
+import common from './common';
+
+export default function (env) {
+  const getCommon = common(env);
+  return merge(getCommon, {
+    mode: 'development',
+    devtool: 'eval-source-map',
+    watch: true,
+    watchOptions: {
+      poll: true,
+    },
+    devServer: {
+      contentBase: path.join(process.cwd(), 'dist'),
+      disableHostCheck: true,
+      historyApiFallback: true,
+      hot: true,
+      host: '0.0.0.0',
+      open: true,
+      overlay: true,
+      port: 3000,
+    },
+    plugins: [new webpack.HotModuleReplacementPlugin()],
+  });
+}

@@ -1,0 +1,13 @@
+.circleci/*
+.git/*
+.github/*
+.tmp/*
+coverage/*
+dist/*
+jest-stare/*
+node_modules/*
+public/*
+reports/*
+scripts/*
+tmp/*
+sandbox/*
