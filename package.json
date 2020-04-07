@@ -88,13 +88,11 @@
     "amp"
   ],
   "license": "MIT",
-  "name": "@amp/webpack",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/polpenaloza/-amp-webpack.git"
-  },
+  "name": "amp-webpack",
+  "repository": "git+https://github.com/polpenaloza/-amp-webpack.git",
   "scripts": {
     "lint": "eslint ."
   },
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "private": false
 }
