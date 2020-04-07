@@ -94,5 +94,5 @@
     "startd": "node ./bin/amp-webpack.js",
     "start": "webpack-dev-server --progress --config src/dev.babel.js --env.dev"
   },
-  "version": "1.0.10"
+  "version": "1.0.11"
 }
