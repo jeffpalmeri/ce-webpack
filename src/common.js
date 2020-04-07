@@ -19,7 +19,7 @@ import {
 import htmlGenerator from './html-generator';
 
 const common = () => {
-  const { AMP_CONFIG } = process;
+  const { AMP_CONFIG = {} } = process;
   const { entry, htmls, COPY_ARRAY = [], FAVICON = '', PLOVER = [] } = AMP_CONFIG;
   if (!entry || typeof entry !== 'object') {
     throw Error('AMP_CONFIG failed: "entry" option cannot be empty and must be an object');
