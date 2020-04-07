@@ -82,7 +82,8 @@
     "parser": "babel-eslint"
   },
   "files": [
-    "src"
+    "src/",
+    "bin/"
   ],
   "homepage": "https://github.com/polpenaloza/amp-webpack#readme",
   "keywords": [
