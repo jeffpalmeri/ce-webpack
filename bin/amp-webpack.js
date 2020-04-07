@@ -16,7 +16,11 @@ const { argv } = yargs
     default: 'dev',
   });
 
-console.info('ARGV: ', { argv });
+console.info('ARGV: ', JSON.stringify({ argv }, 0, 2));
+if (argv.config) {
+  const config = require(argv.config);
+  console.info({ config });
+}
 
 if (argv.env === 'prod') {
   prodBuild();
