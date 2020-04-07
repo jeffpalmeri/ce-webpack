@@ -2,7 +2,7 @@
 
 **Install**
 ````bash
-yarn add @polpenaloza/amp-webpack --dev
+yarn add @amp/webpack --dev
 ````
 **package.json**
 
