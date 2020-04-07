@@ -44,6 +44,7 @@
     "pngquant": "^3.0.0",
     "postcss-loader": "^3.0.0",
     "precss": "^4.0.0",
+    "prompt-confirm": "^2.0.4",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.1.3",
     "uglifyjs-webpack-plugin": "^2.2.0",
@@ -66,8 +67,6 @@
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-watch": "^6.0.1",
-    "fs": "^0.0.1-security",
-    "fs-extra": "^9.0.0",
     "prettier": "^2.0.4"
   },
   "eslintConfig": {
@@ -86,19 +85,26 @@
     "bin"
   ],
   "homepage": "https://github.com/polpenaloza/amp-webpack#readme",
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/__tests__/mock/",
+      "/node_modules/"
+    ]
+  },
   "keywords": [
     "webpack",
     "amp"
   ],
   "license": "MIT",
   "name": "amp-webpack",
-  "repository": "git+https://github.com/polpenaloza/amp-webpack.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/polpenaloza/amp-webpack.git"
+  },
   "scripts": {
     "lint": "eslint .",
     "startd": "node ./bin/amp-webpack.js",
-    "start": "webpack-dev-server --progress --config src/dev.babel.js --env.dev",
-    "build:dev": "webpack --config src/prod.babel.js --env.dev",
-    "build:prod": "webpack -p --config src/prod.babel.js --env.prod"
+    "start": "webpack-dev-server --progress --config src/dev.babel.js --env.dev"
   },
   "version": "1.0.9"
 }

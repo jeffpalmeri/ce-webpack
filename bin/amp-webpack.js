@@ -18,7 +18,8 @@ const { argv } = yargs
 
 console.info('ARGV: ', JSON.stringify({ argv }, 0, 2));
 if (argv.config) {
-  const config = require(argv.config);
+  // eslint-disable-next-line import/no-dynamic-require
+  const config = require(`../../../${argv.config}`);
   console.info({ config });
 }
 
