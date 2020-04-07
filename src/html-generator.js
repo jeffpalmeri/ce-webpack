@@ -1,4 +1,4 @@
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const htmlMinifyConfig = {
   collapseWhitespace: true,
@@ -19,4 +19,4 @@ const htmlGenerator = (mapJS) =>
       })
   );
 
-export default htmlGenerator;
+module.exports = htmlGenerator;

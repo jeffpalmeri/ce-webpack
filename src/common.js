@@ -1,12 +1,12 @@
-import webpack from 'webpack';
-import path from 'path';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
-import ExtractCssChunks from 'extract-css-chunks-webpack-plugin';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import HtmlWebpackInlineSourcePlugin from 'html-webpack-inline-source-plugin';
+const webpack = require('webpack');
+const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 
-import {
+const {
   htmlLoader,
   jsLoader,
   stylesLoader,
@@ -14,9 +14,9 @@ import {
   mediaLoader,
   fontLoader,
   handlebarLoader,
-} from './loaders.babel';
+} = require('./loaders.babel');
 
-import htmlGenerator from './html-generator';
+const htmlGenerator = require('./html-generator');
 
 const common = () => {
   const { AMP_CONFIG = {} } = process;
@@ -119,4 +119,4 @@ const common = () => {
   };
 };
 
-export default common;
+module.exports = common;

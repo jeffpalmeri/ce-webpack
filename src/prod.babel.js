@@ -1,10 +1,10 @@
-import merge from 'webpack-merge';
-import CompressionPlugin from 'compression-webpack-plugin';
-import HtmlMinifierPlugin from 'html-minifier-webpack-plugin';
-import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
-import ImageminPlugin from 'imagemin-webpack';
+const merge = require('webpack-merge');
+const CompressionPlugin = require('compression-webpack-plugin');
+const HtmlMinifierPlugin = require('html-minifier-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const ImageminPlugin = require('imagemin-webpack');
 
-import common from './common';
+const common = require('./common');
 
 const minify = {
   collapseWhitespace: true,
@@ -48,7 +48,7 @@ const plugins = [
   new HtmlMinifierPlugin(minify),
 ];
 
-export default function (env) {
+module.exports = function prod(env) {
   const isProd = Boolean(env.prod);
   const getCommon = common(env);
   const prodConfig = {
@@ -82,4 +82,4 @@ export default function (env) {
     ...prodConfig,
     plugins,
   });
-}
+};

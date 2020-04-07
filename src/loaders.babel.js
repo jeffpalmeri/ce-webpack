@@ -1,14 +1,14 @@
-import path from 'path';
-import Autoprefixer from 'autoprefixer';
-import Precss from 'precss';
-import ExtractCssChunks from 'extract-css-chunks-webpack-plugin';
+const path = require('path');
+const Autoprefixer = require('autoprefixer');
+const Precss = require('precss');
+const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 
-export const htmlLoader = {
+const htmlLoader = {
   test: /\.html$/,
   loaders: ['file-loader?name=[name].html', 'extract-loader', 'html-loader'],
 };
 
-export const jsLoader = {
+const jsLoader = {
   test: /\.(js|jsx)$/,
   exclude: /node_modules/,
   use: {
@@ -20,7 +20,7 @@ export const jsLoader = {
   },
 };
 
-export const stylesLoader = {
+const stylesLoader = {
   test: /(\.css|\.scss|\.sass)$/,
   use: [
     {
@@ -47,7 +47,7 @@ export const stylesLoader = {
   ],
 };
 
-export const imagesLoader = {
+const imagesLoader = {
   test: /\.(gif|png|jpe?g|jp2|svg|ico)\??.*$/,
   use: [
     {
@@ -70,7 +70,7 @@ export const imagesLoader = {
   ],
 };
 
-export const mediaLoader = {
+const mediaLoader = {
   test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
   use: {
     loader: 'url-loader',
@@ -81,7 +81,7 @@ export const mediaLoader = {
   },
 };
 
-export const fontLoader = {
+const fontLoader = {
   test: /\.(woff|woff2|otf|ttf|eot)\??.*$/,
   use: {
     loader: 'url-loader',
@@ -92,7 +92,7 @@ export const fontLoader = {
   },
 };
 
-export const handlebarLoader = {
+const handlebarLoader = {
   test: /\.hbs$/,
   use: [
     {
@@ -102,4 +102,14 @@ export const handlebarLoader = {
       },
     },
   ],
+};
+
+module.exports = {
+  htmlLoader,
+  jsLoader,
+  stylesLoader,
+  imagesLoader,
+  mediaLoader,
+  fontLoader,
+  handlebarLoader,
 };
