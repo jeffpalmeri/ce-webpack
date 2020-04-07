@@ -1,5 +1,6 @@
 {
   "author": "Pol Penaloza <polpenaloza@gmail.com>",
+  "bin": "./bin/amp-webpack.js",
   "bugs": {
     "url": "https://github.com/polpenaoza/amp-webpack/issues"
   },
@@ -45,7 +46,8 @@
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3",
-    "webpack-merge": "^4.2.2"
+    "webpack-merge": "^4.2.2",
+    "yargs": "^15.3.1"
   },
   "description": "Webpack build for common repos",
   "devDependencies": {
