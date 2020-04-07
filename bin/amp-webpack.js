@@ -3,11 +3,20 @@ const yargs = require('yargs');
 const devBuild = require('../src/dev.babel');
 const prodBuild = require('../src/prod.babel');
 
-const { argv } = yargs.usage('$0 [options]', 'Build the project depending on the desired env.').option('env', {
-  type: 'string',
-  describe: 'Environment for build',
-  default: 'dev',
-});
+const { argv } = yargs
+  .usage('$0 [options]', 'Build the project depending on the desired env.')
+  .option('config', {
+    type: 'string',
+    describe: 'Config for build',
+    default: 'dev.babel',
+  })
+  .option('env', {
+    type: 'string',
+    describe: 'Environment for build',
+    default: 'dev',
+  });
+
+console.info('ARGV: ', { argv });
 
 if (argv.env === 'prod') {
   prodBuild();
