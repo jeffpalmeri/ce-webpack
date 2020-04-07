@@ -89,7 +89,6 @@
   ],
   "license": "MIT",
   "name": "@amp/webpack",
-  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/polpenaloza/amp-webpack.git"
