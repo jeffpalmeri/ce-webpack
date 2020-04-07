@@ -5,7 +5,12 @@
     "url": "https://github.com/polpenaoza/amp-webpack/issues"
   },
   "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
     "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/register": "^7.9.0",
+    "@babel/runtime": "^7.9.2",
     "autoprefixer": "^9.7.6",
     "aws-sync-n-invalidate": "^2.3.5",
     "babel-loader": "^8.1.0",
@@ -51,11 +56,6 @@
   },
   "description": "Webpack build for common repos",
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.0",
-    "@babel/register": "^7.9.0",
-    "@babel/runtime": "^7.9.2",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
