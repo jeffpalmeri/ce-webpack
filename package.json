@@ -99,5 +99,5 @@
     "build:dev": "webpack --config src/prod.babel.js --env.dev",
     "build:prod": "webpack -p --config src/prod.babel.js --env.prod"
   },
-  "version": "1.0.6"
+  "version": "1.0.7"
 }
