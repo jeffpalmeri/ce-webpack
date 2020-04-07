@@ -1,10 +1,10 @@
-import path from 'path';
-import merge from 'webpack-merge';
-import webpack from 'webpack';
+const merge = require('webpack-merge');
+const webpack = require('webpack');
+const path = require('path');
 
-import common from './common';
+const common = require('./common');
 
-export default function (env) {
+module.exportss = function dev(env) {
   const getCommon = common(env);
   return merge(getCommon, {
     mode: 'development',
@@ -25,4 +25,4 @@ export default function (env) {
     },
     plugins: [new webpack.HotModuleReplacementPlugin()],
   });
-}
+};
