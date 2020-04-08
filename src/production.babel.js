@@ -48,9 +48,8 @@ const plugins = [
   new HtmlMinifierPlugin(minify),
 ];
 
-module.exports = function prod(env = {}) {
+module.exports = function prod(env) {
   const isProd = Boolean(env.prod);
-  const getCommon = common(env);
   const prodConfig = {
     mode: 'production',
     devtool: !isProd ? 'source-map' : '',
@@ -79,6 +78,5 @@ module.exports = function prod(env = {}) {
     },
     plugins,
   };
-  console.info({ getCommon, prodConfig });
-  return merge(getCommon, prodConfig);
+  return merge(common, prodConfig);
 };

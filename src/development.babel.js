@@ -4,8 +4,7 @@ const path = require('path');
 
 const common = require('./common');
 
-module.exports = function dev(env = {}) {
-  const getCommon = common(env);
+module.exports = function dev() {
   const devConfig = {
     mode: 'development',
     devtool: 'eval-source-map',
@@ -25,5 +24,5 @@ module.exports = function dev(env = {}) {
     },
     plugins: [new webpack.HotModuleReplacementPlugin()],
   };
-  return merge(getCommon, devConfig);
+  return merge(common, devConfig);
 };

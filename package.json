@@ -89,7 +89,8 @@
     "url": "git+https://github.com/polpenaloza/amp-webpack.git"
   },
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "start": "webpack-dev-server --progress --config src/development.babel.js --env.dev"
   },
   "version": "1.0.19"
 }
