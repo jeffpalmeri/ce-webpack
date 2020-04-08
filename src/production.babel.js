@@ -7,8 +7,6 @@ const yargs = require('yargs');
 
 const common = require('./common');
 
-const { argv } = yargs;
-
 const minify = {
   collapseWhitespace: true,
   keepClosingSlash: true,
@@ -51,11 +49,10 @@ const plugins = [
   new HtmlMinifierPlugin(minify),
 ];
 
-module.exports = async function prod(env) {
-  // eslint-disable-next-line import/no-dynamic-require
-  const cfg = await require(`../../../${argv.cfg}`);
-  console.info({ cfg, param: argv.cgf });
+module.exports = function prod(env) {
+  const { argv } = yargs;
   const isProd = Boolean(env.prod);
+  const getCommon = common(argv.cfg);
   const prodConfig = {
     mode: 'production',
     devtool: !isProd ? 'source-map' : '',
@@ -84,5 +81,5 @@ module.exports = async function prod(env) {
     },
     plugins,
   };
-  return merge(common(cfg), prodConfig);
+  return merge(getCommon, prodConfig);
 };

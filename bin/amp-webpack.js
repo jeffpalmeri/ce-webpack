@@ -25,9 +25,10 @@ const { argv } = yargs
     describe: 'Build',
   });
 
-const cmd = ({ webpack, mode, build }) =>
-  // eslint-disable-next-line max-len
-  `yarn run ${webpack} --mode ${mode} --config node_modules/amp-webpack/src/${build}.babel.js --env ${mode} --cfg ${argv.cfg}`;
+const cmd = ({ webpack, mode, build }) => {
+  const config = argv.config || 'node_modules/amp-webpack/src';
+  return `yarn run ${webpack} --mode ${mode} --config ${config}/${build}.babel.js --env ${mode} --cfg ${argv.cfg}`;
+};
 
 const webpack = argv.build || argv.env.prod ? 'webpack' : 'webpack-dev-server --progress';
 const mode = argv.build || argv.env.prod ? 'production' : 'development';

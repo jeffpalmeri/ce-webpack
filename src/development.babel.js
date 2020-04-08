@@ -5,12 +5,9 @@ const yargs = require('yargs');
 
 const common = require('./common');
 
-const { argv } = yargs;
-
-module.exports = async function dev() {
-  // eslint-disable-next-line import/no-dynamic-require
-  const cfg = await require(`../../../${argv.cfg}`);
-  console.info({ cfg, param: argv.cgf });
+module.exports = function dev() {
+  const { argv } = yargs;
+  const getCommon = common(argv.cfg);
   const devConfig = {
     mode: 'development',
     devtool: 'eval-source-map',
@@ -30,5 +27,5 @@ module.exports = async function dev() {
     },
     plugins: [new webpack.HotModuleReplacementPlugin()],
   };
-  return merge(common(cfg), devConfig);
+  return merge(getCommon, devConfig);
 };

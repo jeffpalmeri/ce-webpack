@@ -18,15 +18,10 @@ const {
 
 const htmlGenerator = require('./html-generator');
 
-const common = (config) => {
-  console.info({ config });
-  const {
-    entry, // = { main: path.join(process.cwd(), 'src', 'main.js') },
-    htmls, // = { 'src/main': { filename: 'main', chunks: ['main'] } },
-    COPY_ARRAY = [],
-    FAVICON = '',
-    PLOVER = [],
-  } = config || {};
+const common = (cfg) => {
+  // eslint-disable-next-line import/no-dynamic-require
+  const config = require(path.join(process.cwd(), cfg));
+  const { entry, htmls, COPY_ARRAY = [], FAVICON = '', PLOVER = [] } = config;
   if (!entry || typeof entry !== 'object') {
     throw Error('AMP_CONFIG failed: "entry" option cannot be empty and must be an object');
   }
@@ -93,7 +88,12 @@ const common = (config) => {
 
   const plugins = [
     new webpack.ProgressPlugin(),
-    !isWin && new CleanWebpackPlugin(),
+    !isWin &&
+      new CleanWebpackPlugin({
+        root: '',
+        verbose: true,
+        dry: false,
+      }),
     new CopyWebpackPlugin(COPY_ARRAY),
     new webpack.ProvidePlugin({
       $: 'jquery',
@@ -104,6 +104,7 @@ const common = (config) => {
     ...ploverConfig,
     new ExtractCssChunks({
       filename: 'css/[name].min.css',
+      chunkFilename: 'css/[id].css',
     }),
     PLOVER.length && new HtmlWebpackInlineSourcePlugin(),
   ].filter((plug) => plug);
@@ -114,7 +115,6 @@ const common = (config) => {
     resolve,
     module: {
       rules,
-      strictExportPresence: true,
     },
     plugins,
   };

@@ -12,12 +12,16 @@ const jsLoader = {
   test: /\.(js|jsx)$/,
   exclude: /node_modules/,
   use: {
-    loader: 'file-loader',
+    loader: 'babel-loader',
+    options: {
+      presets: ['@babel/preset-env'],
+      plugins: ['@babel/plugin-proposal-object-rest-spread'],
+    },
   },
 };
 
 const stylesLoader = {
-  test: /(\.css|\.scss|\.sass)$/,
+  test: /\.(sa|sc|c)ss$/,
   use: [
     {
       loader: 'style-loader',

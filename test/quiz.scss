@@ -1,0 +1,55 @@
+html,
+body {
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  background: white;
+  color: black;
+  font-size: 16px;
+  font-family: "cera_proregular", 'sans-serif';
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 16px 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+p {
+  line-height: 20px;
+}
+
+ol, ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+hr {
+  margin: 10px 0 0;
+  opacity: .5;
+}
+
+button:focus {
+  outline: 0;
+}
+
+h1 {
+  background-color: lightblue;
+  text-align: center;
+  margin: 0;
+  padding: 16px;
+}
+
+.main-quiz {
+  height: 100vh;
+  width: 100vw;
+  background-color: lightpink;
+}
