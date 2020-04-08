@@ -48,7 +48,8 @@ const plugins = [
   new HtmlMinifierPlugin(minify),
 ];
 
-module.exports = function prod(env) {
+module.exports = async function prod(env) {
+  const asd = await require(`../../../development.babel`);
   const isProd = Boolean(env.prod);
   const prodConfig = {
     mode: 'production',
@@ -78,5 +79,5 @@ module.exports = function prod(env) {
     },
     plugins,
   };
-  return merge(common, prodConfig);
+  return merge(common(asd), prodConfig);
 };

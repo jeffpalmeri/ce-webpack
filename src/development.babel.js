@@ -4,7 +4,8 @@ const path = require('path');
 
 const common = require('./common');
 
-module.exports = function dev() {
+module.exports = async function dev() {
+  const asd = await require(`../../../development.babel`);
   const devConfig = {
     mode: 'development',
     devtool: 'eval-source-map',
@@ -24,5 +25,5 @@ module.exports = function dev() {
     },
     plugins: [new webpack.HotModuleReplacementPlugin()],
   };
-  return merge(common, devConfig);
+  return merge(common(asd), devConfig);
 };
