@@ -1,11 +1,16 @@
 const merge = require('webpack-merge');
-const webpack = require('webpack');
 const path = require('path');
+const webpack = require('webpack');
+const yargs = require('yargs');
 
 const common = require('./common');
 
+const { argv } = yargs;
+
 module.exports = async function dev() {
-  const asd = await require(`../../../development.babel`);
+  // eslint-disable-next-line import/no-dynamic-require
+  const cfg = await require(`../../../${argv.cfg}`);
+  console.info({ cfg, param: argv.cgf });
   const devConfig = {
     mode: 'development',
     devtool: 'eval-source-map',
@@ -25,5 +30,5 @@ module.exports = async function dev() {
     },
     plugins: [new webpack.HotModuleReplacementPlugin()],
   };
-  return merge(common(asd), devConfig);
+  return merge(common(cfg), devConfig);
 };

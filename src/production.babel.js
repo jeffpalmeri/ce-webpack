@@ -6,6 +6,8 @@ const ImageminPlugin = require('imagemin-webpack');
 
 const common = require('./common');
 
+const { argv } = yargs;
+
 const minify = {
   collapseWhitespace: true,
   keepClosingSlash: true,
@@ -49,7 +51,9 @@ const plugins = [
 ];
 
 module.exports = async function prod(env) {
-  const asd = await require(`../../../development.babel`);
+  // eslint-disable-next-line import/no-dynamic-require
+  const cfg = await require(`../../../${argv.cfg}`);
+  console.info({ cfg, param: argv.cgf });
   const isProd = Boolean(env.prod);
   const prodConfig = {
     mode: 'production',
@@ -79,5 +83,5 @@ module.exports = async function prod(env) {
     },
     plugins,
   };
-  return merge(common(asd), prodConfig);
+  return merge(common(cfg), prodConfig);
 };

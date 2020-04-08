@@ -90,7 +90,7 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "start": "webpack-dev-server --progress --config src/development.babel.js --env.dev"
+    "start": "node ./bin/amp-webpack --progress --config src/development.babel.js --env.dev"
   },
   "version": "1.0.21"
 }
