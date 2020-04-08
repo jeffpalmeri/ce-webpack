@@ -114,8 +114,9 @@
     "lint": "eslint .",
     "start": "webpack-dev-server --progress --config src/development.babel.js --env.dev --cfg webpack/development.js",
     "build": "webpack --config src/production.babel.js --env.dev --cfg webpack/development.js",
-    "start:amp": "node ./bin/amp-webpack.js --config src --env.dev --cfg webpack/development.js",
-    "build:amp": "node ./bin/amp-webpack.js --config src --env.prod --cfg webpack/development.js"
+    "start:dev": "node ./bin/amp-webpack.js --config src --env.dev --cfg webpack/development.js",
+    "build:prod": "node ./bin/amp-webpack.js --config src --env.prod --cfg webpack/development.js",
+    "build:dev": "node ./bin/amp-webpack.js --config src --env.qa --cfg webpack/development.js"
   },
   "version": "1.0.23"
 }

@@ -51,11 +51,11 @@ const plugins = [
 
 module.exports = function prod(env) {
   const { argv } = yargs;
-  const isProd = Boolean(env.prod);
+  const isProd = env === 'production';
   const getCommon = common(argv.cfg);
   const prodConfig = {
     mode: 'production',
-    devtool: !isProd ? 'source-map' : '',
+    devtool: isProd ? '' : 'source-map',
     optimization: {
       removeAvailableModules: true,
       removeEmptyChunks: true,

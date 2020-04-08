@@ -19,10 +19,6 @@ const { argv } = yargs
     type: 'string',
     describe: '',
     default: 'webpack/development.js',
-  })
-  .option('build', {
-    type: 'string',
-    describe: 'Build',
   });
 
 const cmd = ({ webpack, mode, build }) => {
@@ -30,24 +26,24 @@ const cmd = ({ webpack, mode, build }) => {
   return `yarn run ${webpack} --mode ${mode} --config ${config}/${build}.babel.js --env ${mode} --cfg ${argv.cfg}`;
 };
 
-const webpack = argv.build || argv.env.prod ? 'webpack' : 'webpack-dev-server --progress';
-const mode = argv.build || argv.env.prod ? 'production' : 'development';
-const build = argv.build ? 'production' : 'development';
+const webpack = argv.env.prod || argv.env.qa ? 'webpack' : 'webpack-dev-server --progress';
+const mode = argv.env.prod ? 'production' : 'development';
+const build = argv.env.prod || argv.env.qa ? 'production' : 'development';
+const command = cmd({ webpack, mode, build });
 
-exec(cmd({ webpack, mode, build }), function asd(error, stdout, stderr) {
+const startNode = exec(command, function asd(error, stdout, stderr) {
   if (error) {
     console.error({
       success: false,
       stderr,
       error,
-      command: cmd({ webpack, mode, build }),
-    });
-  } else {
-    console.info({
-      success: true,
-      stderr,
-      command: cmd({ webpack, mode, build }),
-      result: stdout,
+      command,
     });
   }
+});
+startNode.stdout.on('data', (data) => {
+  console.info(data);
+});
+startNode.on('close', function exit() {
+  process.exit();
 });
