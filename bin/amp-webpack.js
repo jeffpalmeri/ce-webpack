@@ -25,10 +25,12 @@ console.info('ARGV: ', JSON.stringify({ argv }, 0, 2));
 const cmd = ({ webpack, mode, build }) =>
   `yarn run ${webpack} --mode ${mode} --config node_modules/amp-webpack/src/${build}.babel.js --env ${mode}`;
 
-if (argv.config) {
+const waitForConfig = async () => {
   // eslint-disable-next-line import/no-dynamic-require
-  require(`../../../${argv.config}`);
-}
+  argv.config && (await require(`../../../${argv.config}`));
+};
+
+waitForConfig();
 
 const webpack = argv.build || argv.env.prod ? 'webpack' : 'webpack-dev-server --progress';
 const mode = argv.build || argv.env.prod ? 'production' : 'development';
