@@ -23,7 +23,7 @@ const { argv } = yargs
 console.info('ARGV: ', JSON.stringify({ argv }, 0, 2));
 
 const cmd = ({ webpack, mode, build }) =>
-  `yarn run ${webpack} --mode ${mode} --config src/${build}.babel.js --env ${mode}`;
+  `yarn run ${webpack} --mode ${mode} --config node_modules/amp-webpack/src/${build}.babel.js --env ${mode}`;
 
 if (argv.config) {
   // eslint-disable-next-line import/no-dynamic-require
