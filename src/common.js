@@ -19,8 +19,7 @@ const {
 const htmlGenerator = require('./html-generator');
 
 const common = () => {
-  const config = process.AMP_CONFIG || {};
-  const { AMP_CONFIG = {} } = config;
+  const { AMP_CONFIG = {} } = process;
   const {
     entry, // = { main: path.join(process.cwd(), 'src', 'main.js') },
     htmls, // = { 'src/main': { filename: 'main', chunks: ['main'] } },
