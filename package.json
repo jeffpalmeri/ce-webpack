@@ -92,5 +92,5 @@
     "lint": "eslint .",
     "start": "node ./bin/amp-webpack --progress --config src/development.babel.js --env.dev"
   },
-  "version": "1.0.22"
+  "version": "1.0.23"
 }
