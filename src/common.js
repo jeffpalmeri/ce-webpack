@@ -19,14 +19,14 @@ const {
 const htmlGenerator = require('./html-generator');
 
 const common = () => {
-  const { AMP_CONFIG = {} } = process;
+  console.info({ config: process.AMP_CONFIG });
   const {
     entry, // = { main: path.join(process.cwd(), 'src', 'main.js') },
     htmls, // = { 'src/main': { filename: 'main', chunks: ['main'] } },
     COPY_ARRAY = [],
     FAVICON = '',
     PLOVER = [],
-  } = AMP_CONFIG;
+  } = process.AMP_CONFIG;
   if (!entry || typeof entry !== 'object') {
     throw Error('AMP_CONFIG failed: "entry" option cannot be empty and must be an object');
   }
