@@ -3,6 +3,7 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const HtmlMinifierPlugin = require('html-minifier-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack');
+const yargs = require('yargs');
 
 const common = require('./common');
 

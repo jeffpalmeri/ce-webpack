@@ -25,8 +25,6 @@ const { argv } = yargs
     describe: 'Build',
   });
 
-console.info('ARGV: ', JSON.stringify({ argv }, 0, 2));
-
 const cmd = ({ webpack, mode, build }) =>
   // eslint-disable-next-line max-len
   `yarn run ${webpack} --mode ${mode} --config node_modules/amp-webpack/src/${build}.babel.js --env ${mode} --cfg ${argv.cfg}`;
