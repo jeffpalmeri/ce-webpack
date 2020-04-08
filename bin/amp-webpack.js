@@ -6,34 +6,48 @@
  * directory of this source tree.
  */
 const yargs = require('yargs');
-const webpack = require('webpack');
-const webpackDev = require('webpack-dev-server');
-
-const devBuild = require('../src/dev.babel');
-const prodBuild = require('../src/prod.babel');
+const { exec } = require('child_process');
 
 const { argv } = yargs
   .usage('$0 [options]', 'Build the project depending on the desired env.')
-  .option('config', {
-    type: 'string',
-    describe: 'Config for build',
-    default: 'dev.babel',
-  })
   .option('env', {
     type: 'string',
-    describe: 'Environment for build',
-    default: 'dev',
+    describe: 'Environment',
+    default: { dev: true },
+  })
+  .option('build', {
+    type: 'string',
+    describe: 'Build',
   });
 
 console.info('ARGV: ', JSON.stringify({ argv }, 0, 2));
+
+const cmd = ({ webpack, mode, build }) =>
+  `yarn run ${webpack} --mode ${mode} --config src/${build}.babel.js --env ${mode}`;
+
 if (argv.config) {
   // eslint-disable-next-line import/no-dynamic-require
-  const config = require(`../../../${argv.config}`);
-  console.info({ config });
+  require(`../../../${argv.config}`);
 }
 
-if (argv.env === 'prod') {
-  webpack(prodBuild());
-} else {
-  webpackDev(devBuild());
-}
+const webpack = argv.build || argv.env.prod ? 'webpack' : 'webpack-dev-server --progress';
+const mode = argv.build || argv.env.prod ? 'production' : 'development';
+const build = argv.build ? 'production' : 'development';
+
+exec(cmd({ webpack, mode, build }), function asd(error, stdout, stderr) {
+  if (error) {
+    console.error({
+      success: false,
+      // stderr,
+      error,
+      command: cmd({ webpack, mode, build }),
+    });
+  } else {
+    console.info({
+      success: true,
+      // stderr,
+      command: cmd({ webpack, mode, build }),
+      // result: stdout,
+    });
+  }
+});

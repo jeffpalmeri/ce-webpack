@@ -19,8 +19,15 @@ const {
 const htmlGenerator = require('./html-generator');
 
 const common = () => {
-  const { AMP_CONFIG = {} } = process;
-  const { entry, htmls, COPY_ARRAY = [], FAVICON = '', PLOVER = [] } = AMP_CONFIG;
+  const config = process.AMP_CONFIG || {};
+  const { AMP_CONFIG = {} } = config;
+  const {
+    entry, // = { main: path.join(process.cwd(), 'src', 'main.js') },
+    htmls, // = { 'src/main': { filename: 'main', chunks: ['main'] } },
+    COPY_ARRAY = [],
+    FAVICON = '',
+    PLOVER = [],
+  } = AMP_CONFIG;
   if (!entry || typeof entry !== 'object') {
     throw Error('AMP_CONFIG failed: "entry" option cannot be empty and must be an object');
   }
@@ -87,12 +94,7 @@ const common = () => {
 
   const plugins = [
     new webpack.ProgressPlugin(),
-    !isWin &&
-      new CleanWebpackPlugin({
-        root: '',
-        verbose: true,
-        dry: false,
-      }),
+    !isWin && new CleanWebpackPlugin(),
     new CopyWebpackPlugin(COPY_ARRAY),
     new webpack.ProvidePlugin({
       $: 'jquery',
@@ -114,6 +116,7 @@ const common = () => {
     resolve,
     module: {
       rules,
+      strictExportPresence: true,
     },
     plugins,
   };

@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const fs = require('fs');
 
 const htmlMinifyConfig = {
   collapseWhitespace: true,
@@ -8,11 +9,13 @@ const htmlMinifyConfig = {
   removeStyleLinkTypeAttributes: true,
 };
 
+const generatePage = (template) => fs.readFileSync(template, { encoding: 'utf-8' });
+
 const htmlGenerator = (mapJS) =>
   Object.entries(mapJS).map(
-    ([filename, chunks]) =>
+    ([source, { filename, chunks }]) =>
       new HtmlWebpackPlugin({
-        template: `src/${filename}.html`,
+        templateContent: generatePage(`${source}.html`),
         filename,
         chunks: [...chunks, 'runtime'],
         minify: htmlMinifyConfig,

@@ -48,7 +48,7 @@ const plugins = [
   new HtmlMinifierPlugin(minify),
 ];
 
-module.exports = function prod(env) {
+module.exports = function prod(env = {}) {
   const isProd = Boolean(env.prod);
   const getCommon = common(env);
   const prodConfig = {
@@ -77,9 +77,8 @@ module.exports = function prod(env) {
         }),
       ],
     },
-  };
-  return merge(getCommon, {
-    ...prodConfig,
     plugins,
-  });
+  };
+  console.info({ getCommon, prodConfig });
+  return merge(getCommon, prodConfig);
 };
