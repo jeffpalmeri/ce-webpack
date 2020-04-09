@@ -4,8 +4,11 @@ const Precss = require('precss');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 
 const htmlLoader = {
-  test: /\.html$/,
-  loaders: ['file-loader?name=[name].html', 'extract-loader', 'html-loader'],
+  test: /\.html$/i,
+  loader: 'html-loader',
+  options: {
+    minimize: true,
+  },
 };
 
 const jsLoader = {
