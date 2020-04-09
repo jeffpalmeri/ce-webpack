@@ -7,7 +7,7 @@ const common = require('./common');
 
 module.exports = function dev() {
   const { argv } = yargs;
-  const getCommon = common(argv.cfg);
+  const getCommon = common(argv.init);
   const devConfig = {
     mode: 'development',
     devtool: 'eval-source-map',

@@ -1,7 +1,9 @@
 const path = require('path');
 
 const htmls = {
-  'test/quiz.hbs': { filename: 'quiz', chunks: ['quiz'] },
+  'test/quiz-1.hbs': { filename: 'quiz-1', chunks: ['quiz'] },
+  'test/quiz-2.html': { filename: 'quiz-2', chunks: ['quiz'] },
+  'test/quiz-3.html': { filename: 'quiz-3.html', chunks: ['quiz'] },
 };
 
 const testFolder = [process.cwd(), 'test'];

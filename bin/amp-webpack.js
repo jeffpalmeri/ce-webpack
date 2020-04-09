@@ -15,15 +15,15 @@ const { argv } = yargs
     describe: 'Environment',
     default: { dev: true },
   })
-  .option('cfg', {
+  .option('init', {
     type: 'string',
     describe: '',
-    default: 'webpack/development.js',
+    default: 'webpack/init.js',
   });
 
 const cmd = ({ webpack, mode, build }) => {
   const config = argv.config || 'node_modules/amp-webpack/src';
-  return `yarn run ${webpack} --mode ${mode} --config ${config}/${build}.babel.js --env ${mode} --cfg ${argv.cfg}`;
+  return `yarn run ${webpack} --mode ${mode} --config ${config}/${build}.babel.js --env ${mode} --init ${argv.init}`;
 };
 
 const webpack = argv.env.prod || argv.env.qa ? 'webpack' : 'webpack-dev-server --progress';

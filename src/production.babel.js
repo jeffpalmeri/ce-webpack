@@ -52,7 +52,7 @@ const plugins = [
 module.exports = function prod(env) {
   const { argv } = yargs;
   const isProd = env === 'production';
-  const getCommon = common(argv.cfg);
+  const getCommon = common(argv.init);
   const prodConfig = {
     mode: 'production',
     devtool: isProd ? '' : 'source-map',

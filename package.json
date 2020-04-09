@@ -112,11 +112,11 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "start": "webpack-dev-server --progress --config src/development.babel.js --env.dev --cfg webpack/development.js",
-    "build": "webpack --config src/production.babel.js --env.dev --cfg webpack/development.js",
-    "start:dev": "node ./bin/amp-webpack.js --config src --env.dev --cfg webpack/development.js",
-    "build:prod": "node ./bin/amp-webpack.js --config src --env.prod --cfg webpack/development.js",
-    "build:dev": "node ./bin/amp-webpack.js --config src --env.qa --cfg webpack/development.js"
+    "start": "webpack-dev-server --progress --config src/development.babel.js --env.dev --init webpack/init.js",
+    "build": "webpack --config src/production.babel.js --env.dev --init webpack/init.js",
+    "start:dev": "node ./bin/amp-webpack.js --config src --env.dev --init webpack/init.js",
+    "build:prod": "node ./bin/amp-webpack.js --config src --env.prod --init webpack/init.js",
+    "build:dev": "node ./bin/amp-webpack.js --config src --env.qa --init webpack/init.js"
   },
   "version": "1.1.2"
 }

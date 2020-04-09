@@ -18,9 +18,9 @@ const {
 
 const htmlGenerator = require('./html-generator');
 
-const common = (cfg) => {
+const common = (init) => {
   // eslint-disable-next-line import/no-dynamic-require
-  const config = require(path.join(process.cwd(), cfg));
+  const config = require(path.join(process.cwd(), init));
   const { entry, htmls, COPY_ARRAY = [], FAVICON = '', PLOVER = [] } = config;
   if (!entry || typeof entry !== 'object') {
     throw Error('AMP_CONFIG failed: "entry" option cannot be empty and must be an object');
