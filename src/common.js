@@ -75,7 +75,7 @@ const common = (init) => {
           new HtmlWebpackPlugin({
             template,
             filename,
-            chunks,
+            chunks: ['runtime', ...chunks],
             inlineSource: /.js$/,
             favicon: FAVICON,
           })
