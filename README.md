@@ -88,3 +88,75 @@ module.exports = {
 }
 ```
 ***NOTE:*** it's important to 
+
+## Removals
+
+After implementing this library, you will want to remove some `devDependencies` from your project as those are not needed anymore. You can run the following command to get rid of those. If by any chance you don't have that dependency, you can remove it from the command.
+```
+yarn remove @babel/cli \
+@babel/core \
+@babel/plugin-proposal-class-properties \
+@babel/plugin-proposal-decorators \
+@babel/plugin-proposal-export-namespace-from \
+@babel/plugin-proposal-function-sent \
+@babel/plugin-proposal-json-strings \
+@babel/plugin-proposal-numeric-separator \
+@babel/plugin-proposal-throw-expressions \
+@babel/plugin-syntax-dynamic-import \
+@babel/plugin-syntax-import-meta \
+@babel/plugin-transform-arrow-functions \
+@babel/plugin-transform-runtime \
+@babel/preset-env \
+@babel/preset-react \
+@babel/register \
+@babel/runtime \
+autoprefixer \
+babel-loader \
+babel-plugin-module-resolver \
+babel-plugin-transform-runtime \
+babel-register \
+clean-webpack-plugin \
+compression-webpack-plugin \
+copy-webpack-plugin \
+core-js \
+css-loader \
+custom-event \
+exports-loader \
+extract-css-chunks-webpack-plugin \
+extract-loader \
+extract-text-webpack-plugin \
+file-loader \
+fs \
+fs-extra \
+gifsicle \
+handlebars \
+handlebars-loader \
+handlebars-webpack-plugin \
+happypack \
+html-loader \
+html-minifier-webpack-plugin \
+html-webpack-inline-source-plugin \
+html-webpack-plugin \
+image-webpack-loader \
+imagemin-gifsicle \
+imagemin-pngquant \
+imagemin-svgo \
+imagemin-webpack \
+mozjpeg \
+node-sass \
+path \
+pngquant \
+postcss-loader \
+precss \
+react-hot-loader \
+sass-loader \
+sitemap-webpack-plugin \
+style-loader \
+uglifyjs-webpack-plugin \
+url-loader \
+webpack \
+webpack-cli \
+webpack-dev-server \
+webpack-merge \
+webpack-visualizer-plugin
+```
