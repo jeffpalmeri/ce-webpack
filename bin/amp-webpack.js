@@ -31,7 +31,7 @@ const mode = argv.env.prod ? 'production' : 'development';
 const build = argv.env.prod || argv.env.qa ? 'production' : 'development';
 const command = cmd({ webpack, mode, build });
 
-const startNode = exec(command, function asd(error, stdout, stderr) {
+const startNode = exec(command, { maxBuffer: 1024 * 500 }, function asd(error, stdout, stderr) {
   if (error) {
     console.error({
       success: false,
