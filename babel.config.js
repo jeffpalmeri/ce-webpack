@@ -32,6 +32,17 @@ module.exports = (api) => {
     [
       'module-resolver',
       {
+        alias: {
+          assets: './src/assets',
+          config: './src/config',
+          connectors: './src/connectors',
+          core: './src/core',
+          country: './src/country',
+          'hbs-partials': './src/hbs-partials',
+          scss: './src/scss',
+          shared: './src/shared',
+          variants: './src/variants',
+        },
         root: ['./src', './public', './'],
       },
     ],
