@@ -31,11 +31,10 @@ const mode = argv.env.prod ? 'production' : 'development';
 const build = argv.env.prod || argv.env.qa ? 'production' : 'development';
 const command = cmd({ webpack, mode, build });
 
-const startNode = exec(command, { maxBuffer: 1024 * 10000 }, function asd(error, stdout, stderr) {
+const startNode = exec(command, { maxBuffer: 1024 * 10000 }, function asd(error) {
   if (error) {
     console.error({
       success: false,
-      stderr,
       error,
       command,
     });

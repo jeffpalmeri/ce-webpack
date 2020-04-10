@@ -10,11 +10,14 @@ const testFolder = [process.cwd(), 'test'];
 
 const entry = {
   quiz: path.join(...testFolder, 'quiz.js'),
+  plover: path.join(...testFolder, 'splits', 'plover.js'),
 };
 
 const FAVICON = path.join(process.cwd(), 'img', 'favicon.ico');
 
-const PLOVER = [];
+const PLOVER = {
+  'test/splits/plover': { filename: 'plover', chunks: ['plover'], inline: true },
+};
 
 const COPY_ARRAY = [];
 

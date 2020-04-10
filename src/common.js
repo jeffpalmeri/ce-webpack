@@ -3,7 +3,6 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 
 const {
@@ -77,18 +76,7 @@ const common = (init) => {
 
   const rules = [htmlLoader, jsLoader, stylesLoader, imagesLoader, mediaLoader, fontLoader, handlebarLoader];
 
-  const ploverConfig = PLOVER.length
-    ? PLOVER.map(
-        ({ template, filename, chunks }) =>
-          new HtmlWebpackPlugin({
-            template,
-            filename,
-            chunks: ['runtime', ...chunks],
-            inlineSource: /.js$/,
-            favicon: FAVICON,
-          })
-      )
-    : [];
+  const ploverConfig = PLOVER ? htmlGenerator(PLOVER, FAVICON) : [];
 
   const isWin = process.platform === 'win32';
 
@@ -108,7 +96,7 @@ const common = (init) => {
       jquery: 'jquery',
       jQuery: 'jquery',
     }),
-    ...htmlGenerator(htmls),
+    ...htmlGenerator(htmls, FAVICON),
     ...ploverConfig,
     new ExtractCssChunks({
       filename: 'css/[name].min.css',

@@ -49,13 +49,12 @@ const htmls = {
 
 const FAVICON = path.join(process.cwd(), 'src', 'img', 'favicon.ico');
 
-const PLOVER = [
-  {
-    template: path.join(...variantsFolder, 'splits', 'plover.html'),
-    filename: './plover',
-    chunks: ['plover'],
-  },
-];
+/**
+ * Same structure as htmls, with the notation that inline must be set to `true`
+ */
+const PLOVER = {
+  'test/splits/plover': { filename: 'plover', chunks: ['plover'], inline: true },
+};
 
 const COPY_ARRAY = [];
 

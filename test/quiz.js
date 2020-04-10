@@ -1,7 +1,7 @@
 import './quiz.scss';
 
 export function Init() {
-  console.info('················· yikes!');
+  console.info('················· quiz done!');
 }
 
 window.onload = new Init();
