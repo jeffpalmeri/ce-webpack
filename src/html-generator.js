@@ -6,6 +6,7 @@ const htmlGenerator = (mapJS, FAVICON) => {
       template: source.indexOf('.') === -1 ? `${source}.hbs` : source,
       filename: `./${filename || source.split('/')[source.split('/').length - 1]}`,
       chunks: ['runtime', 'vendors', ...chunks],
+      inject: 'body',
       scriptLoading: 'defer',
     };
     if (FAVICON) {
@@ -13,6 +14,7 @@ const htmlGenerator = (mapJS, FAVICON) => {
     }
     if (inline) {
       delete htmlObj.scriptLoading;
+      delete htmlObj.inject;
       htmlObj.inlineSource = /.js$/;
       htmlObj.chunks = ['runtime', ...chunks];
     }
