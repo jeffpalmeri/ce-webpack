@@ -22,7 +22,7 @@ const { argv } = yargs
   });
 
 const cmd = ({ webpack, mode, build }) => {
-  const config = argv.config || 'node_modules/ce-webpack/src';
+  const config = argv.config || 'node_modules/ce-webpack-temp/src';
   return `yarn run ${webpack} --mode ${mode} --config ${config}/${build}.babel.js --env ${mode} --init ${argv.init}`;
 };
 
