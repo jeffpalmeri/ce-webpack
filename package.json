@@ -110,7 +110,9 @@
   "files": [
     "src",
     "bin",
-    "babel.config.js"
+    "babel.config.js",
+    "postcss.config.js",
+    ".eslintrc.js"
   ],
   "homepage": "https://github.com/polpenaloza/ce-webpack#readme",
   "jest": {
