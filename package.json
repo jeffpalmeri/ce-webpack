@@ -109,7 +109,8 @@
   },
   "files": [
     "src",
-    "bin"
+    "bin",
+    "babel.config.js"
   ],
   "homepage": "https://github.com/polpenaloza/ce-webpack#readme",
   "jest": {
