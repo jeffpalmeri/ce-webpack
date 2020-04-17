@@ -137,5 +137,5 @@
     "ce:qa": "node ./bin/ce-webpack.js --config src --env.qa --init webpack/init.js",
     "ce:prod": "node ./bin/ce-webpack.js --config src --env.prod --init webpack/init.js"
   },
-  "version": "1.0.1"
+  "version": "1.0.2"
 }
