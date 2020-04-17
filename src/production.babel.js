@@ -3,6 +3,8 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const HtmlMinifierPlugin = require('html-minifier-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
 const yargs = require('yargs');
 
 const common = require('./common');
@@ -63,6 +65,7 @@ module.exports = function prod(env) {
       minimizer: [
         new UglifyJsPlugin({
           sourceMap: !isProd,
+          parallel: true,
           uglifyOptions: {
             compress: {
               drop_console: isProd,
@@ -77,6 +80,7 @@ module.exports = function prod(env) {
             },
           },
         }),
+        new OptimizeCSSAssetsPlugin({}),
       ],
     },
     plugins,

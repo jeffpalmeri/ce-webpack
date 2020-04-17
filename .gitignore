@@ -1,24 +1,49 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
 
+# Dependencies
 node_modules/
 bower_components/
-**/sandbox/**
-coverage/
+package-lock.json
+
+# Compiled output
+build
+.history/
+.tmp
+tmp
+dist/
+dist.zip
+*.map
 .sass-cache/
 .happypack/
-.idea/
-.tmp/
-tmp/
-.DS_Store
-reports/
-dist/
-.dist
-dist.zip
-*.log
+
+# Test coverage
+coverage
+jest-stare
+reports
+
+# editors
+.idea
+.vscode
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 *.sublime-project
 *.sublime-workspace
+
+# misc
 CHANGELOG.md
-amp.env
-public/
+*.iml
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 .nohup
 nohup.out
-tmp.*
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log

@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 
 const {
@@ -22,10 +22,10 @@ const common = (init) => {
   const config = require(path.join(process.cwd(), init));
   const { entry, htmls, COPY_ARRAY = [], FAVICON = '', PLOVER = [] } = config;
   if (!entry || typeof entry !== 'object') {
-    throw Error('AMP_CONFIG failed: "entry" option cannot be empty and must be an object');
+    throw Error('CE_CONFIG failed: "entry" option cannot be empty and must be an object');
   }
   if (!htmls || typeof entry !== 'object') {
-    throw Error('AMP_CONFIG failed: "htmls" option cannot be empty and must be an object');
+    throw Error('CE_CONFIG failed: "htmls" option cannot be empty and must be an object');
   }
 
   const output = {
@@ -37,21 +37,23 @@ const common = (init) => {
 
   const optimization = {
     runtimeChunk: 'single',
-    namedChunks: true,
     splitChunks: {
-      chunks: 'async',
+      chunks: 'all',
       minSize: 10000,
       minChunks: 1,
       maxAsyncRequests: 5,
       maxInitialRequests: 5,
       automaticNameDelimiter: '/',
-      name: 'common-chunk',
       cacheGroups: {
-        vendor: {
+        commons: {
           test: /[\\/]node_modules[\\/]/,
-          priority: -10,
-          chunks: 'async',
-          name: 'vendor',
+          chunks: 'all',
+          minChunks: 5,
+        },
+        styles: {
+          test: /\.(sa|sc|c)ss$/,
+          chunks: 'all',
+          minChunks: 2,
         },
       },
     },
@@ -98,9 +100,9 @@ const common = (init) => {
     }),
     ...htmlGenerator(htmls, FAVICON),
     ...ploverConfig,
-    new ExtractCssChunks({
+    new MiniCssExtractPlugin({
       filename: 'css/[name].min.css',
-      chunkFilename: 'css/[id].css',
+      chunkFilename: 'css/[id].min.css',
     }),
     PLOVER.length && new HtmlWebpackInlineSourcePlugin(),
   ].filter((plug) => plug);

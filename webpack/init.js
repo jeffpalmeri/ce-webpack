@@ -1,15 +1,15 @@
 const path = require('path');
 
 const htmls = {
-  'test/quiz-1.hbs': { filename: 'quiz/quiz-1', chunks: ['quiz'] },
-  'test/quiz-2.html': { filename: 'quiz-2', chunks: ['quiz'] },
-  'test/quiz-3.html': { filename: 'quiz-3.html', chunks: ['quiz'] },
+  'test/quiz/quiz-1.hbs': { filename: 'quiz/quiz-1', chunks: ['quiz'] },
+  'test/quiz/quiz-2.html': { filename: 'quiz-2', chunks: ['quiz'] },
+  'test/quiz/quiz-3.html': { filename: 'quiz-3.html', chunks: ['quiz'] },
 };
 
 const testFolder = [process.cwd(), 'test'];
 
 const entry = {
-  quiz: path.join(...testFolder, 'quiz.js'),
+  quiz: path.join(...testFolder, 'quiz', 'quiz.js'),
   plover: path.join(...testFolder, 'splits', 'plover.js'),
 };
 

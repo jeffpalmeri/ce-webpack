@@ -1,4 +1,4 @@
-# AMP-Webpack:
+# CE-Webpack:
 
 ***IMPORTANT***:
 
@@ -10,7 +10,7 @@ We don't require to add any `<script src="/js/main.min.js">` or `<link href="/cs
 
 ## Install
 ```bash
-yarn add --dev amp-webpack
+yarn add --dev ce-webpack
 ````
 
 
@@ -80,13 +80,12 @@ module.exports = {
 ```json
 {
   "scripts": {
-    "start": "amp-webpack --env.dev --init webpack/config.js",
-    "build:prod": "amp-webpack --env.prod --init webpack/config.js",
-    "build:dev": "amp-webpack --env.qa --init webpack/config.js",
+    "start": "ce-webpack --env.dev --init webpack/config.js",
+    "build:prod": "ce-webpack --env.prod --init webpack/config.js",
+    "build:dev": "ce-webpack --env.qa --init webpack/config.js",
   },
 }
 ```
-***NOTE:*** it's important to 
 
 ## Removals
 

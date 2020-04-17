@@ -1,8 +1,8 @@
 {
   "author": "Pol Penaloza <polpenaloza@gmail.com>",
-  "bin": "./bin/amp-webpack.js",
+  "bin": "./bin/ce-webpack.js",
   "bugs": {
-    "url": "https://github.com/polpenaloza/amp-webpack/issues"
+    "url": "https://github.com/polpenaloza/ce-webpack/issues"
   },
   "dependencies": {
     "@babel/cli": "^7.8.4",
@@ -34,7 +34,6 @@
     "css-loader": "^3.5.1",
     "custom-event": "^1.0.1",
     "exports-loader": "^0.7.0",
-    "extract-css-chunks-webpack-plugin": "^4.7.4",
     "extract-loader": "^5.0.1",
     "file-loader": "^6.0.0",
     "handlebars": "^4.7.6",
@@ -49,10 +48,28 @@
     "imagemin-pngquant": "^8.0.0",
     "imagemin-svgo": "^7.1.0",
     "imagemin-webpack": "^5.1.1",
+    "jquery": "^3.5.0",
+    "lodash": "^4.17.15",
+    "mini-css-extract-plugin": "^0.9.0",
     "mozjpeg": "^6.0.1",
     "node-sass": "^4.13.1",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
     "path": "^0.12.7",
+    "pixrem": "^5.0.0",
+    "pleeease-filters": "^4.0.0",
+    "postcss-calc": "^7.0.2",
+    "postcss-color-function": "^4.1.0",
+    "postcss-custom-media": "^7.0.8",
+    "postcss-custom-properties": "^9.1.1",
+    "postcss-custom-selectors": "^5.1.2",
+    "postcss-flexbugs-fixes": "^4.2.0",
+    "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
+    "postcss-media-minmax": "^4.0.0",
+    "postcss-nested": "^4.2.1",
+    "postcss-nesting": "^7.0.1",
+    "postcss-selector-matches": "^4.0.0",
+    "postcss-selector-not": "^4.0.0",
     "precss": "^4.0.0",
     "react-hot-loader": "^4.12.20",
     "sass-loader": "^8.0.2",
@@ -94,7 +111,7 @@
     "src",
     "bin"
   ],
-  "homepage": "https://github.com/polpenaloza/amp-webpack#readme",
+  "homepage": "https://github.com/polpenaloza/ce-webpack#readme",
   "jest": {
     "testPathIgnorePatterns": [
       "/__tests__/mock/",
@@ -103,21 +120,22 @@
   },
   "keywords": [
     "webpack",
-    "amp"
+    "ce"
   ],
   "license": "MIT",
-  "name": "amp-webpack",
+  "name": "ce-webpack",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/polpenaloza/amp-webpack.git"
+    "url": "git+https://github.com/polpenaloza/ce-webpack.git"
   },
   "scripts": {
     "lint": "eslint .",
     "start": "webpack-dev-server --progress --config src/development.babel.js --env.dev --init webpack/init.js",
-    "build": "webpack --config src/production.babel.js --env.dev --init webpack/init.js",
-    "start:dev": "node ./bin/amp-webpack.js --config src --env.dev --init webpack/init.js",
-    "build:prod": "node ./bin/amp-webpack.js --config src --env.prod --init webpack/init.js",
-    "build:dev": "node ./bin/amp-webpack.js --config src --env.qa --init webpack/init.js"
+    "build": "webpack -d --config src/production.babel.js --env.dev --init webpack/init.js",
+    "build:prod": "webpack -p --config src/production.babel.js --env.prod --init webpack/init.js",
+    "ce:dev": "node ./bin/ce-webpack.js --config src --env.dev --init webpack/init.js",
+    "ce:qa": "node ./bin/ce-webpack.js --config src --env.qa --init webpack/init.js",
+    "ce:prod": "node ./bin/ce-webpack.js --config src --env.prod --init webpack/init.js"
   },
   "version": "1.1.14"
 }

@@ -5,7 +5,7 @@ const htmlGenerator = (mapJS, FAVICON) => {
     const htmlObj = {
       template: source.indexOf('.') === -1 ? `${source}.hbs` : source,
       filename: `./${filename || source.split('/')[source.split('/').length - 1]}`,
-      chunks: ['runtime', 'vendors', ...chunks],
+      chunks: ['runtime', ...chunks],
       inject: 'body',
       scriptLoading: 'defer',
     };

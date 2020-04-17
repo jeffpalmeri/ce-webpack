@@ -17,6 +17,7 @@ module.exports = function dev() {
     },
     devServer: {
       contentBase: path.join(process.cwd(), 'dist'),
+      watchContentBase: true,
       disableHostCheck: true,
       historyApiFallback: true,
       hot: true,

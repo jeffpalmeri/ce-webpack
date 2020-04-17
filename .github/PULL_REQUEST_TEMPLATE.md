@@ -5,11 +5,6 @@
 ## Contributors:
 <!--- Remove this section if there's a single contributor. -->
 
-## Related Task[s]:
-<!--- If it fixes an open issue, please link to the issue here. -->
-<!--- Remove this section if there are no tickets. -->
-https://ampush.atlassian.net/browse/
-
 ## Known Issues:
 <!--- Describe if there is something that will be addressed in a later commit, -->
 <!--- or if this is a known issue that will be shipped anyhow. -->

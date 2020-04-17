@@ -1,0 +1,20 @@
+@mixin font-face-woff($fontname, $fontfolder) {
+  @font-face {
+    font-family: $fontname;
+    src: url($fontfolder + '.woff') format('woff'), url($fontfolder + '.woff2') format('woff2');
+  }
+}
+
+@mixin font-face-otf($fontname, $fontfolder) {
+  @font-face {
+    font-family: $fontname;
+    src: url($fontfolder + '.otf') format('opentype');
+  }
+}
+
+@mixin font-face-ttf($fontname, $fontfolder) {
+  @font-face {
+    font-family: $fontname;
+    src: url($fontfolder + '.ttf') format('truetype');
+  }
+}

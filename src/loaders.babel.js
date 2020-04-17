@@ -1,7 +1,5 @@
 const path = require('path');
-const Autoprefixer = require('autoprefixer');
-const Precss = require('precss');
-const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const htmlLoader = {
   test: /\.html$/i,
@@ -27,26 +25,14 @@ const stylesLoader = {
   test: /\.(sa|sc|c)ss$/,
   use: [
     {
-      loader: 'style-loader',
-    },
-    {
-      loader: ExtractCssChunks.loader,
-    },
-    {
-      loader: 'css-loader',
-    },
-    {
-      loader: 'postcss-loader',
+      loader: MiniCssExtractPlugin.loader,
       options: {
-        autoprefixer: {
-          browsers: ['last 2 versions'],
-        },
-        plugins: () => [Precss, Autoprefixer],
+        hmr: process.env.NODE_ENV === 'development',
       },
     },
-    {
-      loader: 'sass-loader',
-    },
+    'css-loader',
+    'postcss-loader',
+    'sass-loader',
   ],
 };
 
