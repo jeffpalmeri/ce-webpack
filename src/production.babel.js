@@ -57,14 +57,14 @@ module.exports = function prod(env) {
   const getCommon = common(argv.init);
   const prodConfig = {
     mode: 'production',
-    devtool: isProd ? '' : 'source-map',
+    devtool: isProd ? '' : 'eval-source-map',
     optimization: {
       removeAvailableModules: true,
       removeEmptyChunks: true,
       mergeDuplicateChunks: true,
       minimizer: [
         new UglifyJsPlugin({
-          sourceMap: !isProd,
+          sourceMap: true,
           parallel: true,
           uglifyOptions: {
             compress: {

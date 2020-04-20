@@ -80,9 +80,9 @@ module.exports = {
 ```json
 {
   "scripts": {
-    "start": "ce-webpack --env.dev --init webpack/config.js",
+    "start": "ce-webpack --env.dev --init webpack/config.js --serve",
     "build:prod": "ce-webpack --env.prod --init webpack/config.js",
-    "build:dev": "ce-webpack --env.qa --init webpack/config.js",
+    "build:dev": "ce-webpack --env.dev --init webpack/config.js",
   },
 }
 ```

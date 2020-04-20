@@ -126,7 +126,7 @@
     "ce"
   ],
   "license": "MIT",
-  "name": "ce-webpack-temp",
+  "name": "ce-webpack",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/polpenaloza/ce-webpack.git"
@@ -136,8 +136,8 @@
     "start": "webpack-dev-server --progress --config src/development.babel.js --env.dev --init webpack/init.js",
     "build": "webpack -d --config src/production.babel.js --env.dev --init webpack/init.js",
     "build:prod": "webpack -p --config src/production.babel.js --env.prod --init webpack/init.js",
+    "ce:start": "node ./bin/ce-webpack.js --config src --env.dev --init webpack/init.js --serve",
     "ce:dev": "node ./bin/ce-webpack.js --config src --env.dev --init webpack/init.js",
-    "ce:qa": "node ./bin/ce-webpack.js --config src --env.qa --init webpack/init.js",
     "ce:prod": "node ./bin/ce-webpack.js --config src --env.prod --init webpack/init.js"
   },
   "version": "3.0.2"
