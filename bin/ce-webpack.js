@@ -32,16 +32,15 @@ const webpack = argv.serve ? 'webpack-dev-server --progress' : 'webpack';
 const mode = argv.env.dev ? 'development' : 'production';
 const build = argv.env.serve ? 'development' : 'production';
 const command = cmd({ webpack, mode, build });
+console.info({ command });
 
 const startNode = exec(command, { maxBuffer: 1024 * 10000 }, function asd(error) {
-  console.info({ command });
   if (error) {
     console.error({
       success: false,
       error,
     });
-  }
-  if (module.hot) {
+  } else if (module.hot) {
     module.hot.accept();
   }
 });
