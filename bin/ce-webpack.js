@@ -26,13 +26,11 @@ const cmd = ({ webpack, mode, build }) => {
   return `yarn run ${webpack} --mode ${mode} --config ${config}/${build}.babel.js --env ${mode} --init ${argv.init}`;
 };
 
-console.info({ argv });
-
 const webpack = argv.serve ? 'webpack-dev-server --progress' : 'webpack';
 const mode = argv.env.dev ? 'development' : 'production';
-const build = argv.env.serve ? 'development' : 'production';
+const build = argv.serve ? 'development' : 'production';
 const command = cmd({ webpack, mode, build });
-console.info({ command });
+console.info(JSON.stringify({ argv, command }, null, 2));
 
 const startNode = exec(command, { maxBuffer: 1024 * 10000 }, function asd(error) {
   if (error) {
