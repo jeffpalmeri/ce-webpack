@@ -22,6 +22,8 @@ module.exports = {
     gtag: true,
     location: true,
     safariAmpt: true,
+    document: true,
+    window: true,
   },
 
   env: {
