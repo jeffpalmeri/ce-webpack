@@ -15,6 +15,13 @@ module.exports = {
 
   globals: {
     __DEV__: true,
+    ampt: true,
+    atrack: true,
+    fbq: true,
+    ga: false,
+    gtag: true,
+    location: true,
+    safariAmpt: true,
   },
 
   env: {
