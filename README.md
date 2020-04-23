@@ -117,7 +117,7 @@ module.exports = postcssConfig;
 **Prettier**
 ```js
 // .prettierrc.js
-const prettierConfig = require('ce-webpack/.prettier');
+const prettierConfig = require('ce-webpack/prettierrc');
 
 module.exports = prettierConfig;
 ```
