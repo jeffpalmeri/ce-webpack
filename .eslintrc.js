@@ -5,6 +5,9 @@ module.exports = {
   extends: [
     'airbnb-base',
     'prettier',
+    'prettier/react',
+    'plugin:react/recommended',
+    'plugin:import/react',
   ],
 
   plugins: ['prettier'],
@@ -75,6 +78,23 @@ module.exports = {
     // ESLint plugin for prettier formatting
     // https://github.com/prettier/eslint-plugin-prettier
     'prettier/prettier': 2,
+    
+    // react specific rules
+    'react/forbid-prop-types': 'off',
+    // Allow .js files to use JSX syntax
+    // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-filename-extension.md
+    'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx'] }],
+
+    // Functional and class components are equivalent from React's point of view
+    // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prefer-stateless-function.md
+    'react/destructuring-assignment': 'off',
+    'react/forbid-prop-types': 'off',
+    'react/prefer-stateless-function': 'off',
+    'react/no-access-state-in-setstate': 'off',
+    'react/state-in-constructor': 'off',
+    'react/static-property-placement': 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'react/jsx-fragments': 'off',
   },
 
   settings: {
@@ -85,5 +105,8 @@ module.exports = {
         moduleDirectory: ['node_modules', './src/']
       }
     },
+    react: {
+      version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React to use
+    }
   }
 };

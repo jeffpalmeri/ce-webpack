@@ -87,6 +87,43 @@ module.exports = {
 }
 ```
 
+## Required files to create
+In your project, you will need to create 2 files and instruct them to extend the config set here:
+
+**Babel**
+```js
+// babel.config
+const babelConfig = require('ce-webpack/babel.config');
+
+module.exports = babelConfig;
+```
+
+**Eslint**
+```js
+// .eslintrc.js
+
+```
+
+**PostCss**
+```js
+// postcss.config.js
+const postcssConfig = require('ce-webpack/postcss.config');
+
+module.exports = postcssConfig;
+```
+
+**Prettier**
+```js
+// .prettierrc.js
+const prettierConfig = require('ce-webpack/.prettier');
+
+module.exports = prettierConfig;
+
+```
+
+NOTE: *if needed, you can extend your rules on each file*
+
+
 ## Removals
 
 After implementing this library, you will want to remove some `devDependencies` from your project as those are not needed anymore. You can run the following command to get rid of those. If by any chance you don't have that dependency, you can remove it from the command.
