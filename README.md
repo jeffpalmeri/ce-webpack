@@ -132,7 +132,7 @@ module.exports = jestConfig;
 
 **StyleLint**
 ```js
-// jest.config.js
+// stylelint.config.js
 const styleLintConfig = require('ce-webpack/stylelint.config');
 
 module.exports = styleLintConfig;
