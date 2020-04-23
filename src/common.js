@@ -18,7 +18,6 @@ const {
 const htmlGenerator = require('./html-generator');
 
 const common = (init) => {
-  // eslint-disable-next-line import/no-dynamic-require
   const config = require(path.join(process.cwd(), init));
   const { entry, htmls, COPY_ARRAY = [], FAVICON = '', PLOVER = [] } = config;
   if (!entry || typeof entry !== 'object') {
