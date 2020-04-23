@@ -137,18 +137,23 @@
   ],
   "license": "MIT",
   "name": "ce-webpack",
+  "peerDependencies": {
+    "eslint": ">= 6",
+    "stylelint": ">= 13",
+    "prettier": ">= 2"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/polpenaloza/ce-webpack.git"
   },
   "scripts": {
-    "lint": "eslint .",
-    "start": "webpack-dev-server --progress --config src/development.babel.js --env.dev --init webpack/init.js",
     "build": "webpack -d --config src/production.babel.js --env.dev --init webpack/init.js",
     "build:prod": "webpack -p --config src/production.babel.js --env.prod --init webpack/init.js",
-    "ce:start": "node ./bin/ce-webpack.js --config src --env.dev --init webpack/init.js --serve",
     "ce:dev": "node ./bin/ce-webpack.js --config src --env.dev --init webpack/init.js",
-    "ce:prod": "node ./bin/ce-webpack.js --config src --env.prod --init webpack/init.js"
+    "ce:prod": "node ./bin/ce-webpack.js --config src --env.prod --init webpack/init.js",
+    "ce:start": "node ./bin/ce-webpack.js --config src --env.dev --init webpack/init.js --serve",
+    "lint": "eslint .",
+    "start": "webpack-dev-server --progress --config src/development.babel.js --env.dev --init webpack/init.js"
   },
   "version": "1.1.1"
 }
