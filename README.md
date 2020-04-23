@@ -101,7 +101,9 @@ module.exports = babelConfig;
 **Eslint**
 ```js
 // .eslintrc.js
+const eslintConfig = require('ce-webpack/eslintrc');
 
+module.exports = eslintConfig;
 ```
 
 **PostCss**
@@ -118,7 +120,22 @@ module.exports = postcssConfig;
 const prettierConfig = require('ce-webpack/.prettier');
 
 module.exports = prettierConfig;
+```
 
+**Jest**
+```js
+// jest.config.js
+const jestConfig = require('ce-webpack/jest.config');
+
+module.exports = jestConfig;
+```
+
+**StyleLint**
+```js
+// jest.config.js
+const styleLintConfig = require('ce-webpack/stylelint.config');
+
+module.exports = styleLintConfig;
 ```
 
 NOTE: *if needed, you can extend your rules on each file*
@@ -145,17 +162,34 @@ yarn remove @babel/cli \
 @babel/preset-react \
 @babel/register \
 @babel/runtime \
+@testing-library/react \
 autoprefixer \
+babel-eslint \
 babel-loader \
 babel-plugin-module-resolver \
 babel-plugin-transform-runtime \
 babel-register \
 clean-webpack-plugin \
+compat \
 compression-webpack-plugin \
 copy-webpack-plugin \
 core-js \
 css-loader \
 custom-event \
+enzyme \
+enzyme-to-json \
+eslint \
+eslint-config-airbnb-base \ 
+eslint-config-prettier \
+eslint-import-resolver-babel-module \
+eslint-loader \
+eslint-plugin-babel \
+eslint-plugin-compat \
+eslint-plugin-import \
+eslint-plugin-jquery \
+eslint-plugin-prettier \
+eslint-plugin-react \
+eslint-watch \
 exports-loader \
 extract-css-chunks-webpack-plugin \
 extract-loader \
@@ -177,16 +211,30 @@ imagemin-gifsicle \
 imagemin-pngquant \
 imagemin-svgo \
 imagemin-webpack \
+jest \
+jest-codemods \
+jest-stare \
+mini-css-extract-plugin \
 mozjpeg \
 node-sass \
 path \
 pngquant \
 postcss-loader \
 precss \
+prettier \
 react-hot-loader \
+sass-lint \
 sass-loader \
 sitemap-webpack-plugin \
 style-loader \
+stylelint \
+stylelint-config-prettier \
+stylelint-config-recommended \
+stylelint-config-recommended-scss \
+stylelint-order \
+stylelint-prettier \
+stylelint-rscss \
+stylelint-scss \
 uglifyjs-webpack-plugin \
 url-loader \
 webpack \
