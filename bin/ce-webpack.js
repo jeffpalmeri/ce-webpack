@@ -18,16 +18,21 @@ const { argv } = yargs
   .option('init', {
     type: 'string',
     describe: '',
-    default: 'webpack/init.js',
+    default: 'webpack/config.js',
   });
 
 const cmd = ({ webpack, mode, build }) => {
   const config = argv.config || 'node_modules/ce-webpack/src';
-  return `yarn run ${webpack} --mode ${mode} --config ${config}/${build}.babel.js --env ${mode} --init ${argv.init}`;
+  const [envKey] = Object.keys(argv.env);
+  return `
+    \n
+    yarn run ${webpack} ${mode} --config ${config}/${build}.babel.js --env.${envKey} --init ${argv.init}
+    \n
+  `;
 };
 
 const webpack = argv.serve ? 'webpack-dev-server --progress' : 'webpack';
-const mode = argv.env.dev ? 'development' : 'production';
+const mode = argv.env.dev ? '' : '-p';
 const build = argv.serve ? 'development' : 'production';
 const command = cmd({ webpack, mode, build });
 console.info(JSON.stringify({ argv, command }, null, 2));

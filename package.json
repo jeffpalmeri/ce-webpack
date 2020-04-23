@@ -147,11 +147,11 @@
     "url": "git+https://github.com/polpenaloza/ce-webpack.git"
   },
   "scripts": {
-    "build": "webpack -d --config src/production.babel.js --env.dev --init webpack/init.js",
-    "build:prod": "webpack -p --config src/production.babel.js --env.prod --init webpack/init.js",
-    "ce:dev": "node ./bin/ce-webpack.js --config src --env.dev --init webpack/init.js",
-    "ce:prod": "node ./bin/ce-webpack.js --config src --env.prod --init webpack/init.js",
-    "ce:start": "node ./bin/ce-webpack.js --config src --env.dev --init webpack/init.js --serve",
+    "build": "webpack -d --config src/production.babel.js --env.dev",
+    "build:prod": "webpack -p --config src/production.babel.js --env.prod",
+    "ce:dev": "node ./bin/ce-webpack.js --config src --env.dev --init webpack/config.js",
+    "ce:prod": "node ./bin/ce-webpack.js --config src --env.prod --init webpack/config.js",
+    "ce:start": "node ./bin/ce-webpack.js --config src --env.dev --init webpack/config.js --serve",
     "lint": "eslint .",
     "start": "webpack-dev-server --progress --config src/development.babel.js --env.dev --init webpack/init.js"
   },

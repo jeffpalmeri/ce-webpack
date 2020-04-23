@@ -51,20 +51,20 @@ const plugins = [
   new HtmlMinifierPlugin(minify),
 ];
 
-module.exports = function prod(env) {
+module.exports = function prod() {
   const { argv } = yargs;
-  const isProd = env === 'production';
+  const isProd = Boolean(argv.env.prod);
   const getCommon = common(argv.init);
   const prodConfig = {
     mode: 'production',
-    devtool: isProd ? '' : 'eval-source-map',
+    devtool: !isProd ? 'eval-source-map' : '',
     optimization: {
       removeAvailableModules: true,
       removeEmptyChunks: true,
       mergeDuplicateChunks: true,
       minimizer: [
         new UglifyJsPlugin({
-          sourceMap: true,
+          sourceMap: !isProd,
           parallel: true,
           uglifyOptions: {
             compress: {
