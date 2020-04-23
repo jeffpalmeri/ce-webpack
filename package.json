@@ -139,8 +139,8 @@
   "name": "ce-webpack",
   "peerDependencies": {
     "eslint": ">= 6",
-    "stylelint": ">= 13",
-    "prettier": ">= 2"
+    "prettier": ">= 2",
+    "stylelint": ">= 13"
   },
   "repository": {
     "type": "git",
@@ -155,5 +155,5 @@
     "lint": "eslint .",
     "start": "webpack-dev-server --progress --config src/development.babel.js --env.dev --init webpack/init.js"
   },
-  "version": "1.1.1"
+  "version": "1.1.2"
 }
