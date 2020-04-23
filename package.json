@@ -150,5 +150,5 @@
     "ce:dev": "node ./bin/ce-webpack.js --config src --env.dev --init webpack/init.js",
     "ce:prod": "node ./bin/ce-webpack.js --config src --env.prod --init webpack/init.js"
   },
-  "version": "1.1.0"
+  "version": "1.1.1"
 }
