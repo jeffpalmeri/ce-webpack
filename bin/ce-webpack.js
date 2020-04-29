@@ -24,18 +24,14 @@ const { argv } = yargs
 const cmd = ({ webpack, mode, build }) => {
   const config = argv.config || 'node_modules/ce-webpack/src';
   const [envKey] = Object.keys(argv.env);
-  return `
-    \n
-    yarn run ${webpack} ${mode} --config ${config}/${build}.babel.js --env.${envKey} --init ${argv.init}
-    \n
-  `;
+  return `yarn run ${webpack} ${mode} --config ${config}/${build}.babel.js --env.${envKey} --init ${argv.init}`;
 };
 
 const webpack = argv.serve ? 'webpack-dev-server --progress' : 'webpack';
-const mode = argv.env.dev ? '' : '-p';
+const mode = argv.serve ? '' : '-p';
 const build = argv.serve ? 'development' : 'production';
 const command = cmd({ webpack, mode, build });
-console.info(JSON.stringify({ argv, command }, null, 2));
+argv.verbose && console.info(JSON.stringify({ argv, command }, null, 2));
 
 const startNode = exec(command, { maxBuffer: 1024 * 10000 }, function asd(error) {
   if (error) {
