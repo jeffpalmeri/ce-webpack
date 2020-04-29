@@ -56,8 +56,8 @@ module.exports = function prod() {
   const isProd = Boolean(argv.env.prod);
   const getCommon = common(argv.init);
   const prodConfig = {
-    mode: 'production',
-    devtool: !isProd ? 'eval-source-map' : '',
+    mode: !isProd ? 'development' : 'production',
+    devtool: !isProd ? 'source-map' : '',
     optimization: {
       removeAvailableModules: true,
       removeEmptyChunks: true,

@@ -43,9 +43,17 @@ const startNode = exec(command, { maxBuffer: 1024 * 10000 }, function asd(error)
     module.hot.accept();
   }
 });
+
+if (argv.verbose) {
+  startNode.stderr.on('data', (data) => {
+    console.info(data);
+  });
+}
+
 startNode.stdout.on('data', (data) => {
   console.info(data);
 });
+
 startNode.on('close', function exit() {
   process.exit();
 });
