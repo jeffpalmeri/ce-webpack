@@ -13,10 +13,9 @@ const htmlGenerator = (mapJS, FAVICON) => {
       htmlObj.favicon = FAVICON;
     }
     if (inline) {
-      delete htmlObj.scriptLoading;
       delete htmlObj.inject;
+      delete htmlObj.scriptLoading;
       htmlObj.inlineSource = /.js|.css$/;
-      htmlObj.template = source || 'src/inline.hbs';
     }
     return new HtmlWebpackPlugin(htmlObj);
   });

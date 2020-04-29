@@ -50,13 +50,10 @@ const htmls = {
 const FAVICON = path.join(process.cwd(), 'src', 'img', 'favicon.ico');
 
 /**
- * Same structure as htmls, with the notation that inline must be set to `true`
- * NOTE: by default, if you don't include a key for the template to locate, it will
- * assing a default one from this repo: inline.hbs
+ * Same structure as htmls, with the notation that inline must be set to `true`.
  */
 const INLINE = {
   'test/inline/inline': { filename: 'my-inline-file', chunks: ['inline-js'], inline: true },
-  '': { filename: 'my-inline-file-2', chunks: ['inline-js'], inline: true },
 };
 
 const COPY_ARRAY = [];

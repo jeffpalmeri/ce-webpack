@@ -13,9 +13,12 @@
   }
 
   .iframe {
-    display: flex;
+    display: none;
     justify-content: center;
     width: 100vw;
     height: calc(100vh - 67px);
+    &.show {
+      display: flex;
+    }
   }
 }

@@ -36,18 +36,22 @@ const common = (init) => {
 
   const optimization = {
     runtimeChunk: 'single',
+    namedChunks: true,
     splitChunks: {
       chunks: 'all',
-      minSize: 0,
+      minSize: 10000,
       minChunks: 1,
       maxAsyncRequests: 5,
-      maxInitialRequests: Infinity,
+      maxInitialRequests: 5,
       automaticNameDelimiter: '/',
+      name: 'common-chunk',
       cacheGroups: {
-        commons: {
+        vendor: {
           test: /[\\/]node_modules[\\/]/,
+          priority: -10,
           chunks: 'all',
           minChunks: 5,
+          name: 'vendor',
         },
         styles: {
           test: /\.(sa|sc|c)ss$/,
