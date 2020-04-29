@@ -3,7 +3,8 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
+const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin-x');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const {
   htmlLoader,
@@ -36,7 +37,6 @@ const common = (init) => {
 
   const optimization = {
     runtimeChunk: 'single',
-    namedChunks: true,
     splitChunks: {
       chunks: 'all',
       minSize: 10000,
@@ -44,14 +44,11 @@ const common = (init) => {
       maxAsyncRequests: 5,
       maxInitialRequests: 5,
       automaticNameDelimiter: '/',
-      name: 'common-chunk',
       cacheGroups: {
-        vendor: {
+        commons: {
           test: /[\\/]node_modules[\\/]/,
-          priority: -10,
           chunks: 'all',
           minChunks: 5,
-          name: 'vendor',
         },
         styles: {
           test: /\.(sa|sc|c)ss$/,
@@ -103,7 +100,7 @@ const common = (init) => {
     }),
   ];
   !isWin && plugins.unshift(new CleanWebpackPlugin({ root: '', verbose: true, dry: false }));
-  inlineConfig.length && plugins.push(new HtmlWebpackInlineSourcePlugin());
+  inlineConfig.length && plugins.push(new HtmlWebpackInlineSourcePlugin(HtmlWebpackPlugin));
 
   return {
     entry,
