@@ -74,6 +74,8 @@ module.exports = {
   COPY_ARRAY,
 };
 ```
+***WARNING***:
+Do not update/upgrade `html-webpack-plugin`, as it will stop INLINE functionality from happening.
 
 
 ## package.json

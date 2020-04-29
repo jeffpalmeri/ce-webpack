@@ -4,7 +4,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const {
   htmlLoader,
@@ -39,10 +38,10 @@ const common = (init) => {
     runtimeChunk: 'single',
     splitChunks: {
       chunks: 'all',
-      minSize: 10000,
+      minSize: 0,
       minChunks: 1,
       maxAsyncRequests: 5,
-      maxInitialRequests: 5,
+      maxInitialRequests: Infinity,
       automaticNameDelimiter: '/',
       cacheGroups: {
         commons: {
@@ -61,19 +60,19 @@ const common = (init) => {
 
   const resolve = {
     extensions: ['.js', '.jsx'],
-    // alias: {
-    //   assets: path.join(process.cwd(), 'src', 'assets'),
-    //   components: path.join(process.cwd(), 'src', 'components'),
-    //   config: path.join(process.cwd(), 'src', 'config'),
-    //   connectors: path.join(process.cwd(), 'src', 'connectors'),
-    //   core: path.join(process.cwd(), 'src', 'core'),
-    //   country: path.join(process.cwd(), 'src', 'country'),
-    //   fonts: path.join(process.cwd(), 'src', 'fonts'),
-    //   'hbs-partials': path.join(process.cwd(), 'src', 'hbs-partials'),
-    //   scss: path.join(process.cwd(), 'src', 'scss'),
-    //   shared: path.join(process.cwd(), 'src', 'shared'),
-    //   variants: path.join(process.cwd(), 'src', 'variants'),
-    // },
+    alias: {
+      assets: path.join(process.cwd(), 'src', 'assets'),
+      components: path.join(process.cwd(), 'src', 'components'),
+      config: path.join(process.cwd(), 'src', 'config'),
+      connectors: path.join(process.cwd(), 'src', 'connectors'),
+      core: path.join(process.cwd(), 'src', 'core'),
+      country: path.join(process.cwd(), 'src', 'country'),
+      fonts: path.join(process.cwd(), 'src', 'fonts'),
+      'hbs-partials': path.join(process.cwd(), 'src', 'hbs-partials'),
+      scss: path.join(process.cwd(), 'src', 'scss'),
+      shared: path.join(process.cwd(), 'src', 'shared'),
+      variants: path.join(process.cwd(), 'src', 'variants'),
+    },
   };
 
   const rules = [htmlLoader, jsLoader, stylesLoader, imagesLoader, mediaLoader, fontLoader, handlebarLoader];
@@ -86,32 +85,22 @@ const common = (init) => {
 
   const plugins = [
     new webpack.ProgressPlugin(),
-    !isWin &&
-      new CleanWebpackPlugin({
-        root: '',
-        verbose: true,
-        dry: false,
-      }),
     new CopyWebpackPlugin(COPY_ARRAY),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jquery: 'jquery',
       jQuery: 'jquery',
     }),
+    ...htmlGenerator(htmls, FAVICON),
+    ...inlineConfig,
     new MiniCssExtractPlugin({
       filename: 'css/[name].min.css',
       chunkFilename: 'css/[id].min.css',
     }),
-    ...htmlGenerator(htmls, FAVICON),
-    // ...inlineConfig,
-    new HtmlWebpackPlugin({
-      template: path.resolve('src', 'inline.hbs'),
-      filename: 'inline',
-      inlineSource: /.js$/,
-      chunks: ['inline-js'],
-    }),
-    inlineConfig.length && new HtmlWebpackInlineSourcePlugin(HtmlWebpackPlugin),
-  ].filter((plug) => plug);
+  ];
+  !isWin && plugins.unshift(new CleanWebpackPlugin({ root: '', verbose: true, dry: false }));
+  inlineConfig.length && plugins.push(new HtmlWebpackInlineSourcePlugin());
+
   return {
     entry,
     output,
