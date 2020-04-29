@@ -55,35 +55,38 @@ module.exports = function prod() {
   const { argv } = yargs;
   const isProd = Boolean(argv.env.prod);
   const getCommon = common(argv.init);
+  const optimization = {
+    removeAvailableModules: true,
+    removeEmptyChunks: true,
+    mergeDuplicateChunks: true,
+    minimizer: [
+      new UglifyJsPlugin({
+        sourceMap: !isProd,
+        parallel: true,
+        uglifyOptions: {
+          compress: {
+            drop_console: isProd,
+            booleans: false,
+            collapse_vars: true,
+            reduce_vars: true,
+            loops: true,
+          },
+          output: {
+            comments: false,
+            beautify: false,
+          },
+        },
+      }),
+      new OptimizeCSSAssetsPlugin({}),
+    ],
+  };
+  const stats = argv.verbose ? 'verbose' : 'normal';
   const prodConfig = {
     mode: !isProd ? 'development' : 'production',
     devtool: !isProd ? 'source-map' : '',
-    optimization: {
-      removeAvailableModules: true,
-      removeEmptyChunks: true,
-      mergeDuplicateChunks: true,
-      minimizer: [
-        new UglifyJsPlugin({
-          sourceMap: !isProd,
-          parallel: true,
-          uglifyOptions: {
-            compress: {
-              drop_console: isProd,
-              booleans: false,
-              collapse_vars: true,
-              reduce_vars: true,
-              loops: true,
-            },
-            output: {
-              comments: false,
-              beautify: false,
-            },
-          },
-        }),
-        new OptimizeCSSAssetsPlugin({}),
-      ],
-    },
+    optimization,
     plugins,
+    stats,
   };
   return merge(getCommon, prodConfig);
 };

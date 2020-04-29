@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const {
   htmlLoader,
@@ -19,7 +20,7 @@ const htmlGenerator = require('./html-generator');
 
 const common = (init) => {
   const config = require(path.join(process.cwd(), init));
-  const { entry, htmls, COPY_ARRAY = [], FAVICON = '', PLOVER = [] } = config;
+  const { entry, htmls, COPY_ARRAY = [], FAVICON = '', INLINE = {} } = config;
   if (!entry || typeof entry !== 'object') {
     throw Error('CE_CONFIG failed: "entry" option cannot be empty and must be an object');
   }
@@ -60,28 +61,28 @@ const common = (init) => {
 
   const resolve = {
     extensions: ['.js', '.jsx'],
-    alias: {
-      assets: path.join(process.cwd(), 'src', 'assets'),
-      components: path.join(process.cwd(), 'src', 'components'),
-      config: path.join(process.cwd(), 'src', 'config'),
-      connectors: path.join(process.cwd(), 'src', 'connectors'),
-      core: path.join(process.cwd(), 'src', 'core'),
-      country: path.join(process.cwd(), 'src', 'country'),
-      fonts: path.join(process.cwd(), 'src', 'fonts'),
-      'hbs-partials': path.join(process.cwd(), 'src', 'hbs-partials'),
-      scss: path.join(process.cwd(), 'src', 'scss'),
-      shared: path.join(process.cwd(), 'src', 'shared'),
-      variants: path.join(process.cwd(), 'src', 'variants'),
-    },
+    // alias: {
+    //   assets: path.join(process.cwd(), 'src', 'assets'),
+    //   components: path.join(process.cwd(), 'src', 'components'),
+    //   config: path.join(process.cwd(), 'src', 'config'),
+    //   connectors: path.join(process.cwd(), 'src', 'connectors'),
+    //   core: path.join(process.cwd(), 'src', 'core'),
+    //   country: path.join(process.cwd(), 'src', 'country'),
+    //   fonts: path.join(process.cwd(), 'src', 'fonts'),
+    //   'hbs-partials': path.join(process.cwd(), 'src', 'hbs-partials'),
+    //   scss: path.join(process.cwd(), 'src', 'scss'),
+    //   shared: path.join(process.cwd(), 'src', 'shared'),
+    //   variants: path.join(process.cwd(), 'src', 'variants'),
+    // },
   };
 
   const rules = [htmlLoader, jsLoader, stylesLoader, imagesLoader, mediaLoader, fontLoader, handlebarLoader];
 
-  const ploverConfig = PLOVER ? htmlGenerator(PLOVER, FAVICON) : [];
-
   const isWin = process.platform === 'win32';
 
   console.info('··· System OS: %s ···\n', process.platform);
+
+  const inlineConfig = INLINE ? htmlGenerator(INLINE, FAVICON) : [];
 
   const plugins = [
     new webpack.ProgressPlugin(),
@@ -97,13 +98,19 @@ const common = (init) => {
       jquery: 'jquery',
       jQuery: 'jquery',
     }),
-    ...htmlGenerator(htmls, FAVICON),
-    ...ploverConfig,
     new MiniCssExtractPlugin({
       filename: 'css/[name].min.css',
       chunkFilename: 'css/[id].min.css',
     }),
-    PLOVER.length && new HtmlWebpackInlineSourcePlugin(),
+    ...htmlGenerator(htmls, FAVICON),
+    // ...inlineConfig,
+    new HtmlWebpackPlugin({
+      template: path.resolve('src', 'inline.hbs'),
+      filename: 'inline',
+      inlineSource: /.js$/,
+      chunks: ['inline-js'],
+    }),
+    inlineConfig.length && new HtmlWebpackInlineSourcePlugin(HtmlWebpackPlugin),
   ].filter((plug) => plug);
   return {
     entry,

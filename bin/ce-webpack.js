@@ -22,9 +22,10 @@ const { argv } = yargs
   });
 
 const cmd = ({ webpack, mode, build }) => {
-  const config = argv.config || 'node_modules/ce-webpack/src';
+  const config = `--config ${argv.config || 'node_modules/ce-webpack/src'}/${build}.babel.js`;
   const [envKey] = Object.keys(argv.env);
-  return `yarn run ${webpack} ${mode} --config ${config}/${build}.babel.js --env.${envKey} --init ${argv.init}`;
+  const init = `--init ${argv.init}`;
+  return `yarn run ${webpack} ${mode} ${config} --env.${envKey} ${init} --colors`;
 };
 
 const webpack = argv.serve ? 'webpack-dev-server --progress' : 'webpack';
@@ -33,27 +34,24 @@ const build = argv.serve ? 'development' : 'production';
 const command = cmd({ webpack, mode, build });
 argv.verbose && console.info(JSON.stringify({ argv, command }, null, 2));
 
-const startNode = exec(command, { maxBuffer: 1024 * 10000 }, function asd(error) {
+const startNode = exec(command, { maxBuffer: 1024 * 10000 }, function cb(error, stdout, stderr) {
   if (error) {
-    console.error({
+    const showError = {
       success: false,
       error,
-    });
+      stderr,
+    };
+    console.error(showError);
   } else if (module.hot) {
     module.hot.accept();
   }
 });
 
-if (argv.verbose) {
-  startNode.stderr.on('data', (data) => {
-    console.info(data);
-  });
-}
-
 startNode.stdout.on('data', (data) => {
-  console.info(data);
+  console.info(data.toString());
 });
 
-startNode.on('close', function exit() {
+startNode.on('close', function exit(code) {
+  console.info(`Child process exited with code ${code.toString()}`);
   process.exit();
 });

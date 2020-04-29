@@ -1,7 +1,7 @@
-import './plover.scss';
+import './inline.scss';
 
 export function Init() {
-  const obj = { plover: true, str: 'plover done!' };
+  const obj = { inline: true, str: 'inline done!' };
   console.info(JSON.stringify({ obj }, null, 2));
 }
 

@@ -23,7 +23,7 @@ import path from 'path';
 const variantsFolder = [process.cwd(), 'src', 'variants'];
 
 const entry = {
-  plover: path.join(...variantsFolder, 'splits', 'plover.js'),
+  'inline-js': path.join(...variantsFolder, 'inline', 'inline.js'),
   'cool-quiz-1': path.join(...variantsFolder, 'quiz', 'cool-quiz-1.js'),
   'cool-quiz-2': path.join(...variantsFolder, 'quiz', 'cool-quiz-2.js'),
 };
@@ -39,7 +39,7 @@ const entry = {
  *     chunks: ['<chunk-name>'], // required, js name that is required for this page.
  *   }
  * }
- */ 
+ */
 const htmls = {
   // this will output www.domain.com/cool-quiz-1
   'src/variants/quiz/cool-quiz-1': { chunks: ['cool-quiz-1'] },
@@ -51,9 +51,12 @@ const FAVICON = path.join(process.cwd(), 'src', 'img', 'favicon.ico');
 
 /**
  * Same structure as htmls, with the notation that inline must be set to `true`
+ * NOTE: by default, if you don't include a key for the template to locate, it will
+ * assing a default one from this repo: inline.hbs
  */
-const PLOVER = {
-  'test/splits/plover': { filename: 'plover', chunks: ['plover'], inline: true },
+const INLINE = {
+  'test/inline/inline': { filename: 'my-inline-file', chunks: ['inline-js'], inline: true },
+  '': { filename: 'my-inline-file-2', chunks: ['inline-js'], inline: true },
 };
 
 const COPY_ARRAY = [];
@@ -67,7 +70,7 @@ module.exports = {
   entry,
   htmls,
   FAVICON,
-  PLOVER,
+  INLINE,
   COPY_ARRAY,
 };
 ```
@@ -179,7 +182,7 @@ custom-event \
 enzyme \
 enzyme-to-json \
 eslint \
-eslint-config-airbnb-base \ 
+eslint-config-airbnb-base \
 eslint-config-prettier \
 eslint-import-resolver-babel-module \
 eslint-loader \

@@ -1,3 +1,4 @@
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const htmlGenerator = (mapJS, FAVICON) => {
@@ -15,8 +16,8 @@ const htmlGenerator = (mapJS, FAVICON) => {
     if (inline) {
       delete htmlObj.scriptLoading;
       delete htmlObj.inject;
-      htmlObj.inlineSource = /.js$/;
-      htmlObj.chunks = ['runtime', ...chunks];
+      htmlObj.inlineSource = /.js|.css$/;
+      htmlObj.template = source || path.resolve('src', 'inline.hbs');
     }
     return new HtmlWebpackPlugin(htmlObj);
   });

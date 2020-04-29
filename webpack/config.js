@@ -10,13 +10,13 @@ const testFolder = [process.cwd(), 'test'];
 
 const entry = {
   quiz: path.join(...testFolder, 'quiz', 'quiz.js'),
-  plover: path.join(...testFolder, 'splits', 'plover.js'),
+  'inline-js': path.join(...testFolder, 'inline', 'index.js'),
 };
 
 const FAVICON = path.join(process.cwd(), 'img', 'favicon.ico');
 
-const PLOVER = {
-  'test/splits/plover': { filename: 'plover', chunks: ['plover'], inline: true },
+const INLINE = {
+  '': { filename: 'inline', chunks: ['inline-js'], inline: true },
 };
 
 const COPY_ARRAY = [];
@@ -30,6 +30,6 @@ module.exports = {
   entry,
   htmls,
   COPY_ARRAY,
-  PLOVER,
+  INLINE,
   FAVICON,
 };
