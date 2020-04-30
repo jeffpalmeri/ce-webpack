@@ -3,8 +3,8 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin-x');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const {
   htmlLoader,
@@ -37,26 +37,27 @@ const common = (init) => {
 
   const optimization = {
     runtimeChunk: 'single',
-    splitChunks: {
-      chunks: 'all',
-      minSize: 10000,
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 5,
-      automaticNameDelimiter: '/',
-      cacheGroups: {
-        commons: {
-          test: /[\\/]node_modules[\\/]/,
-          chunks: 'all',
-          minChunks: 5,
-        },
-        styles: {
-          test: /\.(sa|sc|c)ss$/,
-          chunks: 'all',
-          minChunks: 2,
-        },
-      },
-    },
+    namedChunks: true,
+    // splitChunks: {
+    //   chunks: 'async',
+    //   minSize: 10000,
+    //   minChunks: 1,
+    //   maxAsyncRequests: 5,
+    //   maxInitialRequests: 5,
+    //   automaticNameDelimiter: '/',
+    //   cacheGroups: {
+    //     commons: {
+    //       test: /[\\/]node_modules[\\/]/,
+    //       chunks: 'all',
+    //       minChunks: 5,
+    //     },
+    //     styles: {
+    //       test: /\.(sa|sc|c)ss$/,
+    //       chunks: 'all',
+    //       minChunks: 2,
+    //     },
+    //   },
+    // },
   };
 
   const resolve = {
@@ -100,7 +101,8 @@ const common = (init) => {
     }),
   ];
   !isWin && plugins.unshift(new CleanWebpackPlugin({ root: '', verbose: true, dry: false }));
-  inlineConfig.length && plugins.push(new HtmlWebpackInlineSourcePlugin(HtmlWebpackPlugin));
+  // console.log(JSON.stringify({ inlineConfig }, null, 2));
+  inlineConfig.length && plugins.push(new HtmlWebpackInlineSourcePlugin());
 
   return {
     entry,

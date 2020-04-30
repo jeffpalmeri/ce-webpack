@@ -13,10 +13,10 @@ const htmlGenerator = (mapJS, FAVICON) => {
       htmlObj.favicon = FAVICON;
     }
     if (inline) {
-      delete htmlObj.inject;
       delete htmlObj.scriptLoading;
-      htmlObj.inlineSource = /.js|.css$/;
+      htmlObj.inlineSource = '.(js|css)$';
     }
+    // console.log(JSON.stringify({ htmlObj }, null, 2));
     return new HtmlWebpackPlugin(htmlObj);
   });
 };
