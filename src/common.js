@@ -83,9 +83,6 @@ const common = (init) => {
 
   const plugins = [
     new webpack.ProgressPlugin(),
-    new CopyWebpackPlugin({
-      patterns: COPY_ARRAY,
-    }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jquery: 'jquery',
@@ -97,6 +94,7 @@ const common = (init) => {
       chunkFilename: 'css/[id].min.css',
     }),
   ];
+  COPY_ARRAY.length && plugins.unshift(new CopyWebpackPlugin({ patterns: COPY_ARRAY }));
   !isWin && plugins.unshift(new CleanWebpackPlugin({ root: '', verbose: true, dry: false }));
   Object.keys(INLINE).length && plugins.push(...htmlGenerator(INLINE, FAVICON));
 
