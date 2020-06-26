@@ -1,7 +1,8 @@
 const merge = require('webpack-merge');
 const CompressionPlugin = require('compression-webpack-plugin');
 const HtmlMinifierPlugin = require('html-minifier-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const safePostCssParser = require('postcss-safe-parser');
 const ImageminPlugin = require('imagemin-webpack');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
@@ -56,29 +57,53 @@ module.exports = function prod() {
   const isProd = Boolean(argv.env.prod);
   const getCommon = common(argv.init);
   const optimization = {
-    removeAvailableModules: true,
-    removeEmptyChunks: true,
-    mergeDuplicateChunks: true,
+    minimize: true,
     minimizer: [
-      new UglifyJsPlugin({
-        sourceMap: !isProd,
-        parallel: true,
-        uglifyOptions: {
-          compress: {
-            drop_console: isProd,
-            booleans: false,
-            collapse_vars: true,
-            reduce_vars: true,
-            loops: true,
+      new TerserPlugin({
+        terserOptions: {
+          parallel: 2,
+          parse: {
+            ecma: 8,
           },
+          compress: {
+            ecma: 5,
+            warnings: false,
+            comparisons: false,
+            inline: 2,
+            drop_console: true,
+          },
+          mangle: {
+            safari10: true,
+          },
+          keep_classnames: false,
+          keep_fnames: false,
           output: {
+            ecma: 5,
             comments: false,
-            beautify: false,
+            ascii_only: true,
           },
         },
+        sourceMap: !isProd,
       }),
-      new OptimizeCSSAssetsPlugin({}),
+      new OptimizeCSSAssetsPlugin({
+        cssProcessorOptions: {
+          parser: safePostCssParser,
+          map: !isProd
+            ? {
+                inline: false,
+                annotation: true,
+              }
+            : false,
+        },
+        cssProcessorPluginOptions: {
+          preset: ['default', { minifyFontValues: { removeQuotes: false } }],
+        },
+      }),
     ],
+    splitChunks: {
+      chunks: 'all',
+      name: false,
+    },
   };
   const stats = argv.verbose ? 'verbose' : 'normal';
   const prodConfig = {

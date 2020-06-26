@@ -52,7 +52,7 @@ const imagesLoader = {
         bypassOnDebug: true,
         mozjpeg: {
           progressive: true,
-          quality: 75,
+          quality: 80,
         },
       },
     },

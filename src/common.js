@@ -3,8 +3,6 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const {
   htmlLoader,
@@ -61,7 +59,7 @@ const common = (init) => {
   };
 
   const resolve = {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.scss'],
     alias: {
       assets: path.join(process.cwd(), 'src', 'assets'),
       components: path.join(process.cwd(), 'src', 'components'),
@@ -83,26 +81,24 @@ const common = (init) => {
 
   console.info('··· System OS: %s ···\n', process.platform);
 
-  const inlineConfig = INLINE ? htmlGenerator(INLINE, FAVICON) : [];
-
   const plugins = [
     new webpack.ProgressPlugin(),
-    new CopyWebpackPlugin(COPY_ARRAY),
+    new CopyWebpackPlugin({
+      patterns: COPY_ARRAY,
+    }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jquery: 'jquery',
       jQuery: 'jquery',
     }),
     ...htmlGenerator(htmls, FAVICON),
-    ...inlineConfig,
     new MiniCssExtractPlugin({
       filename: 'css/[name].min.css',
       chunkFilename: 'css/[id].min.css',
     }),
   ];
   !isWin && plugins.unshift(new CleanWebpackPlugin({ root: '', verbose: true, dry: false }));
-  // console.log(JSON.stringify({ inlineConfig }, null, 2));
-  inlineConfig.length && plugins.push(new HtmlWebpackInlineSourcePlugin());
+  Object.keys(INLINE).length && plugins.push(...htmlGenerator(INLINE, FAVICON));
 
   return {
     entry,
@@ -113,6 +109,16 @@ const common = (init) => {
       rules,
     },
     plugins,
+    node: {
+      module: 'empty',
+      dgram: 'empty',
+      dns: 'mock',
+      fs: 'empty',
+      http2: 'empty',
+      net: 'empty',
+      tls: 'empty',
+      child_process: 'empty',
+    },
   };
 };
 
