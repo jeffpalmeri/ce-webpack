@@ -15,9 +15,7 @@ const entry = {
 
 const FAVICON = path.join(process.cwd(), 'img', 'favicon.ico');
 
-const INLINE = {
-  'src/inline.ejs': { filename: 'inline', chunks: ['inline-js'], inline: true },
-};
+const INLINE = [{ filename: 'inline', chunks: ['inline-js'] }];
 
 const COPY_ARRAY = [];
 

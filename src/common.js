@@ -15,15 +15,19 @@ const {
 } = require('./loaders.babel');
 
 const htmlGenerator = require('./html-generator');
+const inlineGenerator = require('./inline-generator');
 
 const common = (init) => {
   const config = require(path.join(process.cwd(), init));
-  const { entry, htmls, COPY_ARRAY = [], FAVICON = '', INLINE = {} } = config;
+  const { entry, htmls, COPY_ARRAY = [], FAVICON, INLINE } = config;
   if (!entry || typeof entry !== 'object') {
     throw Error('CE_CONFIG failed: "entry" option cannot be empty and must be an object');
   }
   if (!htmls || typeof entry !== 'object') {
     throw Error('CE_CONFIG failed: "htmls" option cannot be empty and must be an object');
+  }
+  if (!FAVICON || typeof FAVICON === 'undefined' || typeof FAVICON !== 'string') {
+    throw Error('CE_CONFIG failed: Missing FAVICON, or incorrect type. Should be just a strng!!');
   }
 
   const output = {
@@ -36,26 +40,26 @@ const common = (init) => {
   const optimization = {
     runtimeChunk: 'single',
     namedChunks: true,
-    // splitChunks: {
-    //   chunks: 'async',
-    //   minSize: 10000,
-    //   minChunks: 1,
-    //   maxAsyncRequests: 5,
-    //   maxInitialRequests: 5,
-    //   automaticNameDelimiter: '/',
-    //   cacheGroups: {
-    //     commons: {
-    //       test: /[\\/]node_modules[\\/]/,
-    //       chunks: 'all',
-    //       minChunks: 5,
-    //     },
-    //     styles: {
-    //       test: /\.(sa|sc|c)ss$/,
-    //       chunks: 'all',
-    //       minChunks: 2,
-    //     },
-    //   },
-    // },
+    splitChunks: {
+      chunks: 'async',
+      minSize: 10000,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 5,
+      automaticNameDelimiter: '/',
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          chunks: 'all',
+          minChunks: 5,
+        },
+        styles: {
+          test: /\.(sa|sc|c)ss$/,
+          chunks: 'all',
+          minChunks: 2,
+        },
+      },
+    },
   };
 
   const resolve = {
@@ -96,7 +100,7 @@ const common = (init) => {
   ];
   COPY_ARRAY.length && plugins.unshift(new CopyWebpackPlugin({ patterns: COPY_ARRAY }));
   !isWin && plugins.unshift(new CleanWebpackPlugin({ root: '', verbose: true, dry: false }));
-  Object.keys(INLINE).length && plugins.push(...htmlGenerator(INLINE, FAVICON));
+  INLINE.length && plugins.push(...inlineGenerator(INLINE, FAVICON));
 
   return {
     entry,
