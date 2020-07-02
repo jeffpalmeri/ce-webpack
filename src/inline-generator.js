@@ -6,9 +6,7 @@ const path = require('path');
 const htmlGenerator = (inlineArr, FAVICON) => {
   const INLINE_SCRIPTS = ['runtime'];
   let defaultSource = path.join('node_modules', 'ce-webpack', 'src', 'inline.ejs');
-  if (fs.existsSync(defaultSource)) {
-    console.info('all good');
-  } else {
+  if (!fs.existsSync(defaultSource)) {
     defaultSource = path.join('src', 'inline.ejs');
   }
   const inlines = inlineArr.map(({ filename, chunks, source }, entry) => {
