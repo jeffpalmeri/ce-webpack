@@ -52,66 +52,69 @@ const plugins = [
   new HtmlMinifierPlugin(minify),
 ];
 
+const optimization = {
+  minimize: true,
+  minimizer: [
+    new TerserPlugin({
+      terserOptions: {
+        parallel: 2,
+        parse: {
+          ecma: 8,
+        },
+        compress: {
+          ecma: 5,
+          warnings: false,
+          comparisons: false,
+          inline: 2,
+          drop_console: true,
+        },
+        mangle: {
+          safari10: true,
+        },
+        keep_classnames: false,
+        keep_fnames: false,
+        output: {
+          ecma: 5,
+          comments: false,
+          ascii_only: true,
+        },
+      },
+      sourceMap: true,
+    }),
+    new OptimizeCSSAssetsPlugin({
+      cssProcessorOptions: {
+        parser: safePostCssParser,
+        map: {
+          inline: false,
+          annotation: true,
+        },
+      },
+      cssProcessorPluginOptions: {
+        preset: ['default', { minifyFontValues: { removeQuotes: false } }],
+      },
+    }),
+  ],
+  splitChunks: {
+    chunks: 'all',
+    name: false,
+  },
+};
+
 module.exports = function prod() {
   const { argv } = yargs;
   const isProd = Boolean(argv.env.prod);
   const getCommon = common(argv.init);
-  const optimization = {
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        terserOptions: {
-          parallel: 2,
-          parse: {
-            ecma: 8,
-          },
-          compress: {
-            ecma: 5,
-            warnings: false,
-            comparisons: false,
-            inline: 2,
-            drop_console: true,
-          },
-          mangle: {
-            safari10: true,
-          },
-          keep_classnames: false,
-          keep_fnames: false,
-          output: {
-            ecma: 5,
-            comments: false,
-            ascii_only: true,
-          },
-        },
-        sourceMap: !isProd,
-      }),
-      new OptimizeCSSAssetsPlugin({
-        cssProcessorOptions: {
-          parser: safePostCssParser,
-          map: !isProd
-            ? {
-                inline: false,
-                annotation: true,
-              }
-            : false,
-        },
-        cssProcessorPluginOptions: {
-          preset: ['default', { minifyFontValues: { removeQuotes: false } }],
-        },
-      }),
-    ],
-    splitChunks: {
-      chunks: 'all',
-      name: false,
-    },
-  };
   const stats = argv.verbose ? 'verbose' : 'normal';
   const prodConfig = {
-    mode: !isProd ? 'development' : 'production',
-    devtool: !isProd ? 'source-map' : '',
-    optimization,
-    plugins,
+    mode: 'development',
+    devtool: 'eval-cheap-source-map',
     stats,
   };
+  if (isProd) {
+    prodConfig.mode = 'production';
+    prodConfig.plugins = plugins;
+    prodConfig.optimization = optimization;
+    delete prodConfig.devtool;
+  }
   return merge(getCommon, prodConfig);
 };

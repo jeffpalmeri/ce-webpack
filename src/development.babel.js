@@ -23,7 +23,7 @@ module.exports = function dev() {
   const devConfig = {
     mode: 'development',
     devServer,
-    devtool: 'source-map',
+    devtool: 'eval-cheap-module-source-map',
     watch: true,
     watchOptions: {
       poll: true,
