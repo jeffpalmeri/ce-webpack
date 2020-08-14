@@ -1,4 +1,4 @@
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const CompressionPlugin = require('compression-webpack-plugin');
 const HtmlMinifierPlugin = require('html-minifier-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
