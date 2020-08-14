@@ -13,8 +13,6 @@ We don't require to add any `<script src="/js/main.min.js">` or `<link href="/cs
 yarn add --dev ce-webpack
 ````
 
-
-
 ## Webpack initialize file (--init)
 ```js
 /* config.js */
@@ -22,7 +20,11 @@ import path from 'path';
 
 const variantsFolder = [process.cwd(), 'src', 'variants'];
 
+/*
+ * This requires to be an object with at least 1 entry.
+ */
 const entry = {
+  // Plover file names must have at least 2 words joined by a hyphen.
   'inline-js': path.join(...variantsFolder, 'inline', 'inline.js'),
   'cool-quiz-1': path.join(...variantsFolder, 'quiz', 'cool-quiz-1.js'),
   'cool-quiz-2': path.join(...variantsFolder, 'quiz', 'cool-quiz-2.js'),
@@ -47,15 +49,22 @@ const htmls = {
   'src/variants/quiz/cool-quiz-2.html': { filename: 'quiz-2', chunks: ['cool-quiz-2'] },
 }
 
+/*
+ * The favicon is required, use the path to the favicon.ico
+ */
 const FAVICON = path.join(process.cwd(), 'src', 'img', 'favicon.ico');
 
 /**
- * Same structure as htmls, with the notation that inline must be set to `true`.
+ * For inline files that have logic embed, we use an array named INLINE.
+ * It requires to be an array but it can be empty.
  */
-const INLINE = {
-  'test/inline/inline': { filename: 'my-inline-file', chunks: ['inline-js'], inline: true },
-};
+const INLINE = [
+  { filename: 'my-inline-file', chunks: ['inline-js'] },
+];
 
+/*
+ * Pptional, but highly needed if we use assets in our project.
+ */
 const COPY_ARRAY = [];
 
 COPY_ARRAY.push({
@@ -71,9 +80,6 @@ module.exports = {
   COPY_ARRAY,
 };
 ```
-***WARNING***:
-Do not update/upgrade `html-webpack-plugin`, as it will stop INLINE functionality from happening.
-
 
 ## package.json
 
