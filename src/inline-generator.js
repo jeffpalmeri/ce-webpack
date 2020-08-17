@@ -29,7 +29,7 @@ const htmlGenerator = (inlineArr, FAVICON) => {
     return new HtmlWebpackPlugin(htmlObj);
   });
   inlines.push(new ScriptExtHtmlWebpackPlugin({ inline: INLINE_SCRIPTS }));
-  // console.info(JSON.stringify({ htmls, INLINE_SCRIPTS }, null, 2));
+  console.info(JSON.stringify({ INLINE_SCRIPTS }, null, 2));
   return inlines;
 };
 

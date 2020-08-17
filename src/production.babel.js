@@ -21,29 +21,31 @@ const minify = {
   useShortDoctype: true,
 };
 
-const plugins = [
-  new ImageminPlugin({
-    bail: false,
-    cache: true,
-    name: '[path][name].[ext]',
-    imageminOptions: {
-      plugins: [
-        ['gifsicle', { interlaced: true, optimizationLevel: 3 }],
-        ['mozjpeg', { quality: 90, progressive: true }],
-        ['pngquant', { quality: [0.5, 0.8] }],
-        [
-          'imagemin-svgo',
-          {
-            plugins: [
-              {
-                removeViewBox: false,
-              },
-            ],
-          },
-        ],
+const imageminConfig = {
+  bail: false,
+  cache: true,
+  name: '[path][name].[ext]',
+  imageminOptions: {
+    plugins: [
+      ['gifsicle', { interlaced: true, optimizationLevel: 3 }],
+      ['jpegtran', { progressive: true }],
+      ['mozjpeg', { quality: 85 }],
+      ['pngquant', { quality: [0.65, 0.8] }],
+      [
+        'imagemin-svgo',
+        {
+          plugins: [
+            {
+              removeViewBox: false,
+            },
+          ],
+        },
       ],
-    },
-  }),
+    ],
+  },
+};
+
+const plugins = [
   new CompressionPlugin({
     test: /\.js$|\.css$|\.png$|\.jpg$|\.woff|\.woff2$/,
     threshold: 8192,
@@ -93,6 +95,24 @@ const optimization = {
         preset: ['default', { minifyFontValues: { removeQuotes: false } }],
       },
     }),
+    new ImageminPlugin(
+      merge(imageminConfig, {
+        // Only apply this one to files equal to or over 8192 bytes
+        filter: (source) => source.byteLength >= 8192,
+        imageminOptions: {
+          plugins: [['jpegtran', { progressive: true }]],
+        },
+      })
+    ),
+    new ImageminPlugin(
+      merge(imageminConfig, {
+        // Only apply this one to files under 8192
+        filter: (source) => source.byteLength < 8192,
+        imageminOptions: {
+          plugins: [['jpegtran', { progressive: false }]],
+        },
+      })
+    ),
   ],
 };
 

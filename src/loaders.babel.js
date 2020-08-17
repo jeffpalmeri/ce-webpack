@@ -40,21 +40,7 @@ const imagesLoader = {
   test: /\.(gif|png|jpe?g|jp2|svg|ico)\??.*$/,
   use: [
     {
-      loader: 'url-loader',
-      options: {
-        limit: 4096,
-        name: 'img/[name].[ext]',
-      },
-    },
-    {
-      loader: 'image-webpack-loader',
-      options: {
-        bypassOnDebug: true,
-        mozjpeg: {
-          progressive: true,
-          quality: 80,
-        },
-      },
+      loader: 'file-loader',
     },
   ],
 };
