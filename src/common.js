@@ -51,12 +51,12 @@ const common = (init) => {
         commons: {
           test: /[\\/]node_modules[\\/]/,
           chunks: 'all',
-          minChunks: 2,
+          minChunks: 5,
         },
         styles: {
           test: /\.(sa|sc|c)ss$/,
           chunks: 'all',
-          minChunks: 1,
+          minChunks: 2,
         },
       },
     },

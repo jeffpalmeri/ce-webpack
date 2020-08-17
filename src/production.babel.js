@@ -55,7 +55,9 @@ const plugins = [
 ];
 
 const optimization = {
-  minimize: true,
+  removeAvailableModules: true,
+  removeEmptyChunks: true,
+  mergeDuplicateChunks: true,
   minimizer: [
     new TerserPlugin({
       terserOptions: {
