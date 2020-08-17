@@ -29,7 +29,7 @@ const plugins = [
     imageminOptions: {
       plugins: [
         ['gifsicle', { interlaced: true, optimizationLevel: 3 }],
-        ['mozjpeg', { quality: 90, progressive: false }],
+        ['mozjpeg', { quality: 90, progressive: true }],
         ['pngquant', { quality: [0.5, 0.8] }],
         [
           'imagemin-svgo',
