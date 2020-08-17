@@ -94,10 +94,6 @@ const optimization = {
       },
     }),
   ],
-  splitChunks: {
-    chunks: 'all',
-    name: false,
-  },
 };
 
 module.exports = function prod() {

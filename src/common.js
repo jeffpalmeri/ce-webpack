@@ -98,8 +98,8 @@ const common = (init) => {
       chunkFilename: 'css/[id].min.css',
     }),
   ];
-  COPY_ARRAY.length && plugins.unshift(new CopyWebpackPlugin({ patterns: COPY_ARRAY }));
   !isWin && plugins.unshift(new CleanWebpackPlugin({ root: '', verbose: true, dry: false }));
+  COPY_ARRAY.length && plugins.unshift(new CopyWebpackPlugin({ patterns: COPY_ARRAY }));
   INLINE.length && plugins.push(...inlineGenerator(INLINE, FAVICON));
 
   return {
@@ -111,16 +111,6 @@ const common = (init) => {
       rules,
     },
     plugins,
-    node: {
-      module: 'empty',
-      dgram: 'empty',
-      dns: 'mock',
-      fs: 'empty',
-      http2: 'empty',
-      net: 'empty',
-      tls: 'empty',
-      child_process: 'empty',
-    },
   };
 };
 
