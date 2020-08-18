@@ -64,6 +64,7 @@
     "imagemin-jpegtran": "^7.0.0",
     "imagemin-pngquant": "^9.0.0",
     "imagemin-svgo": "^8.0.0",
+    "imagemin-webp": "^6.0.0",
     "imagemin-webpack": "^5.1.1",
     "jest": "^26.1.0",
     "jest-codemods": "^0.23.0",

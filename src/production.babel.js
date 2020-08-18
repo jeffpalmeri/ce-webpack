@@ -27,10 +27,7 @@ const imageminConfig = {
   name: '[path][name].[ext]',
   imageminOptions: {
     plugins: [
-      ['gifsicle', { interlaced: true, optimizationLevel: 3 }],
-      ['jpegtran', { progressive: true }],
-      ['mozjpeg', { quality: 85 }],
-      ['pngquant', { quality: [0.65, 0.8] }],
+      ['webp', { quality: 70 }],
       [
         'imagemin-svgo',
         {
