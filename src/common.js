@@ -41,24 +41,7 @@ const common = (init) => {
     runtimeChunk: 'single',
     namedChunks: true,
     splitChunks: {
-      chunks: 'async',
-      minSize: 10000,
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 5,
-      automaticNameDelimiter: '/',
-      cacheGroups: {
-        commons: {
-          test: /[\\/]node_modules[\\/]/,
-          chunks: 'all',
-          minChunks: 5,
-        },
-        styles: {
-          test: /\.(sa|sc|c)ss$/,
-          chunks: 'all',
-          minChunks: 2,
-        },
-      },
+      chunks: 'all',
     },
   };
 
