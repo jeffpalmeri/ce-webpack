@@ -160,5 +160,5 @@
     "lint": "eslint .",
     "start": "webpack-dev-server --progress --config src/development.babel.js --env.dev --init webpack/config.js"
   },
-  "version": "2.6.7"
+  "version": "2.6.8"
 }
