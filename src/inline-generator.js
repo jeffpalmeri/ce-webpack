@@ -2,9 +2,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const fs = require('fs');
 const path = require('path');
+const yargs = require('yargs');
 
 const htmlGenerator = (inlineArr, FAVICON) => {
   const INLINE_SCRIPTS = ['runtime'];
+  const { argv } = yargs;
   let defaultSource = path.join('node_modules', 'ce-webpack', 'src', 'inline.ejs');
   if (!fs.existsSync(defaultSource)) {
     defaultSource = path.join('src', 'inline.ejs');
@@ -29,7 +31,7 @@ const htmlGenerator = (inlineArr, FAVICON) => {
     return new HtmlWebpackPlugin(htmlObj);
   });
   inlines.push(new ScriptExtHtmlWebpackPlugin({ inline: INLINE_SCRIPTS }));
-  console.info(JSON.stringify({ INLINE_SCRIPTS }, null, 2));
+  argv.verbose && console.info(JSON.stringify({ INLINE_SCRIPTS }, null, 2));
   return inlines;
 };
 

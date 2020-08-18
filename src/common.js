@@ -42,6 +42,7 @@ const common = (init) => {
     namedChunks: true,
     splitChunks: {
       chunks: 'all',
+      name: false,
     },
   };
 
@@ -62,7 +63,16 @@ const common = (init) => {
     },
   };
 
-  const rules = [htmlLoader, jsLoader, stylesLoader, imagesLoader, mediaLoader, fontLoader, handlebarLoader];
+  const rules = [
+    { parser: { requireEnsure: false } },
+    htmlLoader,
+    jsLoader,
+    stylesLoader,
+    imagesLoader,
+    mediaLoader,
+    fontLoader,
+    handlebarLoader,
+  ];
 
   const isWin = process.platform === 'win32';
 
@@ -92,6 +102,7 @@ const common = (init) => {
     resolve,
     module: {
       rules,
+      strictExportPresence: true,
     },
     plugins,
   };

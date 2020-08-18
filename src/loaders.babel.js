@@ -12,13 +12,17 @@ const htmlLoader = {
 const jsLoader = {
   test: /\.(js|jsx)$/,
   exclude: /node_modules/,
-  use: {
-    loader: 'babel-loader',
-    options: {
-      presets: ['@babel/preset-env'],
-      plugins: ['@babel/plugin-proposal-object-rest-spread'],
+  use: [
+    {
+      loader: 'babel-loader',
+      options: {
+        cacheDirectory: true,
+        cacheCompression: false,
+        presets: ['@babel/preset-env'],
+        plugins: ['@babel/plugin-proposal-object-rest-spread'],
+      },
     },
-  },
+  ],
 };
 
 const stylesLoader = {
@@ -87,4 +91,16 @@ module.exports = {
   mediaLoader,
   fontLoader,
   handlebarLoader,
+  // Some libraries import Node modules but don't use them in the browser.
+  // Tell webpack to provide empty mocks for them so importing them works.
+  node: {
+    module: 'empty',
+    dgram: 'empty',
+    dns: 'mock',
+    fs: 'empty',
+    http2: 'empty',
+    net: 'empty',
+    tls: 'empty',
+    child_process: 'empty',
+  },
 };

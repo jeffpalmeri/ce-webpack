@@ -52,6 +52,7 @@ const plugins = [
 ];
 
 const optimization = {
+  minimize: true,
   removeAvailableModules: true,
   removeEmptyChunks: true,
   mergeDuplicateChunks: true,
@@ -99,7 +100,7 @@ const optimization = {
         // Only apply this one to files equal to or over 8192 bytes
         filter: (source) => source.byteLength >= 8192,
         imageminOptions: {
-          plugins: [['jpegtran', { progressive: true }]],
+          plugins: [['webp', { progressive: true }]],
         },
       })
     ),
@@ -108,7 +109,7 @@ const optimization = {
         // Only apply this one to files under 8192
         filter: (source) => source.byteLength < 8192,
         imageminOptions: {
-          plugins: [['jpegtran', { progressive: false }]],
+          plugins: [['webp', { lossless: true }]],
         },
       })
     ),
