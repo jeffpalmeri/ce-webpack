@@ -3,6 +3,7 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const PreloadWebpackPlugin = require('preload-webpack-plugin');
 
 const {
   htmlLoader,
@@ -34,7 +35,6 @@ const common = (init) => {
     path: path.join(process.cwd(), 'dist'),
     publicPath: '/',
     filename: 'js/[name].min.js',
-    chunkFilename: 'js/[name].min.js',
   };
 
   const optimization = {
@@ -88,12 +88,13 @@ const common = (init) => {
     ...htmlGenerator(htmls, FAVICON),
     new MiniCssExtractPlugin({
       filename: 'css/[name].min.css',
-      chunkFilename: 'css/[id].min.css',
     }),
   ];
-  !isWin && plugins.unshift(new CleanWebpackPlugin({ root: '', verbose: true, dry: false }));
   COPY_ARRAY.length && plugins.unshift(new CopyWebpackPlugin({ patterns: COPY_ARRAY }));
-  INLINE.length && plugins.push(...inlineGenerator(INLINE, FAVICON));
+  !isWin && plugins.unshift(new CleanWebpackPlugin({ root: '', verbose: true, dry: false }));
+  INLINE.length && plugins.concat(inlineGenerator(INLINE, FAVICON));
+
+  plugins.push(new PreloadWebpackPlugin());
 
   return {
     entry,
