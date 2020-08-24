@@ -99,7 +99,7 @@ const common = (init) => {
   ];
   COPY_ARRAY.length && plugins.unshift(new CopyWebpackPlugin({ patterns: COPY_ARRAY }));
   !isWin && plugins.unshift(new CleanWebpackPlugin({ root: '', verbose: true, dry: false }));
-  INLINE.length && plugins.concat(inlineGenerator(INLINE, FAVICON));
+  INLINE.length && plugins.push(...inlineGenerator(INLINE, FAVICON));
 
   plugins.push(new PreloadWebpackPlugin());
 
