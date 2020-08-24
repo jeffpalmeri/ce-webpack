@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const yargs = require('yargs');
 
-const htmlGenerator = (mapJS, FAVICON) => {
+const htmlGenerator = (mapJS, FAVICON, META_TAGS) => {
   const { argv } = yargs;
   const htmls = Object.entries(mapJS).map(([source, { filename, chunks }]) => {
     const template = source.indexOf('.') === -1 ? `${source}.hbs` : source;
@@ -14,6 +14,7 @@ const htmlGenerator = (mapJS, FAVICON) => {
       scriptLoading: 'defer',
       favicon: FAVICON,
     };
+    META_TAGS && (htmlObj.meta = META_TAGS);
     return new HtmlWebpackPlugin(htmlObj);
   });
   argv.verbose && console.info(JSON.stringify({ htmls }, null, 2));

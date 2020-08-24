@@ -54,7 +54,7 @@
     "handlebars": "^4.7.6",
     "handlebars-loader": "^1.7.1",
     "handlebars-webpack-plugin": "^1.8.1",
-    "html-loader": "^1.1.0",
+    "html-loader": "^1.2.1",
     "html-minifier-webpack-plugin": "^2.2.3",
     "html-webpack-plugin": "4.3.0",
     "imagemin-svgo": "^8.0.0",

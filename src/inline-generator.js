@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const yargs = require('yargs');
 
-const htmlGenerator = (inlineArr, FAVICON) => {
+const inlineGenerator = (inlineArr, FAVICON) => {
   const INLINE_SCRIPTS = ['runtime'];
   const { argv } = yargs;
   let defaultSource = path.join('node_modules', 'ce-webpack', 'src', 'inline.ejs');
@@ -35,4 +35,4 @@ const htmlGenerator = (inlineArr, FAVICON) => {
   return inlines;
 };
 
-module.exports = htmlGenerator;
+module.exports = inlineGenerator;

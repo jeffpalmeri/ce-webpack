@@ -121,16 +121,21 @@ module.exports = function prod() {
   const isProd = Boolean(argv.env.prod);
   const getCommon = common(argv.init);
   const stats = argv.verbose ? 'verbose' : 'normal';
-  const prodConfig = {
+  const defaultConfig = {
     mode: 'development',
-    devtool: 'eval-cheap-source-map',
     stats,
   };
-  if (isProd) {
-    prodConfig.mode = 'production';
-    prodConfig.plugins = plugins;
-    prodConfig.optimization = optimization;
-    delete prodConfig.devtool;
-  }
+  const prodConfig = merge(
+    defaultConfig,
+    isProd
+      ? {
+          mode: 'production',
+          plugins,
+          optimization,
+        }
+      : {
+          devtool: 'eval-cheap-source-map',
+        }
+  );
   return merge(getCommon, prodConfig);
 };

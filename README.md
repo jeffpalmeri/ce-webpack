@@ -11,17 +11,26 @@ We don't require to add any `<script src="/js/main.min.js">` or `<link href="/cs
 ## Install
 ```bash
 yarn add --dev ce-webpack
-````
+```
 
-## Webpack initialize file (--init)
+## Webpack initialize files (--init)
+
+### Config file
+
 ```js
 /* config.js */
-import path from 'path';
+
+const path = require('path');
+
+const htmls = require('./htmls');
+const INLINE = require('./inline');
 
 const variantsFolder = [process.cwd(), 'src', 'variants'];
 
 /*
  * This requires to be an object with at least 1 entry.
+ * It's required to have at least 1 entry as this will later on translate to
+ * the actual javascript file that will be injected into your html page.
  */
 const entry = {
   // Plover file names must have at least 2 words joined by a hyphen.
@@ -30,40 +39,13 @@ const entry = {
   'cool-quiz-2': path.join(...variantsFolder, 'quiz', 'cool-quiz-2.js'),
 };
 
-/**
- * Instruct here the exact path and name for the entry html.
- * If it is a handlebars template (.hbs) there is no need to add the extension,
- * by default it checks for handlebar templates.
- * This map can contain the following structure:
- * {
- *   [<key>]: {                  // required, this is the path to your html/htm/hbs file.
- *     filename: '<file-name>',  // optional, will figure out the name via the key.
- *     chunks: ['<chunk-name>'], // required, js name that is required for this page.
- *   }
- * }
- */
-const htmls = {
-  // this will output www.domain.com/cool-quiz-1
-  'src/variants/quiz/cool-quiz-1': { chunks: ['cool-quiz-1'] },
-  // this will output www.domain.com/quiz-2 (whithout html extension)
-  'src/variants/quiz/cool-quiz-2.html': { filename: 'quiz-2', chunks: ['cool-quiz-2'] },
-}
-
 /*
  * The favicon is required, use the path to the favicon.ico
  */
 const FAVICON = path.join(process.cwd(), 'src', 'img', 'favicon.ico');
 
-/**
- * For inline files that have logic embed, we use an array named INLINE.
- * It requires to be an array but it can be empty.
- */
-const INLINE = [
-  { filename: 'my-inline-file', chunks: ['inline-js'] },
-];
-
 /*
- * Pptional, but highly needed if we use assets in our project.
+ * Optional, but highly needed if we use assets in our project.
  */
 const COPY_ARRAY = [];
 
@@ -72,13 +54,84 @@ COPY_ARRAY.push({
   to: path.join(process.cwd(), 'dist', 'fonts'),
 });
 
+/*
+ * Optional: Meta Tags:
+ * Some projects require flexibility to add specific meta tags. The way you can achieve this is
+ * by following this simple pattern:
+ * ref: https://github.com/jantimon/html-webpack-plugin#meta-tags
+ */
+const META_TAGS = {
+  'X-UA-Compatible': { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
+}
+
+/*
+ * Optional: Overwrite any webpack neeed
+ */
+const webpackConfig = {} // your custom config here.
+
 module.exports = {
   entry,
   htmls,
+  webpackConfig,
   FAVICON,
   INLINE,
   COPY_ARRAY,
+  META_TAGS,
 };
+
+```
+
+### HTMLs file
+
+```js
+/* htmls.js */
+
+/**
+ * Instruct here the exact path and name for the entry html.
+ * If it is a handlebars template (.hbs) there is no need to add the extension,
+ * by default it checks for handlebar templates.
+ *
+ * This map can contain the following structure:
+ * {
+ *   [<key>]: {                  // required, this is the path to your html/htm/hbs file.
+ *     chunks: ['<chunk-name>'], // required, js name previuosly declared in the entry
+ *                               // section and that is required only for this page.
+ *
+ *     filename: '<file-name>',  // optional, it will figure out the name via the key.
+ *   }
+ * }
+ */
+const htmls = {
+  // this will output www.my-domain.com/cool-quiz-1, as by default it will figure the page name via the key
+  'src/variants/quiz/cool-quiz-1': { chunks: ['cool-quiz-1'] },
+
+  // this will output www.my-domain.com/quiz-2 (whithout html extension)
+  'src/variants/quiz/cool-quiz-2.html': { filename: 'quiz-2', chunks: ['cool-quiz-2'] },
+}
+
+module.exports = htmls;
+```
+
+### Inline file
+
+```js
+/* inline.js */
+
+/**
+ * For inline files that have logic embed, we use an array named INLINE.
+ * It requires to be an array but it can be empty.
+ *
+ * The inner maps/objects can contain the following structure:
+ * {
+ *   filename: 'some-name', // the output name of the file that will be load on the UI via a URL.
+ *   chunks: ['ex-inline'], // the js file that was previoulsy declared in the entry section.
+ * }
+ */
+const INLINE = [
+  { filename: 'my-inline-file', chunks: ['inline-js'] },
+];
+
+module.exports = INLINE;
 ```
 
 ## package.json
@@ -96,7 +149,9 @@ module.exports = {
 ```
 
 ## Required files to create
-In your project, you will need to create 2 files and instruct them to extend the config set here:
+In your project, you will need to create these files.
+
+NOTE: *if needed, you can extend your rules on each file*
 
 **Babel**
 ```js
@@ -145,8 +200,6 @@ const styleLintConfig = require('ce-webpack/stylelint.config');
 
 module.exports = styleLintConfig;
 ```
-
-NOTE: *if needed, you can extend your rules on each file*
 
 
 ## Removals

@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const { merge } = require('webpack-merge');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -20,7 +21,7 @@ const inlineGenerator = require('./inline-generator');
 
 const common = (init) => {
   const config = require(path.join(process.cwd(), init));
-  const { entry, htmls, COPY_ARRAY = [], FAVICON, INLINE } = config;
+  const { entry, htmls, webpackConfig = {}, COPY_ARRAY = [], FAVICON, INLINE, META_TAGS } = config;
   if (!entry || typeof entry !== 'object') {
     throw Error('CE_CONFIG failed: "entry" option cannot be empty and must be an object');
   }
@@ -28,7 +29,13 @@ const common = (init) => {
     throw Error('CE_CONFIG failed: "htmls" option cannot be empty and must be an object');
   }
   if (!FAVICON || typeof FAVICON === 'undefined' || typeof FAVICON !== 'string') {
-    throw Error('CE_CONFIG failed: Missing FAVICON, or incorrect type. Should be just a strng!!');
+    throw Error('CE_CONFIG failed: Missing FAVICON, or incorrect type. Should be just a string!!');
+  }
+  if (typeof webpackConfig !== 'object') {
+    throw Error('CE_CONFIG failed: webpackConfig incorrect type. Should be just an object!!');
+  }
+  if (META_TAGS && typeof META_TAGS !== 'object') {
+    throw Error('CE_CONFIG failed: webpackConfig incorrect type. Should be just an object!!');
   }
 
   const output = {
@@ -85,7 +92,7 @@ const common = (init) => {
       jquery: 'jquery',
       jQuery: 'jquery',
     }),
-    ...htmlGenerator(htmls, FAVICON),
+    ...htmlGenerator(htmls, FAVICON, META_TAGS),
     new MiniCssExtractPlugin({
       filename: 'css/[name].min.css',
     }),
@@ -96,17 +103,20 @@ const common = (init) => {
 
   plugins.push(new PreloadWebpackPlugin());
 
-  return {
-    entry,
-    output,
-    optimization,
-    resolve,
-    module: {
-      rules,
-      strictExportPresence: true,
+  return merge(
+    {
+      entry,
+      output,
+      optimization,
+      resolve,
+      module: {
+        rules,
+        strictExportPresence: true,
+      },
+      plugins,
     },
-    plugins,
-  };
+    webpackConfig
+  );
 };
 
 module.exports = common;
