@@ -4,7 +4,6 @@ const { merge } = require('webpack-merge');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const PreloadWebpackPlugin = require('preload-webpack-plugin');
 
 const {
   htmlLoader,
@@ -46,10 +45,11 @@ const common = (init) => {
 
   const optimization = {
     runtimeChunk: 'single',
-    namedChunks: true,
+    chunkIds: 'size',
+    flagIncludedChunks: true,
     splitChunks: {
       chunks: 'all',
-      name: false,
+      name: true,
     },
   };
 
@@ -85,6 +85,8 @@ const common = (init) => {
 
   console.info('··· System OS: %s ···\n', process.platform);
 
+  const htmlsTemplates = htmlGenerator(htmls, FAVICON, META_TAGS);
+
   const plugins = [
     new webpack.ProgressPlugin(),
     new webpack.ProvidePlugin({
@@ -92,16 +94,21 @@ const common = (init) => {
       jquery: 'jquery',
       jQuery: 'jquery',
     }),
-    ...htmlGenerator(htmls, FAVICON, META_TAGS),
+    ...htmlsTemplates,
     new MiniCssExtractPlugin({
       filename: 'css/[name].min.css',
     }),
   ];
   COPY_ARRAY.length && plugins.unshift(new CopyWebpackPlugin({ patterns: COPY_ARRAY }));
   !isWin && plugins.unshift(new CleanWebpackPlugin({ root: '', verbose: true, dry: false }));
-  INLINE.length && plugins.push(...inlineGenerator(INLINE, FAVICON));
-
-  plugins.push(new PreloadWebpackPlugin());
+  const excludeHtmlNames = [];
+  if (INLINE.length) {
+    const inlineTemplates = inlineGenerator(INLINE, FAVICON);
+    inlineTemplates.forEach(({ options }) => {
+      excludeHtmlNames.push(options.filename);
+    });
+    plugins.push(...inlineTemplates);
+  }
 
   return merge(
     {
