@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const yargs = require('yargs');
 
-const { extension } = require('./extensions');
+const extension = require('./extensions');
 
 const inlineGenerator = (inlineArr, FAVICON) => {
   const INLINE_SCRIPTS = ['runtime'];

@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const yargs = require('yargs');
 
-const { extension } = require('./extensions');
+const extension = require('./extensions');
 
 const htmlGenerator = (mapJS, FAVICON, META_TAGS) => {
   const { argv } = yargs;
