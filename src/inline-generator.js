@@ -4,6 +4,8 @@ const fs = require('fs');
 const path = require('path');
 const yargs = require('yargs');
 
+const { extension } = require('./extensions');
+
 const inlineGenerator = (inlineArr, FAVICON) => {
   const INLINE_SCRIPTS = ['runtime'];
   const { argv } = yargs;
@@ -21,7 +23,7 @@ const inlineGenerator = (inlineArr, FAVICON) => {
     const template = !source ? defaultSource : source.indexOf('.') === -1 ? `${source}.hbs` : source;
     const htmlObj = {
       template,
-      filename: `./${filename || source.split('/')[source.split('/').length - 1]}`,
+      filename: `./${filename || source.split('/')[source.split('/').length - 1]}${extension}`,
       chunks: ['runtime', ...chunks],
       inject: false,
       cache: false,

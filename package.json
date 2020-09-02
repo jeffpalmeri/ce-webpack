@@ -147,6 +147,7 @@
   "scripts": {
     "build": "webpack -d --config src/production.babel.js --env.dev --init webpack/config.js",
     "build:prod": "webpack -p --config src/production.babel.js --env.prod --init webpack/config.js",
+    "build:dev": "webpack -d --config src/production.babel.js --env.dev --init webpack/config.js",
     "ce:dev": "node ./bin/ce-webpack.js --config src --env.dev --init webpack/config.js",
     "ce:prod": "node ./bin/ce-webpack.js --config src --env.prod --init webpack/config.js",
     "ce:start": "node ./bin/ce-webpack.js --config src --env.dev --init webpack/config.js --serve",
