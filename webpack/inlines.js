@@ -2,7 +2,7 @@ const path = require('path');
 
 const output = {};
 
-const manageOutput = (pages, pathFolder = '') => {
+const manageInlineOutput = (pages, pathFolder = '') => {
   pages.forEach(({ filename, chunk }) => {
     const key = `${path.join(pathFolder, filename)}`;
     const chunks = [`${chunk || filename}`];
@@ -11,6 +11,6 @@ const manageOutput = (pages, pathFolder = '') => {
 };
 
 const inlines = [{ filename: 'inline', chunk: 'inline-js' }];
-manageOutput(inlines);
+manageInlineOutput(inlines);
 
 module.exports = output;

@@ -4,9 +4,8 @@
 
 We don't require to add any `<script src="/js/main.min.js">` or `<link href="/css/main.min.css" />` anywhere, as we are injecting all required js and css files. The conditions for this to work are:
 
-1. Use `entry` to decide the name of the chunk file and then place that chunk name in the `htmls` map.
-2. Make sure to `import` all your scss in that js file, Webpack is smart enough to generate a `.scss` file with the exact same name as your chunk file name.
-
+1. Use `entry` to decide the name of the chunk file and then place that chunk name in the `htmls` or `inlines` map.
+2. Make sure to `import` all your scss in that js file, Webpack is smart enough to generate a `.css` file with the exact same name as your chunk file name.
 
 ## Install
 ```bash
@@ -23,26 +22,28 @@ yarn add --dev ce-webpack
 const path = require('path');
 
 const htmls = require('./htmls');
-const INLINE = require('./inline');
+const inlines = require('./inlines');
 
-const variantsFolder = [process.cwd(), 'src', 'variants'];
+const variantsFolder = path.join(process.cwd(), 'src', 'variants');
 
 /*
  * This requires to be an object with at least 1 entry.
  * It's required to have at least 1 entry as this will later on translate to
  * the actual javascript file that will be injected into your html page.
+ * We are using a function to generate this kind of output here:
+ * https://github.com/polpenaloza/ce-webpack/blob/master/webpack/htmls.js#L23
  */
 const entry = {
   // Plover file names must have at least 2 words joined by a hyphen.
-  'inline-js': path.join(...variantsFolder, 'inline', 'inline.js'),
-  'cool-quiz-1': path.join(...variantsFolder, 'quiz', 'cool-quiz-1.js'),
-  'cool-quiz-2': path.join(...variantsFolder, 'quiz', 'cool-quiz-2.js'),
+  'inline-js': path.join(variantsFolder, 'inline', 'inline.js'),
+  'cool-quiz-1': path.join(variantsFolder, 'quiz', 'cool-quiz-1.js'),
+  'cool-quiz-2': path.join(variantsFolder, 'quiz', 'cool-quiz-2.js'),
 };
 
 /*
  * The favicon is required, use the path to the favicon.ico
  */
-const FAVICON = path.join(process.cwd(), 'src', 'img', 'favicon.ico');
+const FAVICON = path.join(process.cwd(), 'img', 'favicon.ico');
 
 /*
  * Optional, but highly needed if we use assets in our project.
@@ -53,16 +54,6 @@ COPY_ARRAY.push({
   from: path.join(process.cwd(), 'src', 'fonts'),
   to: path.join(process.cwd(), 'dist', 'fonts'),
 });
-
-/*
- * Optional: Meta Tags:
- * Some projects require flexibility to add specific meta tags. The way you can achieve this is
- * by following this simple pattern:
- * ref: https://github.com/jantimon/html-webpack-plugin#meta-tags
- */
-const META_TAGS = {
-  'X-UA-Compatible': { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
-}
 
 /*
  * Optional: Overwrite any webpack neeed
@@ -76,7 +67,6 @@ module.exports = {
   FAVICON,
   INLINE,
   COPY_ARRAY,
-  META_TAGS,
 };
 
 ```
@@ -91,6 +81,11 @@ module.exports = {
  * If it is a handlebars template (.hbs) there is no need to add the extension,
  * by default it checks for handlebar templates.
  *
+ * Optional: Meta Tags:
+ * Some projects require flexibility to add specific meta tags. The way you can achieve this is
+ * by following this simple pattern:
+ * ref: https://github.com/jantimon/html-webpack-plugin#meta-tags
+ *
  * This map can contain the following structure:
  * {
  *   [<key>]: {                  // required, this is the path to your html/htm/hbs file.
@@ -98,12 +93,22 @@ module.exports = {
  *                               // section and that is required only for this page.
  *
  *     filename: '<file-name>',  // optional, it will figure out the name via the key.
+ *     metaTags: {
+ *       <tag-value>: { <tag-key>: <tag-value> }
+ *     }
  *   }
  * }
+ * We are using a function to generate this type of output:
+ * https://github.com/polpenaloza/ce-webpack/blob/master/webpack/htmls.js#L23
  */
 const htmls = {
   // this will output www.my-domain.com/cool-quiz-1, as by default it will figure the page name via the key
-  'src/variants/quiz/cool-quiz-1': { chunks: ['cool-quiz-1'] },
+  'src/variants/quiz/cool-quiz-1': {
+    chunks: ['cool-quiz-1'],
+    metaTags: {
+      'X-UA-Compatible': { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
+    }
+  },
 
   // this will output www.my-domain.com/quiz-2 (whithout html extension)
   'src/variants/quiz/cool-quiz-2.html': { filename: 'quiz-2', chunks: ['cool-quiz-2'] },
@@ -115,23 +120,29 @@ module.exports = htmls;
 ### Inline file
 
 ```js
-/* inline.js */
+/* inlines.js */
 
 /**
  * For inline files that have logic embed, we use an array named INLINE.
  * It requires to be an array but it can be empty.
+ * Optional: Meta Tags (same as in htmls)
  *
  * The inner maps/objects can contain the following structure:
  * {
  *   filename: 'some-name', // the output name of the file that will be load on the UI via a URL.
  *   chunks: ['ex-inline'], // the js file that was previoulsy declared in the entry section.
  * }
+ * We are using a function to generate this type of output:
+ * https://github.com/polpenaloza/ce-webpack/blob/master/webpack/inlines.js#L5
  */
-const INLINE = [
-  { filename: 'my-inline-file', chunks: ['inline-js'] },
-];
+const inlines = {
+  'inline': {
+    filename: 'my-inline-file', chunks: ['inline-js']
+  }
+},
+;
 
-module.exports = INLINE;
+module.exports = inlines;
 ```
 
 ## package.json

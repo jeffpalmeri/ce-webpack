@@ -20,7 +20,7 @@ const META_TAGS = {
 
 const output = {};
 
-const manageOutput = (pages, pagePath = '') => {
+const manageHtmlOutput = (pages, pagePath = '') => {
   pages.forEach(({ source, filename, chunk }) => {
     const key = path.join(variantsPath, pagePath, `${source}.hbs`);
     const value = {
@@ -32,11 +32,11 @@ const manageOutput = (pages, pagePath = '') => {
   });
 };
 
-const htmls = [
+const pages = [
   { source: 'quiz-1', chunk: 'quiz' },
   { source: 'quiz-2', chunk: 'quiz', filename: 'quiz-2.html' },
   { source: 'quiz-3', chunk: 'quiz', filename: 'quiz/quiz-3.htm' },
 ];
-manageOutput(htmls);
+manageHtmlOutput(pages);
 
 module.exports = output;
