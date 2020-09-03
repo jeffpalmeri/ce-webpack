@@ -20,7 +20,7 @@ const inlineGenerator = require('./inline-generator');
 
 const common = (init) => {
   const config = require(path.join(process.cwd(), init));
-  const { entry, htmls, webpackConfig = {}, COPY_ARRAY = [], FAVICON, INLINE, META_TAGS } = config;
+  const { entry, htmls, inlines, webpackConfig = {}, COPY_ARRAY = [], FAVICON } = config;
   if (!entry || typeof entry !== 'object') {
     throw Error('CE_CONFIG failed: "entry" option cannot be empty and must be an object');
   }
@@ -31,9 +31,6 @@ const common = (init) => {
     throw Error('CE_CONFIG failed: Missing FAVICON, or incorrect type. Should be just a string!!');
   }
   if (typeof webpackConfig !== 'object') {
-    throw Error('CE_CONFIG failed: webpackConfig incorrect type. Should be just an object!!');
-  }
-  if (META_TAGS && typeof META_TAGS !== 'object') {
     throw Error('CE_CONFIG failed: webpackConfig incorrect type. Should be just an object!!');
   }
 
@@ -85,7 +82,7 @@ const common = (init) => {
 
   console.info('··· System OS: %s ···\n', process.platform);
 
-  const htmlsTemplates = htmlGenerator(htmls, FAVICON, META_TAGS);
+  const htmlsTemplates = htmlGenerator(htmls, FAVICON);
 
   const plugins = [
     new webpack.ProgressPlugin(),
@@ -102,8 +99,8 @@ const common = (init) => {
   COPY_ARRAY.length && plugins.unshift(new CopyWebpackPlugin({ patterns: COPY_ARRAY }));
   !isWin && plugins.unshift(new CleanWebpackPlugin({ root: '', verbose: true, dry: false }));
   const excludeHtmlNames = [];
-  if (INLINE.length) {
-    const inlineTemplates = inlineGenerator(INLINE, FAVICON);
+  if (Object.keys(inlines).length) {
+    const inlineTemplates = inlineGenerator(inlines, FAVICON);
     inlineTemplates.forEach(({ options }) => {
       excludeHtmlNames.push(options.filename);
     });

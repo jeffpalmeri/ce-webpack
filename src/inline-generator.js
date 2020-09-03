@@ -6,14 +6,14 @@ const yargs = require('yargs');
 
 const extension = require('./extensions');
 
-const inlineGenerator = (inlineArr, FAVICON) => {
+const inlineGenerator = (mapJS, FAVICON) => {
   const INLINE_SCRIPTS = ['runtime'];
   const { argv } = yargs;
   let defaultSource = path.join('node_modules', 'ce-webpack', 'src', 'inline.ejs');
   if (!fs.existsSync(defaultSource)) {
     defaultSource = path.join('src', 'inline.ejs');
   }
-  const inlines = inlineArr.map(({ filename, chunks, source }, entry) => {
+  const inlines = Object.entries(mapJS).map(([entry, { filename, chunks, metaTags, source }]) => {
     if (!filename || typeof filename !== 'string') {
       throw Error(`Filename is invalid for entry number ${entry}. It should be a string value`);
     }
@@ -23,12 +23,13 @@ const inlineGenerator = (inlineArr, FAVICON) => {
     const template = !source ? defaultSource : source.indexOf('.') === -1 ? `${source}.hbs` : source;
     const htmlObj = {
       template,
-      filename: `./${filename || source.split('/')[source.split('/').length - 1]}${extension}`,
+      filename: `./${filename}${extension}`,
       chunks: ['runtime', ...chunks],
       inject: false,
       cache: false,
       favicon: FAVICON,
     };
+    metaTags && (htmlObj.meta = metaTags);
     INLINE_SCRIPTS.push(...chunks);
     return new HtmlWebpackPlugin(htmlObj);
   });

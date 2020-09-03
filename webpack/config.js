@@ -1,17 +1,26 @@
 const path = require('path');
 
 const htmls = require('./htmls');
+const inlines = require('./inlines');
 
-const testFolder = [process.cwd(), 'test'];
+const testFolder = path.join(process.cwd(), 'test');
 
-const entry = {
-  quiz: path.join(...testFolder, 'quiz', 'quiz.js'),
-  'inline-js': path.join(...testFolder, 'inline', 'index.js'),
+const entry = {};
+
+const manageEntries = (pages, variantsPath) => {
+  pages.forEach(({ source, outputName }) => {
+    const value = path.join(variantsPath, `${source}.js`);
+    entry[outputName || source] = value;
+  });
 };
 
-const FAVICON = path.join(process.cwd(), 'img', 'favicon.ico');
+const quizPages = [{ source: 'quiz' }];
+manageEntries(quizPages, path.join(testFolder, 'quiz'));
 
-const INLINE = [{ filename: 'inline', chunks: ['inline-js'] }];
+const inlineJsFiles = [{ source: 'index', outputName: 'inline-js' }];
+manageEntries(inlineJsFiles, path.join(testFolder, 'inline'));
+
+const FAVICON = path.join(process.cwd(), 'img', 'favicon.ico');
 
 const COPY_ARRAY = [];
 
@@ -23,7 +32,7 @@ COPY_ARRAY.push({
 module.exports = {
   entry,
   htmls,
+  inlines,
   COPY_ARRAY,
-  INLINE,
   FAVICON,
 };
