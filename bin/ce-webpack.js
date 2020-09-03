@@ -25,7 +25,9 @@ const cmd = ({ webpack, mode, build }) => {
   const config = `--config ${argv.config || 'node_modules/ce-webpack/src'}/${build}.babel.js`;
   const [envKey] = Object.keys(argv.env);
   const init = `--init ${argv.init}`;
-  return `yarn run ${webpack} ${mode} ${config} --env.${envKey} ${init} --colors`;
+  const argvKeys = Object.keys(argv).filter((argKey) => '_ $0 init env config serve'.indexOf(argKey) === -1);
+  const stringifyArguments = argvKeys.map((argKey) => `--${argKey}=${argv[argKey]}`).join(' ');
+  return `yarn run ${webpack} ${mode} ${config} --env.${envKey} ${init} --colors ${stringifyArguments}`;
 };
 
 const webpack = argv.serve ? 'webpack-dev-server --progress' : 'webpack';
