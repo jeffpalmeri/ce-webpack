@@ -63,9 +63,9 @@ const webpackConfig = {} // your custom config here.
 module.exports = {
   entry,
   htmls,
+  inlines,
   webpackConfig,
   FAVICON,
-  INLINE,
   COPY_ARRAY,
 };
 
