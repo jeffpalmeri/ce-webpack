@@ -67,18 +67,21 @@ argv.verbose && logger.color('blue').log(JSON.stringify({ argv, command }));
 
 memoryUsage('Start >>>');
 
-const startNode = exec(command, { maxBuffer: 1024 * 1024 * 1024 * 1024 }, function cb(error, stdout) {
+const startNode = exec(command, { maxBuffer: 1024 * 1024 * 1024 * 1024 }, function cb(error, stdout, stderr) {
   showProcessingLog = false;
-  if (error) {
-    logger.error(error);
-    logger.log(stdout);
-    memoryUsage('Error >>>');
-  } else if (module.hot) {
-    module.hot.accept();
-  }
+  logger.info('\n>>> ERROR <<<\n');
+  logger.error(error);
+  logger.info('\n>>> stdout <<<\n');
+  logger.log(stdout);
+  logger.info('\n>>> stderr <<<\n');
+  logger.log(stderr);
+  memoryUsage('\nError >>>\n');
 });
 
 toggleProcessingLog();
+if (module.hot) {
+  module.hot.accept();
+}
 
 startNode.stdout.on('data', (data) => {
   if (argv.verbose) {
