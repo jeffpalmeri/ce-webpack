@@ -59,7 +59,7 @@ const optimization = {
   minimizer: [
     new TerserPlugin({
       terserOptions: {
-        parallel: 2,
+        parallel: false,
         parse: {
           ecma: 8,
         },
