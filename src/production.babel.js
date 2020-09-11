@@ -81,7 +81,7 @@ const optimization = {
           ascii_only: true,
         },
       },
-      sourceMap: true,
+      sourceMap: false,
     }),
     new OptimizeCSSAssetsPlugin({
       cssProcessorOptions: {
