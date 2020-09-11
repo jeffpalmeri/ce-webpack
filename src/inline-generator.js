@@ -35,7 +35,7 @@ const inlineGenerator = (mapJS, FAVICON) => {
     return new HtmlWebpackPlugin(htmlObj);
   });
   inlines.push(new ScriptExtHtmlWebpackPlugin({ inline: INLINE_SCRIPTS }));
-  argv.verbose && logger.color('cyan').log(JSON.stringify({ inlines }, null, 2));
+  argv.verbose && logger.color('cyan').log(JSON.stringify({ inlines }));
   return inlines;
 };
 

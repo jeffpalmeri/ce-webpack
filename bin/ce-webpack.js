@@ -9,8 +9,22 @@ const yargs = require('yargs');
 const { exec } = require('child_process');
 const logger = require('node-color-log');
 
-const toGb = (value) => (value / 1024 / 1024 / 1024).toFixed(4);
+let showProcessingLog = true;
+let timer = 0;
 
+const showLog = (processText = 'Processing, hang tight') => {
+  logger.bgColor('white').color('black').log(`    ${processText} -- ${timer} seconds passed   `);
+};
+const toggleProcessingLog = () =>
+  setTimeout(() => {
+    if (showProcessingLog) {
+      timer++;
+      showLog();
+      toggleProcessingLog();
+    }
+  }, 1000);
+
+const toGb = (value) => (value / 1024 / 1024 / 1024).toFixed(4);
 const memoryUsage = (catchPhrase) => {
   const mu = process.memoryUsage();
   const gbUsed = toGb(mu.heapUsed);
@@ -20,7 +34,7 @@ const memoryUsage = (catchPhrase) => {
   logger
     .color('black')
     .bgColor(colorLog)
-    .log(`Memory used at ${catchPhrase}: ${gbUsed} GB, total: ${gbTotal} GB, resident: ${gbResident} GB`);
+    .log(`Memory used on ${catchPhrase}: ${gbUsed} GB, total: ${gbTotal} GB, resident: ${gbResident} GB`);
 };
 
 const { argv } = yargs
@@ -49,24 +63,34 @@ const webpack = argv.serve ? 'webpack-dev-server --progress' : 'webpack';
 const mode = argv.serve ? '' : '-p';
 const build = argv.serve ? 'development' : 'production';
 const command = cmd({ webpack, mode, build });
-argv.verbose && logger.color('blue').log(JSON.stringify({ argv, command }, null, 2));
+argv.verbose && logger.color('blue').log(JSON.stringify({ argv, command }));
+
+memoryUsage('Start >>>');
 
 const startNode = exec(command, { maxBuffer: 1024 * 1024 * 1024 * 1024 }, function cb(error) {
+  showProcessingLog = false;
   if (error) {
     logger.error(error);
+    memoryUsage('Error >>>');
   } else if (module.hot) {
     module.hot.accept();
   }
 });
 
+toggleProcessingLog();
+
 startNode.stdout.on('data', (data) => {
-  argv.verbose && memoryUsage('ongoing >>>');
+  if (argv.verbose) {
+    memoryUsage('ongoing >>>');
+  }
   logger.log(data);
 });
 
 startNode.on('close', function exit(code) {
-  argv.verbose && memoryUsage('closing time >>>');
+  showProcessingLog = false;
   const logColor = Number(code) === 0 ? 'green' : 'red';
+  memoryUsage('Closing >>>');
+  showLog('Processed!');
   logger.color(logColor).dim().log(`Child process exited with code ${code}`);
   process.exit(code);
 });

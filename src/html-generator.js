@@ -20,7 +20,7 @@ const htmlGenerator = (mapJS, FAVICON) => {
     metaTags && (htmlObj.meta = metaTags);
     return new HtmlWebpackPlugin(htmlObj);
   });
-  argv.verbose && logger.color('magenta').log(JSON.stringify({ htmls }, null, 2));
+  argv.verbose && logger.color('magenta').log(JSON.stringify({ htmls }));
   return htmls;
 };
 
