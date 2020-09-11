@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const logger = require('node-color-log');
 const { merge } = require('webpack-merge');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -80,7 +81,7 @@ const common = (init) => {
 
   const isWin = process.platform === 'win32';
 
-  console.info('··· System OS: %s ···\n', process.platform);
+  logger.color('yellow').log('··· System OS: %s ···\n', process.platform);
 
   const htmlsTemplates = htmlGenerator(htmls, FAVICON);
 

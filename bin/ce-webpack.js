@@ -7,6 +7,21 @@
  */
 const yargs = require('yargs');
 const { exec } = require('child_process');
+const logger = require('node-color-log');
+
+const toGb = (value) => (value / 1024 / 1024 / 1024).toFixed(4);
+
+const memoryUsage = (catchPhrase) => {
+  const mu = process.memoryUsage();
+  const gbUsed = toGb(mu.heapUsed);
+  const gbTotal = toGb(mu.heapTotal);
+  const gbResident = toGb(mu.rss);
+  const colorLog = Number(gbTotal) < 2 ? 'green' : Number(gbTotal) > 2 && Number(gbTotal) < 3 ? 'yellow' : 'red';
+  logger
+    .color('black')
+    .bgColor(colorLog)
+    .log(`Memory used at ${catchPhrase}: ${gbUsed} GB, total: ${gbTotal} GB, resident: ${gbResident} GB`);
+};
 
 const { argv } = yargs
   .usage('$0 [options]', 'Build the project depending on the desired env.')
@@ -34,26 +49,24 @@ const webpack = argv.serve ? 'webpack-dev-server --progress' : 'webpack';
 const mode = argv.serve ? '' : '-p';
 const build = argv.serve ? 'development' : 'production';
 const command = cmd({ webpack, mode, build });
-argv.verbose && console.info(JSON.stringify({ argv, command }, null, 2));
+argv.verbose && logger.color('blue').log(JSON.stringify({ argv, command }, null, 2));
 
-const startNode = exec(command, { maxBuffer: 1024 * 10000 }, function cb(error, stdout, stderr) {
+const startNode = exec(command, { maxBuffer: 1024 * 1024 * 1024 * 1024 }, function cb(error) {
   if (error) {
-    const showError = {
-      success: false,
-      error,
-      stderr,
-    };
-    console.error(showError);
+    logger.error(error);
   } else if (module.hot) {
     module.hot.accept();
   }
 });
 
 startNode.stdout.on('data', (data) => {
-  console.info(data.toString());
+  argv.verbose && memoryUsage('ongoing >>>');
+  logger.log(data);
 });
 
 startNode.on('close', function exit(code) {
-  console.info(`Child process exited with code ${code.toString()}`);
-  process.exit();
+  argv.verbose && memoryUsage('closing time >>>');
+  const logColor = Number(code) === 0 ? 'green' : 'red';
+  logger.color(logColor).dim().log(`Child process exited with code ${code}`);
+  process.exit(code);
 });

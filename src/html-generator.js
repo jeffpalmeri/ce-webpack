@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const logger = require('node-color-log');
 const yargs = require('yargs');
 
 const extension = require('./extensions');
@@ -19,7 +20,7 @@ const htmlGenerator = (mapJS, FAVICON) => {
     metaTags && (htmlObj.meta = metaTags);
     return new HtmlWebpackPlugin(htmlObj);
   });
-  argv.verbose && console.info(JSON.stringify({ htmls }, null, 2));
+  argv.verbose && logger.color('magenta').log(JSON.stringify({ htmls }, null, 2));
   return htmls;
 };
 

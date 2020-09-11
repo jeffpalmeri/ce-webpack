@@ -1,8 +1,9 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const fs = require('fs');
 const path = require('path');
 const yargs = require('yargs');
+const logger = require('node-color-log');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 
 const extension = require('./extensions');
 
@@ -34,7 +35,7 @@ const inlineGenerator = (mapJS, FAVICON) => {
     return new HtmlWebpackPlugin(htmlObj);
   });
   inlines.push(new ScriptExtHtmlWebpackPlugin({ inline: INLINE_SCRIPTS }));
-  argv.verbose && console.info(JSON.stringify({ INLINE_SCRIPTS }, null, 2));
+  argv.verbose && logger.color('cyan').log(JSON.stringify({ inlines }, null, 2));
   return inlines;
 };
 
