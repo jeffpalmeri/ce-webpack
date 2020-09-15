@@ -67,15 +67,14 @@ argv.verbose && logger.color('blue').log(JSON.stringify({ argv, command }));
 
 memoryUsage('Start >>>');
 
-const startNode = exec(command, { maxBuffer: 1024 * 1024 * 1024 * 1024 }, function cb(error, stdout, stderr) {
+const startNode = exec(command, { maxBuffer: 1024 * 1024 * 1024 * 1024 }, function cb(error, stdout) {
   showProcessingLog = false;
-  logger.info('\n>>> ERROR <<<\n');
-  logger.error(error);
+  if (error) {
+    logger.info('\n>>> ERROR <<<\n');
+    logger.error(error);
+  }
   logger.info('\n>>> stdout <<<\n');
   logger.log(stdout);
-  logger.info('\n>>> stderr <<<\n');
-  logger.log(stderr);
-  memoryUsage('\nError >>>\n');
 });
 
 toggleProcessingLog();
