@@ -77,7 +77,7 @@ const startNode = exec(command, { maxBuffer: 1024 * 1024 * 1024 * 1024 }, functi
   logger.log(stdout);
 });
 
-toggleProcessingLog();
+!argv.serve && toggleProcessingLog();
 if (module.hot) {
   module.hot.accept();
 }
