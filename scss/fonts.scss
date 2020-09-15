@@ -1,0 +1,7 @@
+@import './font-loader.scss';
+
+@include font-face-ttf('DancingScript-Bold', '/assets/fonts/DancingScript/DancingScript-Bold');
+@include font-face-ttf('DancingScript-Medium', '/assets/fonts/DancingScript/DancingScript-Medium');
+@include font-face-ttf('DancingScript-Regular', '/assets/fonts/DancingScript/DancingScript-Regular');
+@include font-face-ttf('DancingScript-SemiBold', '/assets/fonts/DancingScript/DancingScript-SemiBold');
+@include font-face-ttf('DancingScript-VariableFont', '/assets/fonts/DancingScript/DancingScript-VariableFont');

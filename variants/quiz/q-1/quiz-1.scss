@@ -1,4 +1,7 @@
-.main-quiz {
+@import 'scss/main.scss';
+@import 'scss/fonts.scss';
+
+.main-quiz-1 {
   height: 100vh;
   width: 100vw;
   font-family: 'DancingScript-VariableFont', monospace;
@@ -8,13 +11,13 @@
     background-color: lightblue;
   }
 
+  .show {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .load {
     display: none;
-
-    &.show {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
   }
 }

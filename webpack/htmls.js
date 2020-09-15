@@ -3,7 +3,7 @@ const yargs = require('yargs');
 
 const { env } = yargs.argv;
 
-const variantsPath = path.join(process.cwd(), 'test', 'quiz');
+const variantsPath = path.join(process.cwd(), 'variants', 'quiz');
 const META_TAGS = {
   'X-UA-Compatible': { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
   'Content-Type': { 'http-equiv': 'Content-Type', content: 'text/html;charset=UTF-8' },
@@ -14,7 +14,7 @@ const META_TAGS = {
   },
   'og:image': {
     property: 'og:image',
-    content: `https://${env.domain || 'help'}.hubblecontacts.com/pages/images/quiz/quiz-img1.jpg`,
+    content: `https://${env.domain || 'help'}.domain.com/assets/images/quiz/quiz-img-1.jpg`,
   },
 };
 
@@ -33,9 +33,9 @@ const manageHtmlOutput = (pages, pagePath = '') => {
 };
 
 const pages = [
-  { source: 'quiz-1', chunk: 'quiz' },
-  { source: 'quiz-2', chunk: 'quiz', filename: 'quiz-2.html' },
-  { source: 'quiz-3', chunk: 'quiz', filename: 'quiz/quiz-3.htm' },
+  { source: path.join('q-1', 'quiz-1'), chunk: 'quiz-1', filename: 'quiz-1' },
+  { source: path.join('q-2', 'quiz-2'), chunk: 'quiz-2', filename: 'quiz-2.html' },
+  { source: path.join('q-3', 'quiz-3'), chunk: 'quiz-3', filename: 'quiz/quiz-3.htm' },
 ];
 manageHtmlOutput(pages);
 

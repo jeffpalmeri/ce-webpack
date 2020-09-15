@@ -46,6 +46,7 @@ module.exports = (api) => {
         root: ['./src', './public', './'],
       },
     ],
+    'transform-imports',
   ];
 
   return {

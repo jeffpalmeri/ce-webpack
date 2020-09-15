@@ -48,6 +48,20 @@ const common = (init) => {
     splitChunks: {
       chunks: 'all',
       name: true,
+      minSize: 1000 * 200,
+      cacheGroups: {
+        vendor: {
+          chunks: 'all',
+          minSize: 1000 * 200,
+          name: true,
+          test: /[\\/]node_modules[\\/]/,
+        },
+        common: {
+          chunks: 'all',
+          minSize: 1000 * 200,
+          test: /[\\/]src[\\/]/,
+        },
+      },
     },
   };
 
