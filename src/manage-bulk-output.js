@@ -1,11 +1,11 @@
 const manageHtmlOutput = ({ pages, META_TAGS }) => {
   const output = {};
-  pages.forEach(({ filename, chunk, templateContent }) => {
+  pages.forEach(({ filename, chunk, templateContent, metaTags }) => {
     const key = `${filename}.hbs`;
     const value = {
       filename,
       chunks: [chunk],
-      metaTags: META_TAGS,
+      metaTags: metaTags || META_TAGS,
       templateContent,
     };
     output[key] = value;

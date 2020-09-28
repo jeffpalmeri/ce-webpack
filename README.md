@@ -86,7 +86,7 @@ module.exports = {
  * by following this simple pattern:
  * ref: https://github.com/jantimon/html-webpack-plugin#meta-tags
  *
- * This map can contain the following structure:
+ * This array/map can contain the following structure:
  * {
  *   [<key>]: {                  // required, this is the path to your html/htm/hbs file.
  *     chunks: ['<chunk-name>'], // required, js name previuosly declared in the entry
@@ -101,20 +101,27 @@ module.exports = {
  * We are using a function to generate this type of output:
  * https://github.com/polpenaloza/ce-webpack/blob/master/webpack/htmls.js#L23
  */
-const htmls = {
-  // this will output www.my-domain.com/cool-quiz-1, as by default it will figure the page name via the key
-  'src/variants/quiz/cool-quiz-1': {
-    chunks: ['cool-quiz-1'],
-    metaTags: {
-      'X-UA-Compatible': { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
-    }
+const META_TAGS = {
+  'X-UA-Compatible': { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
+  'Content-Type': { 'http-equiv': 'Content-Type', content: 'text/html;charset=UTF-8' },
+  charset: { charset: 'UTF-8' },
+  viewport: {
+    name: 'viewport',
+    content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no',
   },
+  'og:image': {
+    property: 'og:image',
+    content: `https://${env.domain || 'help'}.domain.com/assets/images/quiz/quiz-img-1.jpg`,
+  },
+};
 
-  // this will output www.my-domain.com/quiz-2 (whithout html extension)
-  'src/variants/quiz/cool-quiz-2.html': { filename: 'quiz-2', chunks: ['cool-quiz-2'] },
-}
+const pages = [
+  { source: path.join(variantsPath, 'q-1', 'quiz-1'), chunk: 'quiz-1', filename: 'quiz-1' },
+  { source: path.join(variantsPath, 'q-2', 'quiz-2'), chunk: 'quiz-2', filename: 'quiz-2.html' },
+  { source: path.join(variantsPath, 'q-3', 'quiz-3'), chunk: 'quiz-3', filename: 'quiz/quiz-3.htm' },
+];
 
-module.exports = htmls;
+module.exports = { pages, META_TAGS };
 ```
 
 ### Inline file
@@ -127,7 +134,7 @@ module.exports = htmls;
  * It requires to be an array but it can be empty.
  * Optional: Meta Tags (same as in htmls)
  *
- * The inner maps/objects can contain the following structure:
+ * The inner array/objects can contain the following structure:
  * {
  *   filename: 'some-name', // the output name of the file that will be load on the UI via a URL.
  *   chunks: ['ex-inline'], // the js file that was previoulsy declared in the entry section.
@@ -135,14 +142,9 @@ module.exports = htmls;
  * We are using a function to generate this type of output:
  * https://github.com/polpenaloza/ce-webpack/blob/master/webpack/inlines.js#L5
  */
-const inlines = {
-  'inline': {
-    filename: 'my-inline-file', chunks: ['inline-js']
-  }
-},
-;
+const inlines = [{ filename: 'inline', chunk: 'inline-js' }];
 
-module.exports = inlines;
+module.exports = { pages: inlines };
 ```
 
 ## package.json
