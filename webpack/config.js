@@ -1,5 +1,6 @@
 const path = require('path');
 
+const bulks = require('./bulks');
 const htmls = require('./htmls');
 const inlines = require('./inlines');
 
@@ -13,6 +14,9 @@ const manageEntries = (pages, variantsPath) => {
     entry[outputName || source] = value;
   });
 };
+
+const bulkPages = [{ source: 'index', outputName: 'bulk-test' }];
+manageEntries(bulkPages, path.join(testFolder, 'bulks'));
 
 const quizPages = [
   { source: path.join('q-1', 'index'), outputName: 'quiz-1' },
@@ -35,6 +39,7 @@ COPY_ARRAY.push({
 
 module.exports = {
   entry,
+  bulks,
   htmls,
   inlines,
   COPY_ARRAY,

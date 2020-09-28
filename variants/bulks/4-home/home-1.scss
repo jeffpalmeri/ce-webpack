@@ -1,0 +1,14 @@
+.bulk-pages {
+  &__home {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    text-align: center;
+    background-color: lightslategray;
+    margin: 15px 0;
+    text-transform: capitalize;
+    flex: 1;
+    width: 100%;
+  }
+}

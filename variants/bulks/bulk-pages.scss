@@ -1,0 +1,19 @@
+@import 'scss/main.scss';
+@import 'scss/fonts.scss';
+@import './1-header/header-1.scss';
+@import './2-hero/hero-1.scss';
+@import './3-carousel/carousel-1.scss';
+@import './4-home/home-1.scss';
+@import './5-footer/footer-1.scss';
+
+body {
+  background-color: lightcoral;
+}
+
+.bulk-pages {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  color: black;
+  font-family: 'DancingScript-VariableFont', monospace;
+}

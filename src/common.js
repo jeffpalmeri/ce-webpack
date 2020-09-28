@@ -18,21 +18,30 @@ const {
 
 const htmlGenerator = require('./html-generator');
 const inlineGenerator = require('./inline-generator');
+const manageBulkOutput = require('./manage-bulk-output');
+const manageHtmlOutput = require('./manage-html-output');
+const manageInlineOutput = require('./manage-inline-output');
 
 const common = (init) => {
   const config = require(path.join(process.cwd(), init));
-  const { entry, htmls, inlines, webpackConfig = {}, COPY_ARRAY = [], FAVICON } = config;
+  const { entry, bulks, htmls, inlines, webpackConfig = {}, COPY_ARRAY = [], FAVICON } = config;
   if (!entry || typeof entry !== 'object') {
-    throw Error('CE_CONFIG failed: "entry" option cannot be empty and must be an object');
+    throw Error('CE_CONFIG failed: <entry> option cannot be empty and must be an object');
   }
   if (!htmls || typeof entry !== 'object') {
-    throw Error('CE_CONFIG failed: "htmls" option cannot be empty and must be an object');
+    throw Error('CE_CONFIG failed: <htmls> option cannot be empty and must be an object');
   }
   if (!FAVICON || typeof FAVICON === 'undefined' || typeof FAVICON !== 'string') {
     throw Error('CE_CONFIG failed: Missing FAVICON, or incorrect type. Should be just a string!!');
   }
   if (typeof webpackConfig !== 'object') {
-    throw Error('CE_CONFIG failed: webpackConfig incorrect type. Should be just an object!!');
+    throw Error('CE_CONFIG failed: <webpackConfig> incorrect type. Should be just an object!!');
+  }
+  if (bulks && typeof bulks !== 'object') {
+    throw Error('CE_CONFIG failed: <bulks> is not an object');
+  }
+  if (inlines && typeof inlines !== 'object') {
+    throw Error('CE_CONFIG failed: <inlines> is not an object');
   }
 
   const output = {
@@ -97,7 +106,8 @@ const common = (init) => {
 
   logger.color('yellow').log('··· System OS: %s ···\n', process.platform);
 
-  const htmlsTemplates = htmlGenerator(htmls, FAVICON);
+  const htmlsTemplates = htmlGenerator(manageHtmlOutput(htmls, FAVICON));
+  const bulkPagesTemplates = bulks ? htmlGenerator(manageBulkOutput(bulks, FAVICON)) : [];
 
   const plugins = [
     new webpack.ProgressPlugin(),
@@ -107,6 +117,7 @@ const common = (init) => {
       jQuery: 'jquery',
     }),
     ...htmlsTemplates,
+    ...bulkPagesTemplates,
     new MiniCssExtractPlugin({
       filename: 'css/[name].min.css',
     }),
@@ -115,7 +126,7 @@ const common = (init) => {
   !isWin && plugins.unshift(new CleanWebpackPlugin({ root: '', verbose: true, dry: false }));
   const excludeHtmlNames = [];
   if (Object.keys(inlines).length) {
-    const inlineTemplates = inlineGenerator(inlines, FAVICON);
+    const inlineTemplates = inlineGenerator(manageInlineOutput(inlines), FAVICON);
     inlineTemplates.forEach(({ options }) => {
       excludeHtmlNames.push(options.filename);
     });
