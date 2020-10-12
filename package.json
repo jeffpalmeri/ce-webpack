@@ -47,6 +47,7 @@
     "eslint-plugin-compat": "^3.7.0",
     "eslint-plugin-import": "^2.21.2",
     "eslint-plugin-jquery": "^1.5.1",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.0",
     "eslint-watch": "^7.0.0",
@@ -158,8 +159,5 @@
     "lint": "eslint .",
     "start": "webpack-dev-server --progress --config src/development.babel.js --env.dev --init webpack/config.js"
   },
-  "version": "2.5.1",
-  "devDependencies": {
-    "eslint-plugin-jsx-a11y": "^6.3.1"
-  }
+  "version": "2.5.1"
 }
