@@ -110,6 +110,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'react/jsx-fragments': 'off',
 
+    // Accessibility rules
     'jsx-a11y/alt-text': 2,
   },
 
