@@ -9,9 +9,10 @@ module.exports = {
     'prettier/react',
     'plugin:react/recommended',
     'plugin:import/react',
+    // 'plugin:jsx-a11y/recommended',
   ],
 
-  plugins: ['prettier'],
+  plugins: ['prettier', 'jsx-a11y'],
 
   globals: {
     __DEV__: true,
@@ -108,6 +109,9 @@ module.exports = {
     'react/static-property-placement': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/jsx-fragments': 'off',
+
+    // Accessibility rules
+    'jsx-a11y/alt-text': 2,
   },
 
   settings: {
