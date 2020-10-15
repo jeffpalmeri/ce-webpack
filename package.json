@@ -133,7 +133,7 @@
     "ce"
   ],
   "license": "MIT",
-  "name": "ce-webpack",
+  "name": "@ampush/ce-webpack",
   "peerDependencies": {
     "eslint": ">= 6",
     "prettier": ">= 2",
