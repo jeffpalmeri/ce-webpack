@@ -1,8 +1,8 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const logger = require('node-color-log');
-const yargs = require('yargs');
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import logger from 'node-color-log';
+import yargs from 'yargs';
 
-const extension = require('./extensions');
+import extension from './extensions';
 
 const htmlGenerator = (mapJS, FAVICON) => {
   const { argv } = yargs;
@@ -27,4 +27,4 @@ const htmlGenerator = (mapJS, FAVICON) => {
   return htmls;
 };
 
-module.exports = htmlGenerator;
+export default htmlGenerator;

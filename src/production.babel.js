@@ -1,14 +1,13 @@
-const { merge } = require('webpack-merge');
-const CompressionPlugin = require('compression-webpack-plugin');
-const HtmlMinifierPlugin = require('html-minifier-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const safePostCssParser = require('postcss-safe-parser');
-const ImageminPlugin = require('imagemin-webpack');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+import { merge } from 'webpack-merge';
+import CompressionPlugin from 'compression-webpack-plugin';
+import HtmlMinifierPlugin from 'html-minifier-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
+import safePostCssParser from 'postcss-safe-parser';
+import ImageminPlugin from 'imagemin-webpack';
+import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import yargs from 'yargs';
 
-const yargs = require('yargs');
-
-const common = require('./common');
+import common from './common';
 
 const minify = {
   collapseWhitespace: true,
@@ -116,7 +115,7 @@ const optimization = {
   ],
 };
 
-module.exports = function prod() {
+export default function prod() {
   const { argv } = yargs;
   const isProd = Boolean(argv.env.prod);
   const getCommon = common(argv.init);
@@ -138,4 +137,4 @@ module.exports = function prod() {
         }
   );
   return merge(getCommon, prodConfig);
-};
+}

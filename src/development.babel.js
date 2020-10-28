@@ -1,11 +1,11 @@
-const { merge } = require('webpack-merge');
-const path = require('path');
-const webpack = require('webpack');
-const yargs = require('yargs');
+import { merge } from 'webpack-merge';
+import path from 'path';
+import webpack from 'webpack';
+import yargs from 'yargs';
 
-const common = require('./common');
+import common from './common';
 
-module.exports = function dev() {
+export default function dev() {
   const { argv } = yargs;
   const getCommon = common(argv.init);
   const stats = argv.verbose ? 'verbose' : 'normal';
@@ -32,4 +32,4 @@ module.exports = function dev() {
     stats,
   };
   return merge(getCommon, devConfig);
-};
+}

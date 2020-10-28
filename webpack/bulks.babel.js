@@ -1,9 +1,8 @@
-const path = require('path');
-const yargs = require('yargs');
+import yargs from 'yargs';
+
+import bulkConfig from '../variants/bulks/bulk-pages';
 
 const { env } = yargs.argv;
-
-const variantsPath = path.join('variants', 'quiz');
 
 const META_TAGS = {
   'X-UA-Compatible': { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
@@ -19,10 +18,19 @@ const META_TAGS = {
   },
 };
 
-const pages = [
-  { source: path.join(variantsPath, 'q-1', 'quiz-1'), chunk: 'quiz-1', filename: 'quiz-1' },
-  { source: path.join(variantsPath, 'q-2', 'quiz-2'), chunk: 'quiz-2', filename: 'quiz-2.html' },
-  { source: path.join(variantsPath, 'q-3', 'quiz-3'), chunk: 'quiz-3', filename: 'quiz/quiz-3.htm' },
-];
+const manageBulkTemplates = (bPages) =>
+  bPages.map(({ filename, template }) => ({
+    filename,
+    chunk: 'bulk-test',
+    templateContent: () => `
+      <html>
+        <body>
+          <div class="bulk-pages">
+            ${template}
+          </div>
+        </body>
+      </html>
+    `,
+  }));
 
-module.exports = { pages, META_TAGS };
+export default { pages: manageBulkTemplates(bulkConfig), META_TAGS };

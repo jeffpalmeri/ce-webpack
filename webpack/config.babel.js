@@ -1,8 +1,8 @@
-const path = require('path');
+import path from 'path';
 
-const bulks = require('./bulks');
-const htmls = require('./htmls');
-const inlines = require('./inlines');
+import bulks from './bulks.babel';
+import htmls from './htmls.babel';
+import inlines from './inlines.babel';
 
 const testFolder = path.join(process.cwd(), 'variants');
 
@@ -37,7 +37,7 @@ COPY_ARRAY.push({
   to: path.join(process.cwd(), 'dist'),
 });
 
-module.exports = {
+export default {
   entry,
   bulks,
   htmls,

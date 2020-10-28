@@ -1,11 +1,11 @@
 // eslint-disable-next-line no-unused-vars
-const Handlebars = require('handlebars');
+import Handlebars from 'handlebars';
 
-const headerOne = require('./1-header/header-1.hbs');
-const heroOneSection = require('./2-hero/hero-1.hbs');
-const carouselOneSection = require('./3-carousel/carousel-1.hbs');
-const homeOneSection = require('./4-home/home-1.hbs');
-const footerOne = require('./5-footer/footer-1.hbs');
+import headerOne from './1-header/header-1.hbs';
+import heroOneSection from './2-hero/hero-1.hbs';
+import carouselOneSection from './3-carousel/carousel-1.hbs';
+import homeOneSection from './4-home/home-1.hbs';
+import footerOne from './5-footer/footer-1.hbs';
 
 const bulkTemplates = [
   {
@@ -41,4 +41,4 @@ const bulkTemplates = [
   },
 ];
 
-module.exports = bulkTemplates;
+export default bulkTemplates;

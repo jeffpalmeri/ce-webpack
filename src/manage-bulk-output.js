@@ -13,4 +13,4 @@ const manageHtmlOutput = ({ pages, META_TAGS }) => {
   return output;
 };
 
-module.exports = manageHtmlOutput;
+export default manageHtmlOutput;

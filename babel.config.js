@@ -6,6 +6,7 @@ module.exports = (api) => {
     [
       '@babel/preset-env',
       {
+        modules: 'commonjs',
         useBuiltIns: 'entry',
         corejs: 3,
         targets: {
@@ -16,6 +17,8 @@ module.exports = (api) => {
   ];
   const plugins = [
     '@babel/plugin-transform-runtime',
+    '@babel/plugin-proposal-export-default-from',
+    'add-module-exports',
 
     // Stage 2 https://github.com/babel/babel/tree/master/packages/babel-preset-stage-2
     ['@babel/plugin-proposal-decorators', { legacy: true }],

@@ -1,5 +1,5 @@
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+import path from 'path';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 const htmlLoader = {
   test: /\.html$/i,
@@ -83,7 +83,7 @@ const handlebarLoader = {
   ],
 };
 
-module.exports = {
+export default {
   htmlLoader,
   jsLoader,
   stylesLoader,

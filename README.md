@@ -60,7 +60,7 @@ COPY_ARRAY.push({
  */
 const webpackConfig = {} // your custom config here.
 
-module.exports = {
+export default {
   entry,
   htmls,
   inlines,
@@ -121,7 +121,7 @@ const pages = [
   { source: path.join(variantsPath, 'q-3', 'quiz-3'), chunk: 'quiz-3', filename: 'quiz/quiz-3.htm' },
 ];
 
-module.exports = { pages, META_TAGS };
+export default { pages, META_TAGS };
 ```
 
 ### Inline file
@@ -144,7 +144,7 @@ module.exports = { pages, META_TAGS };
  */
 const inlines = [{ filename: 'inline', chunk: 'inline-js' }];
 
-module.exports = { pages: inlines };
+export default { pages: inlines };
 ```
 
 ## package.json
