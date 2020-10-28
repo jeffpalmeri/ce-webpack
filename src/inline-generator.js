@@ -10,7 +10,7 @@ const extension = require('./extensions');
 const inlineGenerator = (mapJS, FAVICON) => {
   const INLINE_SCRIPTS = ['runtime'];
   const { argv } = yargs;
-  let defaultSource = path.join('node_modules', 'ce-webpack', 'src', 'inline.ejs');
+  let defaultSource = path.join('node_modules', '@ampush', 'ce-webpack', 'src', 'inline.ejs');
   if (!fs.existsSync(defaultSource)) {
     defaultSource = path.join('src', 'inline.ejs');
   }
