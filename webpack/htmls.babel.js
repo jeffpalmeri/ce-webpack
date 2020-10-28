@@ -1,5 +1,5 @@
-import path from 'path';
-import yargs from 'yargs';
+const path = require('path');
+const yargs = require('yargs');
 
 const { env } = yargs.argv;
 
@@ -25,4 +25,4 @@ const pages = [
   { source: path.join(variantsPath, 'q-3', 'quiz-3'), chunk: 'quiz-3', filename: 'quiz/quiz-3.htm' },
 ];
 
-export default { pages, META_TAGS };
+module.exports = { pages, META_TAGS };

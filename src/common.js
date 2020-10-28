@@ -1,12 +1,12 @@
-import webpack from 'webpack';
-import path from 'path';
-import logger from 'node-color-log';
-import { merge } from 'webpack-merge';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+const webpack = require('webpack');
+const path = require('path');
+const logger = require('node-color-log');
+const { merge } = require('webpack-merge');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-import {
+const {
   htmlLoader,
   jsLoader,
   stylesLoader,
@@ -14,13 +14,13 @@ import {
   mediaLoader,
   fontLoader,
   handlebarLoader,
-} from './loaders.babel';
+} = require('./loaders.babel');
 
-import htmlGenerator from './html-generator';
-import inlineGenerator from './inline-generator';
-import manageBulkOutput from './manage-bulk-output';
-import manageHtmlOutput from './manage-html-output';
-import manageInlineOutput from './manage-inline-output';
+const htmlGenerator = require('./html-generator');
+const inlineGenerator = require('./inline-generator');
+const manageBulkOutput = require('./manage-bulk-output');
+const manageHtmlOutput = require('./manage-html-output');
+const manageInlineOutput = require('./manage-inline-output');
 
 const common = (init) => {
   const config = require(path.join(process.cwd(), init));
@@ -149,4 +149,4 @@ const common = (init) => {
   );
 };
 
-export default common;
+module.exports = common;

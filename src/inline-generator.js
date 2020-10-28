@@ -1,11 +1,11 @@
-import fs from 'fs';
-import path from 'path';
-import yargs from 'yargs';
-import logger from 'node-color-log';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import ScriptExtHtmlWebpackPlugin from 'script-ext-html-webpack-plugin';
+const fs = require('fs');
+const path = require('path');
+const yargs = require('yargs');
+const logger = require('node-color-log');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 
-import extension from './extensions';
+const extension = require('./extensions');
 
 const inlineGenerator = (mapJS, FAVICON) => {
   const INLINE_SCRIPTS = ['runtime'];
@@ -39,4 +39,4 @@ const inlineGenerator = (mapJS, FAVICON) => {
   return inlines;
 };
 
-export default inlineGenerator;
+module.exports = inlineGenerator;

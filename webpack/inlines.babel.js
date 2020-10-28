@@ -1,3 +1,3 @@
 const inlines = [{ filename: 'inline', chunk: 'inline-js' }];
 
-export default { pages: inlines };
+module.exports = { pages: inlines };

@@ -1,6 +1,6 @@
-import yargs from 'yargs';
+const yargs = require('yargs');
 
-import bulkConfig from '../variants/bulks/bulk-pages';
+const bulkConfig = require('../variants/bulks/bulk-pages');
 
 const { env } = yargs.argv;
 
@@ -33,4 +33,4 @@ const manageBulkTemplates = (bPages) =>
     `,
   }));
 
-export default { pages: manageBulkTemplates(bulkConfig), META_TAGS };
+module.exports = { pages: manageBulkTemplates(bulkConfig), META_TAGS };

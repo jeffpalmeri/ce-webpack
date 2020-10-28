@@ -5,4 +5,4 @@ const extension =
     ? ''
     : '.htl';
 
-export default extension;
+module.exports = extension;

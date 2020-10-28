@@ -8,4 +8,4 @@ const manageInlineOutput = ({ pages, META_TAGS }) => {
   return output;
 };
 
-export default manageInlineOutput;
+module.exports = manageInlineOutput;
