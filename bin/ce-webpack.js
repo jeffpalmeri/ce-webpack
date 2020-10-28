@@ -91,7 +91,9 @@ startNode.stdout.on('data', (data) => {
 });
 
 startNode.stderr.on('data', (error) => {
-  logger.log(error);
+  if (argv.verbose) {
+    logger.log(error);
+  }
 });
 
 startNode.on('close', function exit(code) {
