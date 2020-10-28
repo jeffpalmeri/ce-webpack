@@ -51,7 +51,7 @@ const { argv } = yargs
   });
 
 const cmd = ({ webpack, mode, build }) => {
-  const config = `--config ${argv.config || 'node_modules/ce-webpack/src'}/${build}.babel.js`;
+  const config = `--config ${argv.config || 'node_modules/@ampush/ce-webpack/src'}/${build}.babel.js`;
   const [envKey] = Object.keys(argv.env);
   const init = `--init ${argv.init}`;
   const argvKeys = Object.keys(argv).filter((argKey) => '_ $0 init env config serve'.indexOf(argKey) === -1);
@@ -87,6 +87,10 @@ startNode.stdout.on('data', (data) => {
     memoryUsage('ongoing >>>');
   }
   logger.log(data);
+});
+
+startNode.stderr.on('data', (error) => {
+  logger.log(error);
 });
 
 startNode.on('close', function exit(code) {
