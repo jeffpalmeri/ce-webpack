@@ -56,7 +56,8 @@ const cmd = ({ webpack, mode, build }) => {
   const init = `--init ${argv.init}`;
   const argvKeys = Object.keys(argv).filter((argKey) => '_ $0 init env config serve'.indexOf(argKey) === -1);
   const stringifyArguments = argvKeys.map((argKey) => `--${argKey}=${argv[argKey]}`).join(' ');
-  return `yarn run ${webpack} ${mode} ${config} --env.${envKey} ${init} --colors ${stringifyArguments}`;
+  // eslint-disable-next-line max-len
+  return `yarn run ${webpack} ${mode} ${config} --env.${envKey} ${init} --colors ${stringifyArguments} --experimental-modules`;
 };
 
 const webpack = argv.serve ? 'webpack-dev-server --progress' : 'webpack';
