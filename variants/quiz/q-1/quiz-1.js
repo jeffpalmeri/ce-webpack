@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { hot } from 'react-hot-loader/root';
 import PropTypes from 'prop-types';
 
 import './quiz-1.scss';
@@ -9,6 +10,7 @@ const Quiz1 = (props) => {
 
   useEffect(() => {
     setShow(true);
+    console.info('hi there you');
   }, []);
 
   return (
@@ -23,4 +25,4 @@ Quiz1.propTypes = {
   name: PropTypes.string,
 };
 
-export default Quiz1;
+export default hot(Quiz1);

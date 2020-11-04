@@ -4,12 +4,12 @@
 
 We don't require to add any `<script src="/js/main.min.js">` or `<link href="/css/main.min.css" />` anywhere, as we are injecting all required js and css files. The conditions for this to work are:
 
-1. Use `entry` to decide the name of the chunk file and then place that chunk name in the `htmls` or `inlines` map.
+1. Use `entry` to decide the name of the chunk file and then place that chunk name in the `htmls`, `inlines` or `bulk` array.
 2. Make sure to `import` all your scss in that js file, Webpack is smart enough to generate a `.css` file with the exact same name as your chunk file name.
 
 ## Install
 ```bash
-yarn add --dev ce-webpack
+yarn add --dev @ampush/ce-webpack
 ```
 
 ## Webpack initialize files (--init)
@@ -17,28 +17,28 @@ yarn add --dev ce-webpack
 ### Config file
 
 ```js
-/* config.js */
+/* webpack/config.js */
 
 const path = require('path');
 
 const htmls = require('./htmls');
 const inlines = require('./inlines');
+const bulks = require('./bulks')
 
 const variantsFolder = path.join(process.cwd(), 'src', 'variants');
 
 /*
- * This requires to be an object with at least 1 entry.
+ * This requires to be an array with at least 1 entry.
  * It's required to have at least 1 entry as this will later on translate to
  * the actual javascript file that will be injected into your html page.
- * We are using a function to generate this kind of output here:
- * https://github.com/polpenaloza/ce-webpack/blob/master/webpack/htmls.js#L23
+ * NOTE! We are using a function to handle and adapt these entries to webpack needs!
  */
-const entry = {
+const entry = [
   // Plover file names must have at least 2 words joined by a hyphen.
-  'inline-js': path.join(variantsFolder, 'inline', 'inline.js'),
-  'cool-quiz-1': path.join(variantsFolder, 'quiz', 'cool-quiz-1.js'),
-  'cool-quiz-2': path.join(variantsFolder, 'quiz', 'cool-quiz-2.js'),
-};
+  { source: path.join(variantsFolder, 'inline', 'inline.js'), outputName: 'inline-js' },
+  { source: path.join(variantsFolder, 'quiz', 'cool-quiz-1.js'), outputName: 'cool-quiz-1' },
+  { source: path.join(variantsFolder, 'quiz', 'cool-quiz-2.js'), outputName: 'cool-quiz-2' },
+];
 
 /*
  * The favicon is required, use the path to the favicon.ico
@@ -64,6 +64,7 @@ export default {
   entry,
   htmls,
   inlines,
+  bulks,
   webpackConfig,
   FAVICON,
   COPY_ARRAY,
@@ -74,7 +75,7 @@ export default {
 ### HTMLs file
 
 ```js
-/* htmls.js */
+/* webpack/htmls.js */
 
 /**
  * Instruct here the exact path and name for the entry html.
@@ -87,19 +88,16 @@ export default {
  * ref: https://github.com/jantimon/html-webpack-plugin#meta-tags
  *
  * This array/map can contain the following structure:
- * {
- *   [<key>]: {                  // required, this is the path to your html/htm/hbs file.
- *     chunks: ['<chunk-name>'], // required, js name previuosly declared in the entry
- *                               // section and that is required only for this page.
- *
- *     filename: '<file-name>',  // optional, it will figure out the name via the key.
+ * [
+ *   {
+ *     source: '<the path to the js file>' // required, this is the path to your html/htm/hbs file.
+ *     chunk: '<chunk-name>',              // required, js name previuosly declared in the entry.
+ *     outputName: '<file-name>',          // optional, otherwise it will figure out the name via the source.
  *     metaTags: {
  *       <tag-value>: { <tag-key>: <tag-value> }
  *     }
  *   }
- * }
- * We are using a function to generate this type of output:
- * https://github.com/polpenaloza/ce-webpack/blob/master/webpack/htmls.js#L23
+ * ]
  */
 const META_TAGS = {
   'X-UA-Compatible': { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
@@ -111,14 +109,14 @@ const META_TAGS = {
   },
   'og:image': {
     property: 'og:image',
-    content: `https://${env.domain || 'help'}.domain.com/assets/images/quiz/quiz-img-1.jpg`,
+    content: 'https://www.domain.com/assets/images/quiz/quiz-img-1.jpg',
   },
 };
 
 const pages = [
-  { source: path.join(variantsPath, 'q-1', 'quiz-1'), chunk: 'quiz-1', filename: 'quiz-1' },
-  { source: path.join(variantsPath, 'q-2', 'quiz-2'), chunk: 'quiz-2', filename: 'quiz-2.html' },
-  { source: path.join(variantsPath, 'q-3', 'quiz-3'), chunk: 'quiz-3', filename: 'quiz/quiz-3.htm' },
+  { source: path.join(variantsPath, 'q-1', 'quiz-1'), chunk: 'quiz-1', outputName: 'quiz-1' },
+  { source: path.join(variantsPath, 'q-2', 'quiz-2'), chunk: 'quiz-2', outputName: 'quiz-2.html' },
+  { source: path.join(variantsPath, 'q-3', 'quiz-3'), chunk: 'quiz-3', outputName: 'quiz/quiz-3.htm' },
 ];
 
 export default { pages, META_TAGS };
@@ -127,24 +125,44 @@ export default { pages, META_TAGS };
 ### Inline file
 
 ```js
-/* inlines.js */
+/* webpack/inlines.js */
 
 /**
- * For inline files that have logic embed, we use an array named INLINE.
+ * For inline files that have logic embed, we use an array named inlines.
  * It requires to be an array but it can be empty.
  * Optional: Meta Tags (same as in htmls)
  *
  * The inner array/objects can contain the following structure:
  * {
- *   filename: 'some-name', // the output name of the file that will be load on the UI via a URL.
- *   chunks: ['ex-inline'], // the js file that was previoulsy declared in the entry section.
+ *   outputName: 'some-name', // the output name of the file that will be load on the UI via a URL.
+ *   chunk: 'ex-inline', // the js file that was previoulsy declared in the entry section.
  * }
- * We are using a function to generate this type of output:
- * https://github.com/polpenaloza/ce-webpack/blob/master/webpack/inlines.js#L5
  */
-const inlines = [{ filename: 'inline', chunk: 'inline-js' }];
+const inlines = [{ outputName: 'inline', chunk: 'inline-js' }];
 
 export default { pages: inlines };
+```
+
+### Bulks file
+```js
+/* webpack/bulk.js */
+const bulkConfig = require('../variants/bulks/bulk-pages');
+
+const META_TAGS = {
+  'X-UA-Compatible': { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
+  'Content-Type': { 'http-equiv': 'Content-Type', content: 'text/html;charset=UTF-8' },
+  charset: { charset: 'UTF-8' },
+  viewport: {
+    name: 'viewport',
+    content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no',
+  },
+  'og:image': {
+    property: 'og:image',
+    content: 'https://www.domain.com/assets/images/quiz/quiz-img-1.jpg',
+  },
+};
+
+module.exports = { pages: bulkConfig, META_TAGS };
 ```
 
 ## package.json
@@ -154,9 +172,9 @@ export default { pages: inlines };
 ```json
 {
   "scripts": {
-    "start": "ce-webpack --env.dev --init webpack/config.js --serve",
-    "build:prod": "ce-webpack --env.prod --init webpack/config.js",
-    "build:dev": "ce-webpack --env.dev --init webpack/config.js",
+    "start": "ce-webpack --init webpack/config.js --serve",
+    "build:prod": "ce-webpack --init webpack/config.js",
+    "build:dev": "ce-webpack --init webpack/config.js",
   },
 }
 ```
@@ -169,7 +187,7 @@ NOTE: *if needed, you can extend your rules on each file*
 **Babel**
 ```js
 // babel.config
-const babelConfig = require('ce-webpack/babel.config');
+const babelConfig = require('@ampush/ce-webpack/babel.config');
 
 module.exports = babelConfig;
 ```
@@ -177,7 +195,7 @@ module.exports = babelConfig;
 **Eslint**
 ```js
 // .eslintrc.js
-const eslintConfig = require('ce-webpack/eslintrc');
+const eslintConfig = require('@ampush/ce-webpack/eslintrc');
 
 module.exports = eslintConfig;
 ```
@@ -185,7 +203,7 @@ module.exports = eslintConfig;
 **PostCss**
 ```js
 // postcss.config.js
-const postcssConfig = require('ce-webpack/postcss.config');
+const postcssConfig = require('@ampush/ce-webpack/postcss.config');
 
 module.exports = postcssConfig;
 ```
@@ -193,7 +211,7 @@ module.exports = postcssConfig;
 **Prettier**
 ```js
 // .prettierrc.js
-const prettierConfig = require('ce-webpack/prettierrc');
+const prettierConfig = require('@ampush/ce-webpack/prettierrc');
 
 module.exports = prettierConfig;
 ```
@@ -201,7 +219,7 @@ module.exports = prettierConfig;
 **Jest**
 ```js
 // jest.config.js
-const jestConfig = require('ce-webpack/jest.config');
+const jestConfig = require('@ampush/ce-webpack/jest.config');
 
 module.exports = jestConfig;
 ```
@@ -209,7 +227,7 @@ module.exports = jestConfig;
 **StyleLint**
 ```js
 // stylelint.config.js
-const styleLintConfig = require('ce-webpack/stylelint.config');
+const styleLintConfig = require('@ampush/ce-webpack/stylelint.config');
 
 module.exports = styleLintConfig;
 ```

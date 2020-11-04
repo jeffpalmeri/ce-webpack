@@ -58,7 +58,7 @@ const optimization = {
   minimizer: [
     new TerserPlugin({
       terserOptions: {
-        parallel: false,
+        // parallel: false,
         parse: {
           ecma: 8,
         },
@@ -80,7 +80,6 @@ const optimization = {
           ascii_only: true,
         },
       },
-      sourceMap: false,
     }),
     new OptimizeCSSAssetsPlugin({
       cssProcessorOptions: {
@@ -117,18 +116,20 @@ const optimization = {
 
 module.exports = function prod() {
   const { argv } = yargs;
-  const isProd = Boolean(argv.env.prod);
-  const getCommon = common(argv.init);
-  const stats = argv.verbose ? 'verbose' : 'normal';
+  const isProd = argv.mode === 'production';
+  const getCommon = common(argv.env);
   const defaultConfig = {
-    mode: 'development',
-    stats,
+    mode: argv.mode,
+    performance: {
+      hints: 'warning',
+      maxAssetSize: 100 * 1024,
+      maxEntrypointSize: 300 * 1024,
+    },
   };
   const prodConfig = merge(
     defaultConfig,
     isProd
       ? {
-          mode: 'production',
           plugins,
           optimization,
         }

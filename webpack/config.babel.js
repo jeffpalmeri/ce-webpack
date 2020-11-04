@@ -6,27 +6,15 @@ const inlines = require('./inlines.babel');
 
 const testFolder = path.join(process.cwd(), 'variants');
 
-const entry = {};
-
-const manageEntries = (pages, variantsPath) => {
-  pages.forEach(({ source, outputName }) => {
-    const value = path.join(variantsPath, `${source}.js`);
-    entry[outputName || source] = value;
-  });
-};
-
-const bulkPages = [{ source: 'index', outputName: 'bulk-test' }];
-manageEntries(bulkPages, path.join(testFolder, 'bulks'));
-
+const bulkPages = [{ source: path.join(testFolder, 'bulks', 'index'), outputName: 'bulk-test' }];
 const quizPages = [
-  { source: path.join('q-1', 'index'), outputName: 'quiz-1' },
-  { source: path.join('q-2', 'index'), outputName: 'quiz-2' },
-  { source: path.join('q-3', 'index'), outputName: 'quiz-3' },
+  { source: path.join(testFolder, 'quiz', 'q-1', 'index'), outputName: 'quiz-1' },
+  { source: path.join(testFolder, 'quiz', 'q-2', 'index'), outputName: 'quiz-2' },
+  { source: path.join(testFolder, 'quiz', 'q-3', 'index'), outputName: 'quiz-3' },
 ];
-manageEntries(quizPages, path.join(testFolder, 'quiz'));
+const inlineJsFiles = [{ source: path.join(testFolder, 'inline', 'index'), outputName: 'inline-js' }];
 
-const inlineJsFiles = [{ source: 'index', outputName: 'inline-js' }];
-manageEntries(inlineJsFiles, path.join(testFolder, 'inline'));
+const entry = [...bulkPages, ...quizPages, ...inlineJsFiles];
 
 const FAVICON = path.join(process.cwd(), 'assets', 'images', 'favicon.ico');
 

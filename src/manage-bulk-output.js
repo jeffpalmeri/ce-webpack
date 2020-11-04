@@ -1,16 +1,22 @@
-const manageHtmlOutput = ({ pages, META_TAGS }) => {
+const manageBulkOutput = ({ pages, META_TAGS }) => {
   const output = {};
-  pages.forEach(({ filename, chunk, templateContent, metaTags }) => {
-    const key = `${filename}.hbs`;
+  pages.forEach(({ outputName, chunk, template, metaTags }) => {
     const value = {
-      filename,
+      source: outputName,
+      outputName,
       chunks: [chunk],
       metaTags: metaTags || META_TAGS,
-      templateContent,
+      templateContent: () => `
+        <html>
+          <body>
+            ${template}
+          </body>
+        </html>
+      `,
     };
-    output[key] = value;
+    output[outputName] = value;
   });
   return output;
 };
 
-module.exports = manageHtmlOutput;
+module.exports = manageBulkOutput;

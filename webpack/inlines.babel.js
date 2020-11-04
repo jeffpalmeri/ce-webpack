@@ -1,3 +1,3 @@
-const inlines = [{ filename: 'inline', chunk: 'inline-js' }];
+const inlines = [{ outputName: 'inline', chunk: 'inline-js' }];
 
 module.exports = { pages: inlines };

@@ -25,22 +25,22 @@ const manageInlineOutput = require('./manage-inline-output');
 const common = (init) => {
   const config = require(path.join(process.cwd(), init));
   const { entry, bulks, htmls, inlines, webpackConfig = {}, COPY_ARRAY = [], FAVICON } = config;
-  if (!entry || typeof entry !== 'object') {
-    throw Error('CE_CONFIG failed: <entry> option cannot be empty and must be an object');
+  if (!entry || typeof entry !== 'object' || !Array.isArray(entry)) {
+    throw Error('CE_CONFIG failed: <entry> option cannot be empty and must be an array');
   }
-  if (!htmls || typeof entry !== 'object') {
+  if (!htmls || typeof htmls !== 'object' || Array.isArray(htmls)) {
     throw Error('CE_CONFIG failed: <htmls> option cannot be empty and must be an object');
   }
   if (!FAVICON || typeof FAVICON === 'undefined' || typeof FAVICON !== 'string') {
     throw Error('CE_CONFIG failed: Missing FAVICON, or incorrect type. Should be just a string!!');
   }
-  if (typeof webpackConfig !== 'object') {
+  if (typeof webpackConfig !== 'object' || Array.isArray(webpackConfig)) {
     throw Error('CE_CONFIG failed: <webpackConfig> incorrect type. Should be just an object!!');
   }
-  if (bulks && typeof bulks !== 'object') {
+  if (bulks && typeof bulks !== 'object' && Array.isArray(bulks)) {
     throw Error('CE_CONFIG failed: <bulks> is not an object');
   }
-  if (inlines && typeof inlines !== 'object') {
+  if (inlines && typeof inlines !== 'object' && Array.isArray(inlines)) {
     throw Error('CE_CONFIG failed: <inlines> is not an object');
   }
 
@@ -56,19 +56,19 @@ const common = (init) => {
     flagIncludedChunks: true,
     splitChunks: {
       chunks: 'all',
-      name: true,
       minSize: 1000 * 200,
       cacheGroups: {
         vendor: {
           chunks: 'all',
           minSize: 1000 * 200,
-          name: true,
           test: /[\\/]node_modules[\\/]/,
-        },
-        common: {
-          chunks: 'all',
-          minSize: 1000 * 200,
-          test: /[\\/]src[\\/]/,
+          name(module) {
+            // get the name. E.g. node_modules/packageName/not/this/part.js
+            // or node_modules/packageName
+            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+            // npm package names are URL-safe, but some servers don't like @ symbols
+            return `npm.${packageName.replace('@', '')}`;
+          },
         },
       },
     },
@@ -111,16 +111,12 @@ const common = (init) => {
 
   const plugins = [
     new webpack.ProgressPlugin(),
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jquery: 'jquery',
-      jQuery: 'jquery',
-    }),
     ...htmlsTemplates,
     ...bulkPagesTemplates,
     new MiniCssExtractPlugin({
       filename: 'css/[name].min.css',
     }),
+    require('autoprefixer'),
   ];
   COPY_ARRAY.length && plugins.unshift(new CopyWebpackPlugin({ patterns: COPY_ARRAY }));
   !isWin && plugins.unshift(new CleanWebpackPlugin({ root: '', verbose: true, dry: false }));
@@ -135,7 +131,11 @@ const common = (init) => {
 
   return merge(
     {
-      entry,
+      entry: entry.reduce((acc, ent) => {
+        const { source, outputName } = ent;
+        acc[outputName] = source;
+        return acc;
+      }, {}),
       output,
       optimization,
       resolve,

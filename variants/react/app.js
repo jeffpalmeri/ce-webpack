@@ -1,7 +1,6 @@
 import 'core-js/es/map';
 import 'core-js/es/set';
 import 'core-js/stable';
-import 'jquery';
 
 import React from 'react';
 

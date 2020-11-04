@@ -76,7 +76,7 @@ const handlebarLoader = {
   use: [
     {
       loader: 'handlebars-loader',
-      query: {
+      options: {
         partialDirs: [path.join(process.cwd(), 'src', 'hbs-partials')],
       },
     },

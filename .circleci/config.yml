@@ -1,0 +1,95 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@4.0.0
+  slack: circleci/slack@3.4.2
+
+attachws: &attach_ws
+    at: ~/project
+
+slackmessage_e: &slackmessage_error
+  channel: mystique
+  fail_only: true
+  webhook: https://hooks.slack.com/services/${SLACK_WEBHOOK}
+  failure_message: ":disappointed: Failed! $CIRCLE_USERNAME's workflow on $CIRCLE_BRANCH at $CIRCLE_JOB. ($CIRCLE_BUILD_URL)"
+
+slackmessage_s: &slackmessage
+  channel: mystique
+  webhook: https://hooks.slack.com/services/${SLACK_WEBHOOK}
+  failure_message: ":disappointed: Failed! $CIRCLE_USERNAME's workflow on $CIRCLE_BRANCH at $CIRCLE_JOB. ($CIRCLE_BUILD_URL)"
+  success_message: ":tada: Success! $CIRCLE_USERNAME's workflow on $CIRCLE_BRANCH at $CIRCLE_JOB! ($CIRCLE_BUILD_URL)"
+
+jobs:
+  install:
+    executor: node/default
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - persist_to_workspace:
+          root: .
+          paths: [node_modules]
+      - run: node --version
+      - slack/status:
+          <<: *slackmessage_error
+
+  lint:
+    executor: node/default
+    steps:
+      - checkout
+      - attach_workspace:
+          <<: *attach_ws
+      - run:
+          name: JS Lint
+          command: yarn lint-js
+      - slack/status:
+          <<: *slackmessage_error
+
+  publish:
+    executor: node/default
+    steps:
+      - attach_workspace:
+          <<: *attach_ws
+      - run:
+          name: Authenticate with registry
+          command: echo "//npm.pkg.github.com/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
+      - run:
+          name: Publish package
+          command: yarn publish
+
+  release:
+    executor: node/default
+    steps:
+      - checkout
+      - attach_workspace:
+          <<: *attach_ws
+      - run:
+          name: Semantic release
+          command: yarn semantic-release
+
+workflows:
+  cewebpack_flow:
+    jobs:
+      - install:
+          context: aws-context
+      - lint:
+          context: aws-context
+          requires:
+            - install
+      - publish:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - install
+            - lint
+      - release:
+          filters:
+            branches:
+              only:
+                - master
+                - QA
+          requires:
+            - install
+            - lint

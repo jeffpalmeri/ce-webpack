@@ -1,7 +1,7 @@
 const extension =
-  process.platform === 'win32' && process.env.WEBPACK_DEV_SERVER
+  process.platform === 'win32' && process.argv.indexOf('serve') !== -1
     ? '.html'
-    : process.env.WEBPACK_DEV_SERVER
+    : process.argv.indexOf('serve') !== -1
     ? ''
     : '.htl';
 

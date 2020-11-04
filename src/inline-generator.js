@@ -5,8 +5,6 @@ const logger = require('node-color-log');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 
-const extension = require('./extensions');
-
 const inlineGenerator = (mapJS, FAVICON) => {
   const INLINE_SCRIPTS = ['runtime'];
   const { argv } = yargs;
@@ -14,17 +12,18 @@ const inlineGenerator = (mapJS, FAVICON) => {
   if (!fs.existsSync(defaultSource)) {
     defaultSource = path.join('src', 'inline.ejs');
   }
-  const inlines = Object.entries(mapJS).map(([entry, { filename, chunks, metaTags, source }]) => {
-    if (!filename || typeof filename !== 'string') {
-      throw Error(`Filename is invalid for entry number ${entry}. It should be a string value`);
+  const extension = require('./extensions');
+  const inlines = Object.entries(mapJS).map(([entry, { outputName, chunks, metaTags, source }]) => {
+    if (!outputName || typeof outputName !== 'string') {
+      throw Error(`Output name is invalid for entry number ${entry}. It should be a string value`);
     }
     if (!chunks || !Array.isArray(chunks) || !chunks.length) {
-      throw Error(`Chunks is invalid for entry number ${entry} - ${filename}. It should be an array.`);
+      throw Error(`Chunks is invalid for entry number ${entry} - ${outputName}. It should be an array.`);
     }
     const template = !source ? defaultSource : source.indexOf('.') === -1 ? `${source}.hbs` : source;
     const htmlObj = {
       template,
-      filename: `./${filename}${extension}`,
+      filename: `./${outputName}${extension}`,
       chunks: ['runtime', ...chunks],
       inject: false,
       cache: false,

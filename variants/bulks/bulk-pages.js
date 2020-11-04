@@ -9,34 +9,42 @@ import footerOne from './5-footer/footer-1.hbs';
 
 const bulkTemplates = [
   {
-    filename: 'bulk-one',
+    outputName: 'bulk-one',
+    chunk: 'bulk-test',
     template: `
-      ${headerOne({ headerText: 'this is your header one' })}
-      ${heroOneSection({ heroText: 'Hero one' })}
-      ${carouselOneSection({ carouselText: 'carousel one' })}
-      ${homeOneSection({ someText: 'yes, it works!!' })}
-      ${footerOne({ date: '2020-1' })}
-
+      <div class="bulk-pages">
+        ${headerOne({ headerText: 'this is your header one' })}
+        ${heroOneSection({ heroText: 'Hero one' })}
+        ${carouselOneSection({ carouselText: 'carousel one' })}
+        ${homeOneSection({ someText: 'yes, it works!!' })}
+        ${footerOne({ date: '2020-1' })}
+      </div>
     `,
   },
   {
-    filename: 'bulk-two',
+    outputName: 'bulk-two',
+    chunk: 'bulk-test',
     template: `
-      ${headerOne({ headerText: 'this is your header two' })}
-      ${heroOneSection()}
-      ${carouselOneSection({ carouselText: 'carousel two' })}
-      ${homeOneSection({ someText: 'yes, it works on page 2' })}
-      ${footerOne({ date: '2020-2' })}
+      <div class="bulk-pages">
+        ${headerOne({ headerText: 'this is your header two' })}
+        ${heroOneSection()}
+        ${carouselOneSection({ carouselText: 'carousel two' })}
+        ${homeOneSection({ someText: 'yes, it works on page 2' })}
+        ${footerOne({ date: '2020-2' })}
+      </div>
     `,
   },
   {
-    filename: 'bulk-three',
+    outputName: 'bulk-three',
+    chunk: 'bulk-test',
     template: `
-      ${headerOne({ headerText: 'this is your header three' })}
-      ${heroOneSection({ heroText: 'Hero three' })}
-      ${carouselOneSection({ carouselText: 'carousel three' })}
-      ${homeOneSection({ someText: 'yaaaaay!!' })}
-      ${footerOne({ date: '2020-3' })}
+      <div class="bulk-pages">
+        ${headerOne({ headerText: 'this is your header three' })}
+        ${heroOneSection({ heroText: 'Hero three' })}
+        ${carouselOneSection({ carouselText: 'carousel three' })}
+        ${homeOneSection({ someText: 'yaaaaay!!' })}
+        ${footerOne({ date: '2020-3' })}
+      </div>
     `,
   },
 ];

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { hot } from 'react-hot-loader/root';
 import PropTypes from 'prop-types';
 
 import './quiz-2.scss';
@@ -24,4 +25,4 @@ Quiz1.propTypes = {
   description: PropTypes.string,
 };
 
-export default Quiz1;
+export default hot(Quiz1);

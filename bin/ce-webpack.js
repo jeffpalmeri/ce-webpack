@@ -37,31 +37,22 @@ const memoryUsage = (catchPhrase) => {
     .log(`Memory used on ${catchPhrase}: ${gbUsed} GB, total: ${gbTotal} GB, resident: ${gbResident} GB`);
 };
 
-const { argv } = yargs
-  .usage('$0 [options]', 'Build the project depending on the desired env.')
-  .option('env', {
-    type: 'object',
-    describe: 'Environment',
-    default: { dev: true },
-  })
-  .option('init', {
-    type: 'string',
-    describe: '',
-    default: 'webpack/config.js',
-  });
+const { argv } = yargs.usage('$0 [options]', 'Build the project depending on the config env file.').option('env', {
+  type: 'object',
+  describe: 'Config Environment',
+  default: './webpack/config.babel.js',
+});
 
 const cmd = ({ webpack, mode, build }) => {
   const config = `--config ${argv.config || 'node_modules/@ampush/ce-webpack/src'}/${build}.babel.js`;
-  const [envKey] = Object.keys(argv.env);
-  const init = `--init ${argv.init}`;
-  const argvKeys = Object.keys(argv).filter((argKey) => '_ $0 init env config serve'.indexOf(argKey) === -1);
-  const stringifyArguments = argvKeys.map((argKey) => `--${argKey}=${argv[argKey]}`).join(' ');
+  // const argvKeys = Object.keys(argv).filter((argKey) => '_ $0 init env config serve'.indexOf(argKey) === -1);
+  // const stringifyArguments = argvKeys.map((argKey) => `--${argKey}=${argv[argKey]}`).join(' ');
   // eslint-disable-next-line max-len
-  return `yarn run ${webpack} ${mode} ${config} --env.${envKey} ${init} --colors ${stringifyArguments} --experimental-modules`;
+  return `yarn run ${webpack} --mode ${mode} ${config} --env ${argv.init} --color`;
 };
 
-const webpack = argv.serve ? 'webpack-dev-server --progress' : 'webpack';
-const mode = argv.serve ? '' : '-p';
+const webpack = argv.serve ? 'webpack serve --progress' : 'webpack';
+const mode = argv.serve ? 'development' : 'production';
 const build = argv.serve ? 'development' : 'production';
 const command = cmd({ webpack, mode, build });
 argv.verbose && logger.color('blue').log(JSON.stringify({ argv, command }));

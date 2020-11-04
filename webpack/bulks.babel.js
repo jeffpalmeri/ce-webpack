@@ -1,8 +1,4 @@
-const yargs = require('yargs');
-
 const bulkConfig = require('../variants/bulks/bulk-pages');
-
-const { env } = yargs.argv;
 
 const META_TAGS = {
   'X-UA-Compatible': { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
@@ -14,23 +10,8 @@ const META_TAGS = {
   },
   'og:image': {
     property: 'og:image',
-    content: `https://${env.domain || 'help'}.domain.com/assets/images/quiz/quiz-img-1.jpg`,
+    content: `https://${process.domain || 'help'}.domain.com/assets/images/quiz/quiz-img-1.jpg`,
   },
 };
 
-const manageBulkTemplates = (bPages) =>
-  bPages.map(({ filename, template }) => ({
-    filename,
-    chunk: 'bulk-test',
-    templateContent: () => `
-      <html>
-        <body>
-          <div class="bulk-pages">
-            ${template}
-          </div>
-        </body>
-      </html>
-    `,
-  }));
-
-module.exports = { pages: manageBulkTemplates(bulkConfig), META_TAGS };
+module.exports = { pages: bulkConfig, META_TAGS };

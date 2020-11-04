@@ -20,9 +20,9 @@ const META_TAGS = {
 };
 
 const pages = [
-  { source: path.join(variantsPath, 'q-1', 'quiz-1'), chunk: 'quiz-1', filename: 'quiz-1' },
-  { source: path.join(variantsPath, 'q-2', 'quiz-2'), chunk: 'quiz-2', filename: 'quiz-2.html' },
-  { source: path.join(variantsPath, 'q-3', 'quiz-3'), chunk: 'quiz-3', filename: 'quiz/quiz-3.htm' },
+  { source: path.join(variantsPath, 'q-1', 'quiz-1'), chunk: 'quiz-1' },
+  { source: path.join(variantsPath, 'q-2', 'quiz-2'), chunk: 'quiz-2', outputName: 'quiz-2.html' },
+  { source: path.join(variantsPath, 'q-3', 'quiz-3'), chunk: 'quiz-3', outputName: 'quiz/quiz-3.htm' },
 ];
 
 module.exports = { pages, META_TAGS };
