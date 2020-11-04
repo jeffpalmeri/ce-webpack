@@ -21,11 +21,16 @@ slackmessage_s: &slackmessage
 
 jobs:
   install:
-    executor: node/default
+    executor:
+      name: node/default
+      tag: '14.15'
     steps:
       - checkout
+      - attach_workspace:
+          <<: *attach_ws
       - node/install-packages:
           pkg-manager: yarn
+          cache-path: ~/project/node_modules
       - persist_to_workspace:
           root: .
           paths: [node_modules]
@@ -34,20 +39,25 @@ jobs:
           <<: *slackmessage_error
 
   lint:
-    executor: node/default
+    executor:
+      name: node/default
+      tag: '14.15'
     steps:
       - checkout
       - attach_workspace:
           <<: *attach_ws
       - run:
           name: JS Lint
-          command: yarn lint-js
+          command: yarn lint
       - slack/status:
           <<: *slackmessage_error
 
   publish:
-    executor: node/default
+    executor:
+      name: node/default
+      tag: '14.15'
     steps:
+      - checkout
       - attach_workspace:
           <<: *attach_ws
       - run:
@@ -56,9 +66,13 @@ jobs:
       - run:
           name: Publish package
           command: yarn publish
+      - slack/status:
+          <<: *slackmessage_error
 
   release:
-    executor: node/default
+    executor:
+      name: node/default
+      tag: '14.15'
     steps:
       - checkout
       - attach_workspace:
@@ -82,7 +96,6 @@ workflows:
               only:
                 - master
           requires:
-            - install
             - lint
       - release:
           filters:
@@ -91,5 +104,4 @@ workflows:
                 - master
                 - QA
           requires:
-            - install
-            - lint
+            - publish
