@@ -62,10 +62,10 @@ jobs:
           <<: *attach_ws
       - run:
           name: Authenticate with registry
-          command: echo "npm.pkg.github.com/:_authToken=$NPM_TOKEN" > ~/.npmrc
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/project/.npmrc
       - run:
           name: Publish package
-          command: yarn publish
+          command: npm publish
       - slack/status:
           <<: *slackmessage_error
 
