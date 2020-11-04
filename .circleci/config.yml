@@ -52,23 +52,6 @@ jobs:
       - slack/status:
           <<: *slackmessage_error
 
-  publish:
-    executor:
-      name: node/default
-      tag: '14.15'
-    steps:
-      - checkout
-      - attach_workspace:
-          <<: *attach_ws
-      - run:
-          name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/project/.npmrc
-      - run:
-          name: Publish package
-          command: npm publish
-      - slack/status:
-          <<: *slackmessage_error
-
   release:
     executor:
       name: node/default
@@ -92,14 +75,6 @@ workflows:
           context: aws-context
           requires:
             - install
-      - publish:
-          context: aws-context
-          filters:
-            branches:
-              only:
-                - master
-          requires:
-            - lint
       - release:
           context: aws-context
           filters:
