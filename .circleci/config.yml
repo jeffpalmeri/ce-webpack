@@ -62,7 +62,7 @@ jobs:
           <<: *attach_ws
       - run:
           name: Authenticate with registry
-          command: echo "//npm.pkg.github.com/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
+          command: echo "//npm.pkg.github.com/:_authToken=$NPM_TOKEN" > ~/.npmrc
       - run:
           name: Publish package
           command: yarn publish
@@ -80,6 +80,8 @@ jobs:
       - run:
           name: Semantic release
           command: yarn semantic-release
+      - slack/status:
+          <<: *slackmessage_error
 
 workflows:
   cewebpack_flow:
@@ -91,6 +93,7 @@ workflows:
           requires:
             - install
       - publish:
+          context: aws-context
           filters:
             branches:
               only:
@@ -98,10 +101,11 @@ workflows:
           requires:
             - lint
       - release:
+          context: aws-context
           filters:
             branches:
               only:
                 - master
                 - QA
           requires:
-            - publish
+            - lint
