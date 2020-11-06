@@ -9,7 +9,7 @@ module.exports = {
     'prettier/react',
     'plugin:react/recommended',
     'plugin:import/react',
-    // 'plugin:jsx-a11y/recommended',
+    'plugin:jsx-a11y/recommended',
   ],
 
   plugins: ['prettier', 'jsx-a11y'],
