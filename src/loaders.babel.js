@@ -2,7 +2,7 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const htmlLoader = {
-  test: /\.html$/i,
+  test: /\.(html|htm)$/i,
   loader: 'html-loader',
   options: {
     minimize: true,
@@ -10,7 +10,7 @@ const htmlLoader = {
 };
 
 const jsLoader = {
-  test: /\.(js|jsx)$/,
+  test: /\.(js|jsx|ts|tsx)$/,
   exclude: /node_modules/,
   use: [
     {
