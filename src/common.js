@@ -75,14 +75,13 @@ const common = (init) => {
   };
 
   const resolve = {
-    extensions: ['.js', '.jsx', '.scss'],
+    extensions: ['.scss', '.js', '.jsx', '.ts', '.tsx', '.json', '.png', '.gif', '.jpg', '.svg'],
     alias: {
       assets: path.join(process.cwd(), 'src', 'assets'),
       components: path.join(process.cwd(), 'src', 'components'),
       config: path.join(process.cwd(), 'src', 'config'),
       connectors: path.join(process.cwd(), 'src', 'connectors'),
       core: path.join(process.cwd(), 'src', 'core'),
-      country: path.join(process.cwd(), 'src', 'country'),
       fonts: path.join(process.cwd(), 'src', 'fonts'),
       'hbs-partials': path.join(process.cwd(), 'src', 'hbs-partials'),
       scss: path.join(process.cwd(), 'src', 'scss'),
