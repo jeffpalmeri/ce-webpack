@@ -92,7 +92,14 @@ module.exports = {
     ],
     // ESLint plugin for prettier formatting
     // https://github.com/prettier/eslint-plugin-prettier
-    'prettier/prettier': 2,
+    'prettier/prettier': [
+      2,
+      {
+        singleQuote: true,
+        endOfLine: 'auto',
+        trailingComma: 'es5',
+      },
+    ],
 
     // react specific rules
     'react/forbid-prop-types': 'off',

@@ -25,24 +25,26 @@
     "@babel/register": "^7.12.1",
     "@babel/runtime": "^7.12.5",
     "@loadable/component": "^5.14.1",
-    "@testing-library/react": "^11.1.1",
-    "autoprefixer": "^10.0.1",
+    "@testing-library/react": "^11.1.2",
+    "@typescript-eslint/eslint-plugin": "^4.7.0",
+    "@typescript-eslint/parser": "^4.7.0",
+    "autoprefixer": "^10.0.2",
     "babel-eslint": "^10.1.0",
-    "babel-loader": "^8.1.0",
+    "babel-loader": "^8.2.1",
     "babel-plugin-add-module-exports": "^1.0.4",
     "babel-plugin-module-resolver": "^4.0.0",
     "babel-plugin-transform-imports": "^2.0.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-register": "^6.26.0",
     "clean-webpack-plugin": "^3.0.0",
-    "compression-webpack-plugin": "^6.0.5",
+    "compression-webpack-plugin": "^6.1.0",
     "copy-webpack-plugin": "^6.3.0",
     "core-js": "^3.7.0",
     "css-loader": "^5.0.1",
     "enzyme": "^3.11.0",
     "enzyme-to-json": "^3.6.1",
-    "eslint": "^7.12.1",
-    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint": "^7.13.0",
+    "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^6.15.0",
     "eslint-import-resolver-babel-module": "^5.2.0",
     "eslint-loader": "^4.0.2",
@@ -77,13 +79,13 @@
     "path": "^0.12.7",
     "pixrem": "^5.0.0",
     "pleeease-filters": "^4.0.0",
-    "postcss": "^8.1.6",
+    "postcss": "^8.1.7",
     "postcss-calc": "^7.0.5",
     "postcss-color-function": "^4.1.0",
     "postcss-custom-media": "^7.0.8",
     "postcss-custom-properties": "^10.0.0",
     "postcss-custom-selectors": "^5.1.2",
-    "postcss-flexbugs-fixes": "^5.0.0",
+    "postcss-flexbugs-fixes": "^5.0.1",
     "postcss-import": "^13.0.0",
     "postcss-loader": "^4.0.4",
     "postcss-media-minmax": "^4.0.0",
@@ -99,7 +101,7 @@
     "react-dom": "^17.0.1",
     "react-hot-loader": "^4.13.0",
     "sass-lint": "^1.13.1",
-    "sass-loader": "^10.0.5",
+    "sass-loader": "^10.1.0",
     "script-ext-html-webpack-plugin": "^2.1.5",
     "style-ext-html-webpack-plugin": "^4.1.3",
     "style-loader": "^2.0.0",
@@ -112,6 +114,7 @@
     "stylelint-rscss": "^0.4.0",
     "stylelint-scss": "^3.18.0",
     "terser-webpack-plugin": "^5.0.3",
+    "ts-loader": "^8.0.11",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "url-loader": "^4.1.1",
     "webpack": "^5.4.0",
@@ -121,6 +124,12 @@
     "yargs": "^16.1.0"
   },
   "description": "Webpack build for common repos",
+  "devDependencies": {
+    "@commitlint/config-conventional": "^11.0.0",
+    "commitlint": "^11.0.0",
+    "husky": "^4.3.0",
+    "semantic-release": "^17.2.2"
+  },
   "files": [
     "src",
     "bin",
@@ -149,13 +158,13 @@
     "stylelint": ">= 13"
   },
   "repository": {
-    "url": "git://github.com/ampush/ce-webpack.git",
-    "access": "restricted"
+    "access": "restricted",
+    "url": "git://github.com/ampush/ce-webpack.git"
   },
   "scripts": {
     "build": "webpack --config ./src/production.babel.js --mode development --env ./webpack/config.babel.js",
-    "build:prod": "webpack --config ./src/production.babel.js --mode production --env ./webpack/config.babel.js",
     "build:dev": "webpack --config ./src/production.babel.js --mode development --env ./webpack/config.babel.js",
+    "build:prod": "webpack --config ./src/production.babel.js --mode production --env ./webpack/config.babel.js",
     "ce:dev": "node ./bin/ce-webpack.js --config src --init webpack/config.babel.js",
     "ce:prod": "node ./bin/ce-webpack.js --config src --init webpack/config.babel.js",
     "ce:start": "node ./bin/ce-webpack.js --config src --init webpack/config.babel.js --serve",
@@ -164,11 +173,5 @@
     "start": "webpack serve --progress --config src/development.babel.js --mode development --env webpack/config.babel.js",
     "warnings": "webpack --performance-hints warning"
   },
-  "version": "4.1.5",
-  "devDependencies": {
-    "@commitlint/config-conventional": "^11.0.0",
-    "commitlint": "^11.0.0",
-    "husky": "^4.3.0",
-    "semantic-release": "^17.2.2"
-  }
+  "version": "4.1.5"
 }
