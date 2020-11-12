@@ -75,7 +75,6 @@ const common = (init) => {
   };
 
   const resolve = {
-    extensions: ['.scss', '.js', '.jsx', '.ts', '.tsx', '.json', '.png', '.gif', '.jpg', '.svg'],
     alias: {
       assets: path.join(process.cwd(), 'src', 'assets'),
       components: path.join(process.cwd(), 'src', 'components'),
@@ -128,13 +127,16 @@ const common = (init) => {
     plugins.push(...inlineTemplates);
   }
 
+  const entries = entry.reduce((acc, ent) => {
+    const { source, outputName } = ent;
+    const key = outputName || source.split('/')[source.split('/').length - 1];
+    acc[key] = source;
+    return acc;
+  }, {});
+  console.log({ entries });
   return merge(
     {
-      entry: entry.reduce((acc, ent) => {
-        const { source, outputName } = ent;
-        acc[outputName] = source;
-        return acc;
-      }, {}),
+      entry: entries,
       output,
       optimization,
       resolve,
