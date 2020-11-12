@@ -133,7 +133,7 @@ const common = (init) => {
     acc[key] = source;
     return acc;
   }, {});
-  console.log({ entries });
+
   return merge(
     {
       entry: entries,
