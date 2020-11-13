@@ -146,7 +146,7 @@ export default { pages: inlines };
 ### Bulks file
 ```js
 /* webpack/bulk.js */
-const bulkConfig = require('../variants/bulks/bulk-pages');
+const bulkConfig = require('../variants/bulks/bulk-pages'); // check this file for the format
 
 const META_TAGS = {
   'X-UA-Compatible': { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
@@ -177,6 +177,25 @@ module.exports = { pages: bulkConfig, META_TAGS };
     "build:dev": "ce-webpack --init webpack/config.js",
   },
 }
+```
+
+## CircleCI
+
+Make sure to update the CircleCI `config.yml` to have this configs:
+
+```yml
+jobs:
+  install:
+    executor:
+      name: node/default # update all node sections to match this one
+      tag: '14.15'
+    steps:
+      - checkout
+      - attach_workspace:
+          <<: *attach_ws
+      - run:
+          name: Export AMP Npm token
+          command: echo "//registry.npmjs.org/:_authToken=${AMP_NPM_TOKEN}" > ~/project/.npmrc
 ```
 
 ## Required files to create
