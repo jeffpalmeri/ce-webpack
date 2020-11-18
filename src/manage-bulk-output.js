@@ -4,7 +4,7 @@ const manageBulkOutput = ({ pages, META_TAGS }) => {
     const value = {
       source: outputName,
       outputName,
-      chunks: [chunk],
+      chunks: Array.isArray(chunk) ? chunk : [chunk],
       metaTags: metaTags || META_TAGS,
       templateContent: () => `
         <html>
