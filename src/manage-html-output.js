@@ -4,7 +4,7 @@ const manageHtmlOutput = ({ pages, META_TAGS }) => {
     const value = {
       source,
       outputName,
-      chunks: [chunk],
+      chunks: Array.isArray(chunk) ? chunk : [chunk],
       metaTags: metaTags || META_TAGS,
     };
     output[source] = value;

@@ -70,14 +70,10 @@ const fontLoader = {
 
 const handlebarLoader = {
   test: /\.hbs$/,
-  use: [
-    {
-      loader: 'handlebars-loader',
-      options: {
-        partialDirs: [path.join(process.cwd(), 'src', 'hbs-partials')],
-      },
-    },
-  ],
+  loader: 'handlebars-loader',
+  options: {
+    partialDirs: [path.join(process.cwd(), 'src', 'hbs-partials')],
+  },
 };
 
 module.exports = {
