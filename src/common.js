@@ -44,6 +44,18 @@ const common = (init) => {
     throw Error('CE_CONFIG failed: <inlines> is not an object');
   }
 
+  if (webpackConfig) {
+    const { ProvidePlugin } = webpackConfig;
+    if (ProvidePlugin) {
+      const plugins = webpackConfig.plugins || [];
+      ProvidePlugin.forEach((provider) => {
+        plugins.push(new webpack.ProvidePlugin(provider));
+      });
+      webpackConfig.plugins = plugins;
+      delete webpackConfig.ProvidePlugin;
+    }
+  }
+
   const output = {
     path: path.join(process.cwd(), 'dist'),
     publicPath: '/',
