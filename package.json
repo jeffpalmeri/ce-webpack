@@ -152,13 +152,10 @@
   ],
   "license": "MIT",
   "name": "@ampush/ce-webpack",
-  "peerDependencies": {
-    "eslint": ">= 6",
-    "prettier": ">= 2",
-    "stylelint": ">= 13"
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com"
   },
   "repository": {
-    "access": "restricted",
     "url": "git://github.com/ampush/ce-webpack.git"
   },
   "scripts": {
