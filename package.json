@@ -155,9 +155,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
-  "repository": {
-    "url": "git://github.com/ampush/ce-webpack.git"
-  },
+  "repository": "git://github.com/ampush/ce-webpack.git",
   "scripts": {
     "build": "webpack --config ./src/production.babel.js --mode development --env ./webpack/config.babel.js",
     "build:dev": "webpack --config ./src/production.babel.js --mode development --env ./webpack/config.babel.js",
