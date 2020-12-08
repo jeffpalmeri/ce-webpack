@@ -134,7 +134,7 @@ module.exports = function prod() {
           optimization,
         }
       : {
-          devtool: 'eval-cheap-source-map',
+          devtool: 'cheap-source-map',
         }
   );
   return merge(getCommon, prodConfig);
