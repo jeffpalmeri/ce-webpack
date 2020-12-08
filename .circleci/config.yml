@@ -28,6 +28,9 @@ jobs:
       - checkout
       - attach_workspace:
           <<: *attach_ws
+      - run:
+          name: Export AMP NPM Token
+          command: echo "//npm.pkg.github.com/:_authToken=${AMP_PKG_TOKEN}" > ~/project/.npmrc
       - node/install-packages:
           pkg-manager: yarn
           cache-path: ~/project/node_modules

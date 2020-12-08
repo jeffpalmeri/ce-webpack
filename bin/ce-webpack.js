@@ -52,7 +52,7 @@ const cmd = ({ webpack, mode, build }) => {
 };
 
 const webpack = argv.serve ? 'webpack serve --progress' : 'webpack';
-const mode = argv.serve ? 'development' : 'production';
+const mode = argv.serve || argv.env === 'dev' ? 'development' : 'production';
 const build = argv.serve ? 'development' : 'production';
 const command = cmd({ webpack, mode, build });
 argv.verbose && logger.color('blue').log(JSON.stringify({ argv, command }));
