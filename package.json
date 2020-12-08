@@ -170,5 +170,5 @@
     "start": "webpack serve --progress --config src/development.babel.js --mode development --env webpack/config.babel.js",
     "warnings": "webpack --performance-hints warning"
   },
-  "version": "4.1.5"
+  "version": "3.3.2"
 }
