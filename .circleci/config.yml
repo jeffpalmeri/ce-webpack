@@ -30,7 +30,11 @@ jobs:
           <<: *attach_ws
       - run:
           name: Export AMP NPM Token
-          command: echo "//npm.pkg.github.com/:_authToken=${AMP_PKG_TOKEN}" > ~/project/.npmrc
+          command: |
+              echo "@ampush:registry=https://npm.pkg.github.com/" > ~/.npmrc
+              echo "//npm.pkg.github.com/:_authToken=\"$AMP_PKG_TOKEN\"" >> ~/.npmrc
+              npm set @ampush:registry https://npm.pkg.github.com
+          # command: echo "//npm.pkg.github.com/:_authToken=${AMP_PKG_TOKEN}" > ~/project/.npmrc
       - node/install-packages:
           pkg-manager: yarn
           cache-path: ~/project/node_modules
