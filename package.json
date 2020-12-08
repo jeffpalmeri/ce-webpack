@@ -153,7 +153,7 @@
   "license": "MIT",
   "name": "@ampush/ce-webpack",
   "publishConfig": {
-    "registry":"https://npm.pkg.github.com"
+    "registry": "https://npm.pkg.github.com"
   },
   "repository": {
     "url": "git://github.com/ampush/ce-webpack.git"
