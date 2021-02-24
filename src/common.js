@@ -134,6 +134,7 @@ const common = (init) => {
   if (Object.keys(inlines).length) {
     const inlineTemplates = inlineGenerator(manageInlineOutput(inlines), FAVICON);
     inlineTemplates.forEach((template) => {
+      // updated for latest v of html-webpack-plugin
       const options = template.userOptions || template.options;
       excludeHtmlNames.push(options.filename);
     });
