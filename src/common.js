@@ -133,7 +133,8 @@ const common = (init) => {
   const excludeHtmlNames = [];
   if (Object.keys(inlines).length) {
     const inlineTemplates = inlineGenerator(manageInlineOutput(inlines), FAVICON);
-    inlineTemplates.forEach(({ options }) => {
+    inlineTemplates.forEach((template) => {
+      const options = template.userOptions || template.options;
       excludeHtmlNames.push(options.filename);
     });
     plugins.push(...inlineTemplates);

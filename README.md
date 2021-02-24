@@ -7,6 +7,10 @@ We don't require to add any `<script src="/js/main.min.js">` or `<link href="/cs
 1. Use `entry` to decide the name of the chunk file and then place that chunk name in the `htmls`, `inlines` or `bulk` array.
 2. Make sure to `import` all your scss in that js file, Webpack is smart enough to generate a `.css` file with the exact same name as your chunk file name.
 
+## Configure your local env and get to know how we work
+
+https://ampush.atlassian.net/wiki/spaces/CO/pages/1387823105/GitHub+Flow+and+Repo+Configuration
+
 ## Install
 ```bash
 yarn add --dev @ampush/ce-webpack
