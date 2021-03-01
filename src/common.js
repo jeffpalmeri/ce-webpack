@@ -59,7 +59,7 @@ const common = (init) => {
   const output = {
     path: path.join(process.cwd(), 'dist'),
     publicPath: '/ampstaging/',
-    filename: 'js/[name].min.js',
+    filename: 'ampstaging/js/[name].min.js',
   };
 
   const optimization = {
