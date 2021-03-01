@@ -5,7 +5,7 @@ orbs:
   slack: circleci/slack@3.4.2
 
 attachws: &attach_ws
-    at: ~/project
+  at: ~/project
 
 slackmessage_e: &slackmessage_error
   channel: mystique
@@ -63,9 +63,9 @@ jobs:
       - run:
           name: Export AMP NPM Token
           command: |
-              echo "@ampush:registry=https://npm.pkg.github.com/" > ~/project/.npmrc
-              echo "//npm.pkg.github.com/:_authToken=${AMP_PKG_TOKEN}" >> ~/project/.npmrc
-              npm set @ampush:registry https://npm.pkg.github.com
+            echo "@ampush:registry=https://npm.pkg.github.com/" > ~/project/.npmrc
+            echo "//npm.pkg.github.com/:_authToken=${AMP_PKG_TOKEN}" >> ~/project/.npmrc
+            npm set @ampush:registry https://npm.pkg.github.com
           # command: echo "//npm.pkg.github.com/:_authToken=${AMP_PKG_TOKEN}" > ~/project/.npmrc
       - run:
           name: Semantic release
@@ -89,5 +89,6 @@ workflows:
               only:
                 - master
                 - QA
+                - releaseprefixtest
           requires:
             - lint

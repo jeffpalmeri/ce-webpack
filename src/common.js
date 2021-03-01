@@ -58,7 +58,7 @@ const common = (init) => {
 
   const output = {
     path: path.join(process.cwd(), 'dist'),
-    publicPath: '/',
+    publicPath: '/ampstaging/',
     filename: 'js/[name].min.js',
   };
 

@@ -1,5 +1,5 @@
 module.exports = {
-  branches: ['master', { name: 'QA', prerelease: true }],
+  branches: ['master', { name: 'QA', prerelease: true }, { name: 'releaseprefixtest', prerelease: true }],
   dryRun: false,
   plugins: [
     '@semantic-release/release-notes-generator',
